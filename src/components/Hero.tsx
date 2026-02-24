@@ -50,8 +50,8 @@ export default function Hero() {
             <span className="text-foreground font-medium">data science</span>,{" "}
             <span className="text-foreground font-medium">AI</span>, and{" "}
             <span className="text-foreground font-medium">business strategy</span>.
-            14 consulting-grade case studies with partners like BCG, LVMH, BNP
-            Paribas, and Carrefour &mdash; 4x winner, built to deliver real impact.
+            15 consulting-grade case studies with partners like BCG, Louis Vuitton, BNP
+            Paribas, Asmodee, and Carrefour &mdash; 4x winner, built to deliver real impact.
             Currently pursuing an MSc at{" "}
             <span className="text-foreground font-medium">Mines Paris PSL</span>{" "}
             &times;{" "}
@@ -66,7 +66,7 @@ export default function Hero() {
             className="mt-8 flex flex-wrap gap-3"
           >
             {[
-              "15 Projects",
+              "16 Projects",
               "4x Winner",
               "Mines Paris PSL",
               "Reserviste CND",

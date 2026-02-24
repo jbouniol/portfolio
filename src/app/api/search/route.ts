@@ -20,6 +20,7 @@ Impact: ${p.impact}`;
 
   const experienceChunks = experiences.map((e) => {
     return `## ${e.company} — ${e.role}
+Slug: ${e.slug}
 Period: ${e.period} | Location: ${e.location}
 Tagline: ${e.tagline}
 Description: ${e.description}
@@ -30,9 +31,9 @@ Missions: ${e.isConfidential ? "Classified — cannot be disclosed" : e.missions
 
 ## Profile
 - Student at Albert School x Mines Paris PSL (MSc Data & AI for Business)
-- 14 Business Deep Dives across BCG, Louis Vuitton, CMA-CGM, BNP Paribas, Carrefour, SNCF, Henkel, and more
+- 15 Business Deep Dives across BCG, Louis Vuitton, CMA-CGM, BNP Paribas, Carrefour, SNCF, Henkel, Asmodee, and more
 - 1 ML School Project: Finovera (AI Stock Portfolio Advisor)
-- 4x BDD Winner, 4x Finalist/Podium
+- 4x BDD Winner, 5x Finalist/Podium
 - Skills: Python, SQL, Scikit-learn, PyTorch, Qlik Sense, Power BI, Excel/VBA, Make, Zapier, Notion, GenAI
 - Email: jbouniol@albertschool.com
 - Education: MSc Mines Paris PSL x Albert School (2025-2027), Bachelor Albert School x Mines Paris PSL (2023-2025), Baccalaureat Ecole Pascal (2020-2023)
@@ -42,9 +43,14 @@ Missions: ${e.isConfidential ? "Classified — cannot be disclosed" : e.missions
 ${experienceChunks.join("\n\n")}
 
 ## Other Leadership
-- Notion Campus Leader (Sep 2025 — Present): Selected for Notion's international program. Developing the Notion community at Albert School.
-- Student Representative at Albert School (Sep 2023 — Present): Student fairs across Paris, Marseille, Lyon, Geneva. Hosted workshop for 200 students in Luxembourg.
-- Capgemini Ambassador (2024-2025): Representing Capgemini on campus at Albert School.
+- Slug: notion-campus-leader | Notion Campus Leader (Sep 2025 — Present): Selected for Notion's international program. Developing the Notion community at Albert School.
+- Slug: student-representative | Student Representative at Albert School (Sep 2023 — Present): Student fairs across Paris, Marseille, Lyon, Geneva. Hosted workshop for 200 students in Luxembourg.
+- Slug: capgemini-ambassador | Capgemini Ambassador (2024-2025): Representing Capgemini on campus at Albert School.
+
+## Education
+- Slug: msc-mines-paris | MSc Data & AI for Business at Mines Paris PSL x Albert School (2025-2027): Advanced double-diploma program combining data science, AI engineering, and business strategy at France's #1 engineering school.
+- Slug: bachelor-albert-school | Bachelor Business & Data at Albert School x Mines Paris PSL (2023-2025): Europe's first data-centric business school. 15+ Business Deep Dives. Double diploma with Mines Paris PSL.
+- Slug: baccalaureat-ecole-pascal | Baccalaureat High Honors at Ecole Pascal (2020-2023): Specialization in Mathematics and SES, with Maths Expertes option.
 
 ## Projects (Business Deep Dives & School Projects)
 
@@ -98,9 +104,13 @@ Rules:
 - Format your response as JSON with this structure:
   {
     "answer": "Your text answer here",
-    "relatedProjects": ["slug1", "slug2"],
+    "relatedProjects": ["project-slug1", "project-slug2"],
+    "relatedExperiences": ["experience-slug1"],
     "type": "project" | "experience" | "skill" | "general"
   }
+- relatedProjects: use project slugs from the Business Deep Dives / School Projects sections
+- relatedExperiences: use experience slugs: "generali", "sunver", "cnd", "albert-junior-consulting", "notion-campus-leader", "student-representative", "capgemini-ambassador", "msc-mines-paris", "bachelor-albert-school", "baccalaureat-ecole-pascal"
+- Always include relevant related items. If the question is about experience, include relatedExperiences. If about projects, include relatedProjects. You can include both when relevant.
 
 Portfolio data:
 ${PORTFOLIO_CONTEXT}`,
@@ -161,9 +171,92 @@ ${PORTFOLIO_CONTEXT}`,
         tags: p.tags,
       }));
 
+    // Static data for non-clickable experience/education items
+    const allExperienceItems: Record<
+      string,
+      { slug: string; role: string; company: string; period: string; tagline: string; category: string; hasPage: boolean }
+    > = {};
+
+    // Clickable experiences (have detail pages)
+    for (const e of experiences) {
+      allExperienceItems[e.slug] = {
+        slug: e.slug,
+        role: e.role,
+        company: e.company,
+        period: e.period,
+        tagline: e.tagline,
+        category: e.type === "work" ? "Work Experience" : "Leadership",
+        hasPage: true,
+      };
+    }
+
+    // Non-clickable leadership
+    allExperienceItems["notion-campus-leader"] = {
+      slug: "notion-campus-leader",
+      role: "Campus Leader",
+      company: "Notion",
+      period: "Sep 2025 — Present",
+      tagline: "Selected for Notion's international Campus Leader program. Developing the Notion community at Albert School.",
+      category: "Leadership",
+      hasPage: false,
+    };
+    allExperienceItems["student-representative"] = {
+      slug: "student-representative",
+      role: "Student Representative",
+      company: "Albert School",
+      period: "Sep 2023 — Present",
+      tagline: "Student fairs across Paris, Marseille, Lyon, Geneva. Hosted a workshop for 200 students in Luxembourg.",
+      category: "Leadership",
+      hasPage: false,
+    };
+    allExperienceItems["capgemini-ambassador"] = {
+      slug: "capgemini-ambassador",
+      role: "Ambassador",
+      company: "Capgemini",
+      period: "2024 — 2025",
+      tagline: "Representing Capgemini on campus at Albert School.",
+      category: "Leadership",
+      hasPage: false,
+    };
+
+    // Education
+    allExperienceItems["msc-mines-paris"] = {
+      slug: "msc-mines-paris",
+      role: "MSc Data & AI for Business",
+      company: "Mines Paris PSL x Albert School",
+      period: "2025 — 2027",
+      tagline: "Advanced double-diploma program combining data science, AI engineering, and business strategy.",
+      category: "Education",
+      hasPage: false,
+    };
+    allExperienceItems["bachelor-albert-school"] = {
+      slug: "bachelor-albert-school",
+      role: "Bachelor Business & Data",
+      company: "Albert School x Mines Paris PSL",
+      period: "2023 — 2025",
+      tagline: "Europe's first data-centric business school. 15+ Business Deep Dives. Double diploma with Mines Paris PSL.",
+      category: "Education",
+      hasPage: false,
+    };
+    allExperienceItems["baccalaureat-ecole-pascal"] = {
+      slug: "baccalaureat-ecole-pascal",
+      role: "Baccalaureat — High Honors",
+      company: "Ecole Pascal",
+      period: "2020 — 2023",
+      tagline: "Specialization in Mathematics and SES, with Maths Expertes option.",
+      category: "Education",
+      hasPage: false,
+    };
+
+    // Enrich experience data
+    const relatedExperienceData = (parsed.relatedExperiences || [])
+      .map((slug: string) => allExperienceItems[slug])
+      .filter(Boolean);
+
     return NextResponse.json({
       answer: parsed.answer,
       relatedProjects: relatedProjectData,
+      relatedExperiences: relatedExperienceData,
       type: parsed.type || "general",
     });
   } catch (error) {

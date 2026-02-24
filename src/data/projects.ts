@@ -406,6 +406,33 @@ export const projects: Project[] = [
     duration: "3 weeks",
     category: "bdd",
   },
+  {
+    slug: "asmodee-bga-game-recommendation",
+    title: "Game Recommendation Engine from Player Behavior",
+    company: "Asmodee",
+    tagline:
+      "Analyzing 20GB+ of player behavior data on Board Game Arena to map natural game connections and build personalized game journey recommendations.",
+    tags: ["Data", "AI", "Strategy"],
+    context:
+      "Board Game Arena (BGA), owned by Asmodee, is the world's largest online board gaming platform with 11M+ users and 1,000+ games. Player habits generate massive amounts of behavioral data — repeated plays of the same game, frequent transitions between games — creating implicit links between titles.",
+    problem:
+      "User gaming habits on BGA generate natural connections between games, whether through multiple plays of a single title or frequent transitions from one game to another. How to analyze and visualize these connections in order to recommend personalized game journeys based on player profiles?",
+    data: "20GB+ of raw player behavior data from Board Game Arena — including game session logs, user play histories, game-to-game transition patterns, and player profile metadata. Required SQL-based processing due to the massive data volume.",
+    method:
+      "Used SQL extensively to query, filter, and aggregate the 20GB+ dataset into workable structures. Mapped game-to-game transition networks from player sessions. Identified natural game clusters and player archetypes. Built visualization of game connections and designed a recommendation logic based on player behavior profiles.",
+    result:
+      "Delivered a game connection analysis with visual mapping of player journeys and a recommendation framework for personalized game paths based on user profiles.",
+    impact:
+      "Directly applicable to BGA's product strategy — improving game discovery, increasing session time, and reducing churn through smarter recommendations. Demonstrated ability to handle large-scale real-world datasets.",
+    canvaEmbedUrl:
+      "https://www.canva.com/design/DAGg5vod7cI/2-KvH74aUv3g7M7Hp3OWeQ/view?embed",
+    githubUrl: "",
+    year: "2025",
+    duration: "3 weeks",
+    badge: "Finalist",
+    category: "bdd",
+    contributors: ["Keira Chang"],
+  },
 
   // ─── SCHOOL PROJECTS ──────────────────────────────────
   {

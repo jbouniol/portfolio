@@ -30,9 +30,9 @@ const toolCategories = [
 ];
 
 const highlights = [
-  { number: "14", label: "Business Deep Dives" },
+  { number: "15", label: "Business Deep Dives" },
   { number: "4", label: "BDD Wins" },
-  { number: "4", label: "Finalists" },
+  { number: "5", label: "Finalists" },
   { number: "10+", label: "Industries Covered" },
 ];
 
