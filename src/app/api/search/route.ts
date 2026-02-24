@@ -31,9 +31,9 @@ Missions: ${e.isConfidential ? "Classified — cannot be disclosed" : e.missions
 
 ## Profile
 - Student at Albert School x Mines Paris PSL (MSc Data & AI for Business)
-- 15 Business Deep Dives across BCG, Louis Vuitton, CMA-CGM, BNP Paribas, Carrefour, SNCF, Henkel, Asmodee, and more
+- 12 Business Deep Dives across Louis Vuitton, CMA-CGM, BNP Paribas, Carrefour, SNCF, Henkel, Asmodee, Generali, Edmond de Rothschild, and more
 - 1 ML School Project: Finovera (AI Stock Portfolio Advisor)
-- 4x BDD Winner, 5x Finalist/Podium
+- 4x BDD Winner, 6x Finalist/Podium
 - Skills: Python, SQL, Scikit-learn, PyTorch, Qlik Sense, Power BI, Excel/VBA, Make, Zapier, Notion, GenAI
 - Email: jbouniol@albertschool.com
 - Education: MSc Mines Paris PSL x Albert School (2025-2027), Bachelor Albert School x Mines Paris PSL (2023-2025), Baccalaureat Ecole Pascal (2020-2023)
@@ -49,7 +49,7 @@ ${experienceChunks.join("\n\n")}
 
 ## Education
 - Slug: msc-mines-paris | MSc Data & AI for Business at Mines Paris PSL x Albert School (2025-2027): Advanced double-diploma program combining data science, AI engineering, and business strategy at France's #1 engineering school.
-- Slug: bachelor-albert-school | Bachelor Business & Data at Albert School x Mines Paris PSL (2023-2025): Europe's first data-centric business school. 15+ Business Deep Dives. Double diploma with Mines Paris PSL.
+- Slug: bachelor-albert-school | Bachelor Business & Data at Albert School x Mines Paris PSL (2023-2025): Europe's first data-centric business school. 12 Business Deep Dives. Double diploma with Mines Paris PSL.
 - Slug: baccalaureat-ecole-pascal | Baccalaureat High Honors at Ecole Pascal (2020-2023): Specialization in Mathematics and SES, with Maths Expertes option.
 
 ## Projects (Business Deep Dives & School Projects)
@@ -234,7 +234,7 @@ ${PORTFOLIO_CONTEXT}`,
       role: "Bachelor Business & Data",
       company: "Albert School x Mines Paris PSL",
       period: "2023 — 2025",
-      tagline: "Europe's first data-centric business school. 15+ Business Deep Dives. Double diploma with Mines Paris PSL.",
+      tagline: "Europe's first data-centric business school. 12 Business Deep Dives. Double diploma with Mines Paris PSL.",
       category: "Education",
       hasPage: false,
     };

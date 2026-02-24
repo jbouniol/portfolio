@@ -4,29 +4,40 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowUpRight,
-  Lock,
   Trophy,
   Award,
   ShieldCheck,
   Rocket,
+  Zap,
+  Handshake,
 } from "lucide-react";
 import { projects, allTags, type ProjectTag } from "@/data/projects";
 
 const bddProjects = projects.filter((p) => p.category === "bdd");
+const hackathonProjects = projects.filter((p) => p.category === "hackathon");
+const consultingProjects = projects.filter((p) => p.category === "consulting");
 const schoolProjects = projects.filter((p) => p.category === "school");
+
+function filterByTag<T extends { tags: ProjectTag[] }>(
+  items: T[],
+  tag: ProjectTag | "All"
+): T[] {
+  return tag === "All" ? items : items.filter((p) => p.tags.includes(tag));
+}
 
 export default function Projects() {
   const [activeTag, setActiveTag] = useState<ProjectTag | "All">("All");
 
-  const filteredBDD =
-    activeTag === "All"
-      ? bddProjects
-      : bddProjects.filter((p) => p.tags.includes(activeTag));
+  const filteredBDD = filterByTag(bddProjects, activeTag);
+  const filteredHackathon = filterByTag(hackathonProjects, activeTag);
+  const filteredConsulting = filterByTag(consultingProjects, activeTag);
+  const filteredSchool = filterByTag(schoolProjects, activeTag);
 
-  const filteredSchool =
-    activeTag === "All"
-      ? schoolProjects
-      : schoolProjects.filter((p) => p.tags.includes(activeTag));
+  const totalFiltered =
+    filteredBDD.length +
+    filteredHackathon.length +
+    filteredConsulting.length +
+    filteredSchool.length;
 
   return (
     <section id="projects" className="py-32 px-6">
@@ -39,11 +50,11 @@ export default function Projects() {
         >
           <p className="font-mono text-sm text-accent mb-3">Portfolio</p>
           <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">
-            Projects
+            Hackathons & Business Deep Dives
           </h2>
           <p className="mt-4 text-muted max-w-xl text-lg">
-            Business Deep Dives, personal builds, and side projects. From
-            3-week consulting intensives to AI-powered apps.
+            Consulting case studies, hackathons, consulting missions, and school
+            projects. From 3-day hackathons to 3-week deep dives.
           </p>
         </motion.div>
 
@@ -89,18 +100,73 @@ export default function Projects() {
                 {filteredBDD.length}
               </span>
             </div>
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <AnimatePresence mode="popLayout">
                 {filteredBDD.map((project, i) => (
-                  <ProjectCard key={project.slug} project={project} index={i} />
+                  <ProjectCard
+                    key={project.slug}
+                    project={project}
+                    index={i}
+                  />
                 ))}
               </AnimatePresence>
             </div>
           </div>
         )}
 
-        {/* Personal Projects Section */}
+        {/* Hackathon Section */}
+        {filteredHackathon.length > 0 && (
+          <div className="mt-16">
+            <div className="flex items-center gap-2 mb-6">
+              <Zap size={14} className="text-amber-400" />
+              <h3 className="text-sm font-mono text-muted uppercase tracking-wider">
+                Hackathons
+              </h3>
+              <span className="px-2 py-0.5 text-[10px] font-mono bg-amber-500/10 text-amber-400 rounded-full">
+                {filteredHackathon.length}
+              </span>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <AnimatePresence mode="popLayout">
+                {filteredHackathon.map((project, i) => (
+                  <ProjectCard
+                    key={project.slug}
+                    project={project}
+                    index={i}
+                  />
+                ))}
+              </AnimatePresence>
+            </div>
+          </div>
+        )}
+
+        {/* Consulting Missions Section */}
+        {filteredConsulting.length > 0 && (
+          <div className="mt-16">
+            <div className="flex items-center gap-2 mb-6">
+              <Handshake size={14} className="text-emerald-400" />
+              <h3 className="text-sm font-mono text-muted uppercase tracking-wider">
+                Consulting Missions
+              </h3>
+              <span className="px-2 py-0.5 text-[10px] font-mono bg-emerald-500/10 text-emerald-400 rounded-full">
+                {filteredConsulting.length}
+              </span>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <AnimatePresence mode="popLayout">
+                {filteredConsulting.map((project, i) => (
+                  <ProjectCard
+                    key={project.slug}
+                    project={project}
+                    index={i}
+                  />
+                ))}
+              </AnimatePresence>
+            </div>
+          </div>
+        )}
+
+        {/* School Projects Section */}
         {filteredSchool.length > 0 && (
           <div className="mt-16">
             <div className="flex items-center gap-2 mb-6">
@@ -112,11 +178,14 @@ export default function Projects() {
                 {filteredSchool.length}
               </span>
             </div>
-
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <AnimatePresence mode="popLayout">
                 {filteredSchool.map((project, i) => (
-                  <ProjectCard key={project.slug} project={project} index={i} />
+                  <ProjectCard
+                    key={project.slug}
+                    project={project}
+                    index={i}
+                  />
                 ))}
               </AnimatePresence>
             </div>
@@ -124,7 +193,7 @@ export default function Projects() {
         )}
 
         {/* Empty state */}
-        {filteredBDD.length === 0 && filteredSchool.length === 0 && (
+        {totalFiltered === 0 && (
           <div className="mt-10 text-center py-12 text-muted font-mono text-sm">
             No projects match this filter.
           </div>
@@ -168,6 +237,11 @@ function ProjectCard({
           {project.badge === "2nd Place" && (
             <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-mono bg-zinc-400/10 text-zinc-400 border border-zinc-400/20 rounded-full">
               <Award size={10} /> 2nd Place
+            </span>
+          )}
+          {project.badge === "Honorable Mention" && (
+            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full">
+              <Award size={10} /> Mention
             </span>
           )}
           {project.isNDA && (

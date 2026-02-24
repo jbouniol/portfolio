@@ -75,7 +75,7 @@ const education = [
     degree: "Bachelor Business & Data",
     school: "Albert School x Mines Paris PSL",
     description:
-      "Europe's first data-centric business school. 15+ Business Deep Dives with BCG, Louis Vuitton, BNP Paribas, Asmodee, and more. Double diploma with Mines Paris PSL.",
+      "Europe's first data-centric business school. 12 Business Deep Dives with Louis Vuitton, BNP Paribas, Generali, Asmodee, and more. Double diploma with Mines Paris PSL.",
   },
   {
     period: "2020 — 2023",

@@ -15,9 +15,9 @@ export default function Home() {
       <main>
         <Hero />
         <WhatIBuild />
+        <AISearch />
         <Projects />
         <Experience />
-        <AISearch />
         <Research />
         <Contact />
       </main>

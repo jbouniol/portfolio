@@ -145,7 +145,7 @@ export default function AISearch() {
       result.relatedExperiences.length > 0);
 
   return (
-    <section className="py-32 px-6">
+    <section id="ai-search" className="py-32 px-6">
       <div className="max-w-3xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -403,6 +403,11 @@ export default function AISearch() {
                         {project.badge === "2nd Place" && (
                           <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-mono bg-zinc-400/10 text-zinc-400 border border-zinc-400/20 rounded-full">
                             <Award size={10} /> 2nd Place
+                          </span>
+                        )}
+                        {project.badge === "Honorable Mention" && (
+                          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full">
+                            <Award size={10} /> Mention
                           </span>
                         )}
                       </div>

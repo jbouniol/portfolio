@@ -106,6 +106,11 @@ export default function ProjectDetailClient({
                   <Award size={10} /> 2nd Place
                 </span>
               )}
+              {project.badge === "Honorable Mention" && (
+                <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full">
+                  <Award size={10} /> Honorable Mention
+                </span>
+              )}
               {project.isNDA && (
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-mono bg-red-500/10 text-red-400 border border-red-500/20 rounded-full">
                   <ShieldCheck size={10} /> NDA
@@ -140,7 +145,7 @@ export default function ProjectDetailClient({
             transition={{ delay: 0.3 }}
             className="mt-8 flex flex-wrap gap-3"
           >
-            {project.canvaEmbedUrl ? (
+            {project.canvaEmbedUrl && (
               <button
                 onClick={() => setShowCanva(!showCanva)}
                 className="inline-flex items-center gap-2 px-4 py-2.5 bg-accent text-white text-sm font-medium rounded-lg hover:bg-accent/90 transition-colors"
@@ -148,14 +153,9 @@ export default function ProjectDetailClient({
                 <Presentation size={16} />
                 {showCanva ? "Hide Deck" : "View Deck"}
               </button>
-            ) : (
-              <span className="inline-flex items-center gap-2 px-4 py-2.5 bg-surface border border-border text-sm text-muted rounded-lg cursor-default">
-                <Presentation size={16} />
-                Deck — Coming Soon
-              </span>
             )}
 
-            {project.githubUrl ? (
+            {project.githubUrl && (
               <a
                 href={project.githubUrl}
                 target="_blank"
@@ -166,12 +166,21 @@ export default function ProjectDetailClient({
                 Explore Code
                 <ExternalLink size={12} />
               </a>
-            ) : project.isNDA ? (
+            )}
+
+            {project.isNDA && (
               <span className="inline-flex items-center gap-2 px-4 py-2.5 bg-surface border border-border text-sm text-muted rounded-lg cursor-default">
                 <ShieldCheck size={16} />
                 Under NDA
               </span>
-            ) : null}
+            )}
+
+            {project.isPrivate && !project.isNDA && (
+              <span className="inline-flex items-center gap-2 px-4 py-2.5 bg-surface border border-border text-sm text-muted rounded-lg cursor-default">
+                <ShieldCheck size={16} />
+                Private
+              </span>
+            )}
           </motion.div>
 
           {/* Canva Embed */}

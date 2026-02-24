@@ -16,7 +16,7 @@ export type ProjectTag =
   | "NLP"
   | "SaaS";
 
-export type ProjectCategory = "bdd" | "school" | "personal";
+export type ProjectCategory = "bdd" | "hackathon" | "consulting" | "school";
 
 export interface Project {
   slug: string;
@@ -45,22 +45,22 @@ export const projects: Project[] = [
   // ─── WINNERS ──────────────────────────────────────────────
   {
     slug: "generali-it-practices",
-    title: "IT Practices Audit & Optimization",
+    title: "IT Project Portfolio Optimization",
     company: "Generali",
     tagline:
-      "Analysis of a 15,000-line dataset to visualize IT practices, identify inconsistencies, and propose concrete optimizations.",
-    tags: ["Data", "Consulting", "Automation"],
+      "Analyzing a 15,000+ line dataset of internal IT projects to optimize portfolio management, improve data quality, and propose an AI assistant for project tracking.",
+    tags: ["Data", "Consulting", "AI"],
     context:
-      "Generali, one of Europe's largest insurers, needed visibility into its IT practices across teams. A 15,000-line dataset captured operational processes but lacked structure and actionable insight.",
+      "Generali France provided a 15,000+ line dataset covering their internal IT project portfolio. The challenge was to optimize the management of this entire portfolio in just 3 weeks.",
     problem:
-      "How to turn a massive, unstructured IT operations dataset into clear visualizations that reveal inconsistencies and drive concrete improvement projects?",
-    data: "15,000-line internal IT practices dataset covering team workflows, tool usage, process compliance, and incident logs.",
+      "How to leverage a massive internal IT project dataset to optimize portfolio management, improve data quality, and better understand project complexity at Generali?",
+    data: "15,000+ line internal dataset covering Generali's IT project portfolio — project metadata, timelines, statuses, teams, and operational metrics.",
     method:
-      "Cleaned and structured the raw dataset. Built dashboards to visualize patterns and anomalies. Identified key inconsistencies across teams. Proposed targeted optimizations with implementation roadmaps.",
+      "Conducted in-depth analysis of the full dataset to extract actionable insights. Proposed data quality improvements: standardization processes, validation rules, and real-time alerts. Designed collaborative tools (Gantt charts, Kanban boards) to improve mission tracking. Developed a mathematical formula to evaluate project complexity. Proposed GENERALI-A, an AI assistant to optimize project tracking and capture previously uncollected data.",
     result:
-      "Delivered a comprehensive audit with prioritized recommendations. Won the BDD challenge for this project.",
+      "Won the BDD challenge. Delivered a comprehensive optimization plan for Generali's IT project portfolio with concrete tools and an AI-powered tracking assistant.",
     impact:
-      "Actionable improvement roadmap adopted by the team. Demonstrated how data-driven audits can surface hidden operational inefficiencies at enterprise scale.",
+      "Directly applicable recommendations for project management at scale. The AI assistant concept (GENERALI-A) demonstrated how GenAI can improve data capture and project oversight in enterprise environments.",
     canvaEmbedUrl:
       "https://www.canva.com/design/DAGQ1iFjoI0/zpuuh-DHBZI5CruBac087w/view?embed",
     githubUrl: "",
@@ -72,22 +72,22 @@ export const projects: Project[] = [
   },
   {
     slug: "henkel-commercial-optimization",
-    title: "Commercial Resource Optimization",
+    title: "Sales Optimization & Resource Reallocation",
     company: "Henkel",
     tagline:
-      "Optimizing commercial resources at Leroy Merlin and Bricomarche using sales, advertising, and merchandising data.",
+      "Optimizing and predicting Henkel sales to efficiently reallocate commercial resources across Leroy Merlin and Bricomarche.",
     tags: ["Data", "Strategy", "Consulting", "Retail"],
     context:
-      "Henkel distributes products through major DIY retailers including Leroy Merlin and Bricomarche. The challenge was to optimize commercial resource allocation while supporting local brand growth.",
+      "Henkel needed to optimize its commercial strategy across major DIY retailers. The challenge was to predict sales performance and propose a resource reallocation strategy to maximize impact.",
     problem:
-      "How, using sales, advertising investment, merchandising data, and sales force visit frequency, to optimize commercial resources at Leroy Merlin and Bricomarche while maintaining a dominant position and supporting local DIY brands?",
+      "How to optimize and predict Henkel sales in order to efficiently reallocate commercial resources while strengthening existing partnerships (Leroy Merlin) and exploring new growth relays (Bricomarche)?",
     data: "Sales data, advertising investment metrics, merchandising KPIs, sales force visit logs, and competitive positioning data across retail channels.",
     method:
-      "Cross-referenced sales force activity with commercial outcomes. Built optimization models to reallocate resources toward highest-impact touchpoints. Benchmarked performance against competitors.",
+      "Built sales prediction models and optimization frameworks. Proposed innovative solutions to reinforce existing partnerships with Leroy Merlin while identifying growth opportunities with Bricomarche as a new relay.",
     result:
-      "Delivered a resource allocation framework that maximized ROI across both retail channels. Won the BDD challenge.",
+      "Won the BDD challenge. Delivered a sales prediction and resource reallocation strategy with concrete recommendations for both retail partners.",
     impact:
-      "Applicable model for any FMCG company managing multi-retailer distribution with constrained commercial budgets.",
+      "Actionable commercial strategy applicable to any FMCG company managing multi-retailer distribution with constrained budgets.",
     canvaEmbedUrl:
       "https://www.canva.com/design/DAGW0n4ghss/3j1y2s9NqWCFFMhvPxt8zw/view?embed",
     githubUrl: "",
@@ -99,22 +99,22 @@ export const projects: Project[] = [
   },
   {
     slug: "la-french-tech-aix-marseille",
-    title: "Startup Ecosystem Growth Analysis",
+    title: "Startup Ecosystem Portrait & Growth Strategy",
     company: "La French Tech",
     tagline:
-      "Web scraping to build a startup database, then descriptive analysis of the Aix-Marseille ecosystem to identify new income levers.",
+      "Building a startup database from scratch via web scraping, analyzing the Aix-Marseille ecosystem, and identifying new growth levers — presented to the DG of La French Tech.",
     tags: ["Data", "Strategy", "Consulting", "Automation"],
     context:
-      "La French Tech Aix-Marseille supports a growing ecosystem of startups. The organization needed a data-driven portrait of its members to unlock new revenue streams — but no structured database existed.",
+      "La French Tech Aix-Marseille Région Sud needed a data-driven portrait of its members and a strategy to unlock new revenue streams. No structured database existed — the data had to be built from scratch.",
     problem:
-      "How to build a descriptive analysis of the Aix-Marseille startup ecosystem (robot portrait of members) and identify new income levers for both organic and external growth?",
-    data: "Custom-built database via web scraping of startup profiles, funding rounds, sector classifications, growth metrics, revenue models, and ecosystem partnership data.",
+      "How to create a detailed portrait of La French Tech's startups, highlight typological differences between free and paid memberships, and identify new funding levers for organic and external growth?",
+    data: "Custom-built database via web scraping of startup profiles, membership data, funding rounds, sector classifications, and ecosystem metrics. Challenging dataset requiring extensive data cleaning.",
     method:
-      "Developed web scraping scripts to build a comprehensive startup database from scratch. Segmented members by growth potential and sector. Identified underexploited income levers through comparative analysis with other French Tech hubs.",
+      "Developed web scraping scripts to build the startup database from scratch. Analyzed typological differences between free and paid memberships. Identified organic and external growth strategies with new funding levers. Presented findings directly to the DG of La French Tech Aix-Marseille Région Sud.",
     result:
-      "Delivered an actionable growth strategy with identified revenue streams. Won the BDD challenge.",
+      "Won the BDD challenge. Delivered a comprehensive ecosystem portrait with actionable growth and funding strategies.",
     impact:
-      "Framework directly applicable to any regional tech ecosystem seeking to scale funding and partnership models. Demonstrated end-to-end data acquisition via scraping.",
+      "Framework directly applicable to any regional tech ecosystem seeking to scale membership models and unlock new revenue streams.",
     canvaEmbedUrl:
       "https://www.canva.com/design/DAF1vnl1DTI/aacddqChXnBDihu6_zGsvg/view?embed",
     githubUrl: "",
@@ -129,17 +129,17 @@ export const projects: Project[] = [
     title: "Strategic Growth Plan",
     company: "Linkpick",
     tagline:
-      "Strategic decisions to promote growth while improving the experience for students, institutions, and partners — no data, pure strategy.",
-    tags: ["Strategy", "Consulting"],
+      "Strategic decisions to promote growth while improving the experience for students, institutions, and partners — featuring ML, new features, and better data collection.",
+    tags: ["Strategy", "Consulting", "AI"],
     context:
-      "Linkpick connects students with institutions and partner companies. The platform needed a strategic plan to simultaneously grow its user base and improve stakeholder experience.",
+      "Linkpick connects students with institutions and partner companies. The platform needed a strategic plan to simultaneously grow its user base and improve the experience across all stakeholders.",
     problem:
-      "How to effectively make strategic decisions that promote Linkpick's growth while improving the experience of students, institutions, and partner companies?",
+      "How to make strategic decisions that promote Linkpick's growth while improving the experience of students, institutions, and partner companies?",
     data: "Market research, stakeholder interviews, competitive landscape analysis, and user experience assessments.",
     method:
-      "Analyzed stakeholder needs across all user types. Identified friction points and growth opportunities. Built a strategic recommendation framework with concrete action plans.",
+      "Proposed new platform features, machine learning integration for smarter matching, improved data collection mechanisms, and a complete UX overhaul to enhance the user experience across all stakeholder types.",
     result:
-      "Delivered a multi-stakeholder growth strategy with actionable recommendations. Won the BDD challenge.",
+      "Won the BDD challenge. Delivered a multi-stakeholder growth strategy with concrete feature proposals, ML recommendations, and UX improvements.",
     impact:
       "Scalable framework for any marketplace platform balancing growth across multiple user segments.",
     canvaEmbedUrl:
@@ -166,11 +166,11 @@ export const projects: Project[] = [
       "How to propose a strategy to boost the South Korean market on Louis Vuitton products using sales and client data from the HKMT region?",
     data: "Sales data, client segmentation models, regional purchasing patterns, and competitive positioning across the HKMT luxury market.",
     method:
-      "Analyzed cross-regional purchasing behaviors. Identified transferable insights from HKMT markets to South Korea. Built a market entry optimization strategy leveraging client data patterns.",
+      "Conducted in-depth data analysis on regional purchasing behaviors. Proposed a reimagined online experience mirroring the in-store luxury journey — including new offerings, redesigned digital experience, online exclusivity, and AI-powered cross-selling for a more personalized luxury experience.",
     result:
-      "Delivered a comprehensive market strategy for the South Korean expansion. Reached finalist stage of the BDD challenge.",
+      "Delivered a comprehensive market strategy for the South Korean expansion with both data-driven insights and innovative digital experience proposals. Reached finalist stage.",
     impact:
-      "Strategic framework applicable to luxury brand expansion across Asian markets with culturally nuanced consumer behaviors.",
+      "Strategic framework applicable to luxury brand expansion across Asian markets, combining data analytics with digital customer experience innovation.",
     isNDA: true,
     year: "2024",
     duration: "3 weeks",
@@ -191,11 +191,11 @@ export const projects: Project[] = [
       "How to analyze the correlation between weather conditions and the frequency of railway incidents, then use machine learning to predict daily defects?",
     data: "Historical weather data (temperature, precipitation, wind), railway incident logs, track maintenance records, and geographic infrastructure mapping.",
     method:
-      "Built correlation models between weather variables and incident frequency. Trained ML models to predict daily defect probabilities. Validated against historical incident data.",
+      "Analyzed seasonality patterns and weather-incident correlations. Built a predictive maintenance algorithm using the provided data for better resource allocation and maintenance personnel scheduling. Conducted time-of-day analysis on incident frequency. Proposed a climate-control algorithm that adjusts train temperature based on passenger count to reduce average climate energy consumption.",
     result:
-      "Delivered a predictive model capable of forecasting daily railway defect likelihood based on weather forecasts. Reached finalist stage.",
+      "Delivered a predictive maintenance model plus resource optimization recommendations and an energy-saving climate algorithm. Reached finalist stage.",
     impact:
-      "Framework applicable to any infrastructure operator seeking to reduce weather-related disruptions through predictive analytics.",
+      "Framework applicable to any infrastructure operator seeking to reduce weather-related disruptions through predictive analytics and optimize operational resource allocation.",
     canvaEmbedUrl:
       "https://www.canva.com/design/DAF90X1BVhE/mzURIjhieeJP_lgpR3hpLQ/view?embed",
     githubUrl: "",
@@ -223,31 +223,60 @@ export const projects: Project[] = [
       "Built a functional vehicle recognition model. Presented viable military applications of computer vision. Reached finalist stage.",
     impact:
       "Demonstrated practical AI applicability for defense scenarios. Hands-on experience with transfer learning and real-time classification systems.",
-    canvaEmbedUrl: "",
-    githubUrl: "",
+    canvaEmbedUrl:
+      "https://www.canva.com/design/DAGDTo8mZHU/Cq0_d9VW4HV3vfM0aXLHtQ/view?embed",
+    githubUrl: "https://github.com/Maxime-Buisson/groupe2-6miliarite",
     year: "2024",
     duration: "3 days",
     badge: "Finalist",
-    category: "bdd",
+    category: "hackathon",
+    contributors: ["Maxime Buisson", "Eleonore de Bokay", "Alexandre DR"],
+  },
+  {
+    slug: "capgemini-traumatrix-hackathon",
+    title: "Commercialization Plan for Traumatrix",
+    company: "Capgemini",
+    tagline:
+      "Inter-Junior Enterprise competition — developing a go-to-market and industrialization plan for Traumatrix, a MedTech innovation. Honorable Mention.",
+    tags: ["Strategy", "Consulting"],
+    context:
+      "Capgemini organized a hackathon competition between Junior Enterprises. The challenge was to build a compelling commercialization and industrialization proposal for Traumatrix, a MedTech product.",
+    problem:
+      "How to develop a go-to-market strategy and industrialization plan for Traumatrix, positioning it for commercial success in the MedTech market?",
+    data: "Market research, competitive landscape analysis, MedTech regulatory frameworks, and industrialization cost models.",
+    method:
+      "Built a comprehensive commercialization proposal covering market positioning, go-to-market strategy, industrialization roadmap, and financial projections. Competed against other Junior Enterprises.",
+    result:
+      "Received Honorable Mention in the inter-JE competition. Delivered a full go-to-market and industrialization plan for Traumatrix.",
+    impact:
+      "Direct experience in MedTech commercialization strategy and inter-JE competitive consulting.",
+    canvaEmbedUrl:
+      "https://www.canva.com/design/DAGdCr5c2yo/I0fvQvYcSJR8c5AG6eDhmw/view?embed",
+    githubUrl: "",
+    year: "2025",
+    duration: "Hackathon",
+    badge: "Honorable Mention",
+    category: "hackathon",
+    contributors: ["Anna Spira", "Alexis Arnaud", "Charles Constant", "Farees Aamir"],
   },
   {
     slug: "bnp-paribas-case",
-    title: "BNP Paribas Strategic Case",
+    title: "Client Service Optimization via Data",
     company: "BNP Paribas",
     tagline:
-      "Business deep dive on BNP Paribas — strategic analysis with data-driven methodology. Finished 2nd.",
-    tags: ["Finance", "Data", "Consulting", "Strategy"],
+      "Improving BNP Paribas Securities Services client experience by recalibrating SLAs, detecting complex requests, and building an AI-powered front-end — on 3M+ annual service requests.",
+    tags: ["Finance", "Data", "AI", "Consulting"],
     context:
-      "BNP Paribas, Europe's largest banking group, operates across 65+ countries. This BDD focused on analyzing strategic business challenges through data-driven approaches.",
+      "BNP Paribas Securities Services processes ~3 million Service Requests per year, exchanges 20-30 million emails, and operates across 5,000+ users on 1,300 desks via Hobart, their internal request management system. The system works, but at massive complexity — generating miscalibrated deadlines, heterogeneous workflows, invisible overloads, and unmeasured client friction.",
     problem:
-      "Strategic business problem addressed through data analysis and consulting methodology as part of the Albert School BDD program.",
-    data: "Banking operational data, financial performance metrics, and strategic indicators provided by BNP Paribas for the case study.",
+      "As a Client Service Manager, how to improve daily client experience by better exploiting Hobart data to recalibrate SLAs, detect complex requests early, and reduce friction?",
+    data: "Service Request logs from Hobart (3M+ annual), email interaction data, desk performance metrics, SLA configuration data, request categorization (1,522 categories), and resolution time distributions.",
     method:
-      "Applied structured consulting methodology with data analysis. Built frameworks to address the strategic challenge and delivered actionable recommendations.",
+      "1) Recalibrated SLAs using P85 of observed resolution times (46% of deadlines were too generous, 44% too tight). 2) Built a complexity detection system — 5% of SRs generate 15% of workload; flagged requests with >2 inbound or >5 interactions. 3) Created a 'Strongest Desk' score (Speed × Volume × Reliability) for intelligent rerouting. 4) Proposed clustering of 1,522 categories into 390 coherent clusters (4x complexity reduction). 5) Designed an AI front-end: email → auto-classification → analyst validation → instant acknowledgment + Q&A suggestions.",
     result:
-      "Delivered a comprehensive strategic analysis with data-backed recommendations to BNP Paribas stakeholders. Finished 2nd in the BDD challenge.",
+      "Finished 2nd in the BDD challenge. Delivered 5 concrete solutions spanning SLA recalibration, complexity detection, intelligent routing, category simplification, and an AI-powered client interface.",
     impact:
-      "Direct experience working on real banking strategic challenges with one of the world's largest financial institutions.",
+      "Directly applicable framework for any large-scale service operations team dealing with high-volume request management and client satisfaction optimization.",
     canvaEmbedUrl:
       "https://www.canva.com/design/DAHBGuOas40/NnKwWMauiM6t5nDjB1idRg/view?embed",
     githubUrl: "https://github.com/jbouniol/bdd-bnpparibas",
@@ -259,22 +288,22 @@ export const projects: Project[] = [
   },
   {
     slug: "carrefour-beer-assortment",
-    title: "Beer Assortment Optimization",
+    title: "Beer Assortment Optimization with AI",
     company: "Carrefour",
     tagline:
-      "Optimizing the beer assortment strategy across Carrefour stores in Grand Est, Normandie, and PACA regions.",
-    tags: ["Data", "Retail", "Strategy", "Consulting"],
+      "Optimizing beer assortment across 3 French regions with an AI-powered Streamlit dashboard, a natural language SQL chatbot, and recommendation algorithms for store managers.",
+    tags: ["Data", "Retail", "AI", "Consulting"],
     context:
-      "Carrefour, France's largest retailer, needed to optimize its beer category assortment across regional stores. Consumer preferences vary significantly between Grand Est, Normandie, and PACA.",
+      "Carrefour needed to optimize its beer category assortment across Grand Est, Normandie, and PACA regions. Consumer preferences vary significantly by geography, and store managers lacked accessible data tools.",
     problem:
-      "How to optimize the beer assortment in Carrefour stores across three distinct French regions (Grand Est, Normandie, PACA) to maximize sales while adapting to local consumer preferences?",
-    data: "Store-level beer sales data, regional consumer preference surveys, SKU performance metrics, shelf space allocation, competitor assortment benchmarks, and demographic data per region.",
+      "How to optimize the beer assortment in Carrefour stores across three distinct French regions to maximize sales while giving store managers AI-powered tools to understand and act on their data?",
+    data: "Store-level beer sales data, regional consumer preferences, SKU performance metrics, shelf space allocation, and demographic data per region.",
     method:
-      "Analyzed sales patterns by region and store format. Identified underperforming SKUs and regional preference gaps. Built an assortment optimization model factoring in local tastes, shelf constraints, and margin targets.",
+      "Built a Streamlit dashboard with regional statistics visualization and AI-powered assortment recommendations for store managers. Created a chatbot trained on store data for conversational data exploration. Implemented natural language to SQL queries (e.g., 'which is the best-selling beer?') using AI to generate and execute SQL queries — giving non-technical store managers instant access to insights.",
     result:
-      "Delivered a regionalized assortment strategy with tailored recommendations per geography. Reached finalist stage of the BDD challenge.",
+      "Reached finalist stage. Delivered a complete data product: Streamlit dashboard with AI recommendations, conversational chatbot, and natural-language SQL interface for store managers.",
     impact:
-      "Applicable to any retail category management challenge requiring regional customization at scale.",
+      "Demonstrated how AI can democratize data access in retail — making complex analytics available to non-technical users through natural language interfaces.",
     canvaEmbedUrl:
       "https://www.canva.com/design/DAGjPRbPZts/-bZZXQZRUx7XfNCGYH-WYA/view?embed",
     githubUrl: "",
@@ -282,6 +311,7 @@ export const projects: Project[] = [
     duration: "3 weeks",
     badge: "Finalist",
     category: "bdd",
+    contributors: ["Alexandra Arucan", "Alexandre Mouton Bistondi", "Iliane Amadou"],
   },
 
   // ─── OTHER BDDs ───────────────────────────────────────────
@@ -290,72 +320,26 @@ export const projects: Project[] = [
     title: "Optimal Sea Route Optimization",
     company: "CMA-CGM",
     tagline:
-      "Defining optimal sea routes for CMA-CGM to minimize costs and carbon footprint using an optimization algorithm.",
+      "Developing two custom algorithms to define optimal maritime routes for CMA-CGM — minimizing costs, time, and carbon footprint on the path to carbon neutrality by 2050.",
     tags: ["Data", "Logistics", "Automation"],
     context:
-      "CMA-CGM, the world's 3rd largest shipping company, operates 600+ vessels across global routes. Fuel costs and environmental regulations create pressure to optimize routing decisions.",
+      "CMA-CGM, a global leader in maritime transport, is targeting carbon neutrality by 2050. The challenge was to optimize their maritime routes to reduce both costs and ecological footprint.",
     problem:
-      "How to define the optimal sea routes for CMA-CGM to minimize both operational costs and carbon footprint using an optimization algorithm?",
-    data: "Route distance matrices, fuel consumption models, carbon emission factors, port throughput data, and weather/sea condition datasets.",
+      "How to define the optimal sea routes for CMA-CGM to minimize costs, transit time, and carbon emissions using custom optimization algorithms?",
+    data: "Route distance matrices, fuel consumption models, carbon emission factors, transhipment cost data, port throughput metrics, and CO2 emission datasets.",
     method:
-      "Built an optimization algorithm balancing cost minimization with carbon footprint reduction. Modeled multiple routing scenarios with varying constraint weights. Benchmarked against existing routes.",
+      "Developed two custom algorithms in 3 weeks: (1) a variant of Dijkstra's algorithm finding the shortest path considering 4 key variables (time, cost, transhipment, CO2), and (2) a Travelling Salesman Problem-inspired algorithm optimizing CMA-CGM's full maritime lines end-to-end.",
     result:
-      "Delivered an optimization model identifying routes with significant cost and emission reduction potential versus current operations.",
+      "Delivered two functional optimization algorithms that demonstrably reduce CMA-CGM's carbon footprint while accounting for time, transhipment costs, and emissions constraints.",
     impact:
-      "Directly applicable to maritime logistics decarbonization strategies. Combines operational efficiency with ESG compliance objectives.",
+      "Directly applicable to maritime logistics decarbonization. Demonstrated algorithmic problem-solving at scale for one of the world's largest shipping companies.",
     canvaEmbedUrl:
       "https://www.canva.com/design/DAF_-W7vuZQ/rAhI9eN1HvgrcJdpzEK2IA/view?embed",
     githubUrl: "",
     year: "2024",
     duration: "3 weeks",
     category: "bdd",
-  },
-  {
-    slug: "bcg-drone-business-plan",
-    title: "Industrial Drone Business Plan",
-    company: "Boston Consulting Group",
-    tagline:
-      "Building a 3-year business plan in Excel to estimate funds needed to launch an industrial drone company.",
-    tags: ["Consulting", "Finance", "Strategy"],
-    context:
-      "BCG partnered with Albert School to challenge students on a classic strategy consulting exercise: building a comprehensive financial model for a new market entrant.",
-    problem:
-      "How to make a 3-year business plan proposal in Excel and estimate the funds to be raised to launch an industrial drone company by analyzing the market?",
-    data: "Market sizing data, competitive landscape analysis, unit economics, manufacturing cost structures, and regulatory framework data for drone operations.",
-    method:
-      "Conducted market analysis and competitive benchmarking. Built a detailed 3-year financial model in Excel including revenue projections, cost structures, and funding requirements. Stress-tested assumptions.",
-    result:
-      "Delivered a comprehensive business plan with a clear funding roadmap, breakeven analysis, and growth scenarios for investor presentation.",
-    impact:
-      "End-to-end strategy consulting exercise from market analysis to financial modeling. Directly applicable to startup fundraising and venture strategy.",
-    year: "2023",
-    duration: "3 weeks",
-    category: "bdd",
-  },
-  {
-    slug: "jellyfish-marketing-genai",
-    title: "Digital Marketing Strategy with GenAI",
-    company: "Jellyfish",
-    tagline:
-      "Allocating a 1M euro marketing budget across 5 digital channels for an eco-responsible hiking brand, using GenAI for ad creation.",
-    tags: ["Marketing", "AI", "Strategy"],
-    context:
-      "Jellyfish, a global digital marketing agency, challenged students to think like media planners. The brief: launch an eco-responsible hiking equipment product line with a constrained budget.",
-    problem:
-      "How to spend 1 million euros in marketing budget across 5 digital channels for a hiking equipment brand launching an eco-responsible product line? And how to use GenAI tools to create the ad?",
-    data: "Channel performance benchmarks, audience segmentation data, CPM/CPC rates, conversion funnel metrics, and eco-consumer behavioral data.",
-    method:
-      "Built a multi-channel budget allocation model optimizing for reach and conversion. Segmented audiences by eco-sensitivity. Used GenAI tools to produce ad creatives aligned with brand positioning.",
-    result:
-      "Delivered a complete media plan with channel-by-channel allocation, projected KPIs, and GenAI-produced ad creatives ready for deployment.",
-    impact:
-      "Demonstrated practical GenAI integration in marketing workflows. Applicable framework for any brand managing multi-channel digital campaigns with sustainability positioning.",
-    canvaEmbedUrl: "",
-    githubUrl: "",
-    year: "2024",
-    duration: "3 weeks",
-    category: "bdd",
-    contributors: ["Sacha Nardoux", "Vincent Le Duigou", "Diana Serfati"],
+    contributors: ["Baptiste Thuaudet", "Chloé Dallet", "Alexandre Mouton-Bistondi"],
   },
   {
     slug: "ministere-armees-qlik-dashboard",
@@ -376,35 +360,36 @@ export const projects: Project[] = [
     impact:
       "Decision-support tool applicable to any large organization managing complex workforce planning at scale. Direct experience with sovereign data environments.",
     canvaEmbedUrl:
-      "https://www.canva.com/design/DAGDTo8mZHU/Cq0_d9VW4HV3vfM0aXLHtQ/view?embed",
+      "https://www.canva.com/design/DAGT7FNNA6o/lanapZvI07TyWiQ9VDETmg/view?embed",
     githubUrl: "",
     year: "2024",
     duration: "3 weeks",
     category: "bdd",
-    contributors: ["Maxime Buisson", "Eleonore de Bokay", "Alexandre DR"],
+    contributors: ["Chloé Dallet", "Mathias Bourdet"],
   },
   {
     slug: "edmond-de-rothschild-fund-analysis",
-    title: "Euro High Yield Fund Flow Analysis",
+    title: "Euro High Yield Fund Flow Analysis & Prediction",
     company: "Edmond de Rothschild",
     tagline:
-      "Analyzing 4 years of fund inflows and outflows to identify patterns, optimize collection periods, and model customer behavior.",
-    tags: ["Finance", "Data", "Strategy"],
+      "3 weeks analyzing the Euro High Yield fund collections — combining data analysis, deep learning, and sentiment analysis to predict and optimize inflows/outflows.",
+    tags: ["Finance", "Data", "AI", "ML"],
     context:
-      "Edmond de Rothschild manages the EDR Fund Euro High Yield, one of its key investment vehicles. Understanding flow dynamics is critical for liquidity management and growth strategy.",
+      "Edmond de Rothschild manages the EDR Fund Euro High Yield, one of its key investment vehicles. The challenge was to analyze where, when, and why collections could have been optimized over the past years.",
     problem:
-      "How, using internal and external data, to analyse the inflows and outflows of the EDR Fund Euro High Yield over the last 4 years, identify reasons for these flows, optimize collection periods and geographies, and model customer behaviour according to internal and external indicators?",
-    data: "4 years of fund flow data (inflows/outflows), geographic collection data, customer behavioral metrics, market condition indicators, and competitor fund performance.",
+      "How to analyze the inflows and outflows of the EDR Fund Euro High Yield, identify client typologies, and build predictive models to anticipate fund movements based on macro and internal indicators?",
+    data: "4 years of fund flow data (inflows/outflows), client typology data, macroeconomic indicators (COVID, financial crises, geopolitical tensions, corporate bankruptcy rates), and market sentiment data.",
     method:
-      "Analyzed temporal flow patterns to identify seasonality and triggers. Mapped geographic collection efficiency. Built customer behavior models correlating internal activity with external market indicators.",
+      "Analyzed client typologies and their behavioral responses to macroeconomic events. Built a deep learning predictive model enriched with sentiment analysis scores and scenario modeling capabilities. Incorporated macroeconomic factors (global events, European crises, interest rates) to forecast fund movements and enable proactive collection management.",
     result:
-      "Delivered a comprehensive flow analysis with actionable recommendations for collection optimization and customer retention strategies.",
+      "Delivered a comprehensive analysis with a predictive deep learning model, scenario simulation tools, and client-specific strategy recommendations for proactive fund management.",
     impact:
-      "Framework applicable to any asset manager seeking to optimize fund distribution and anticipate investor behavior based on market conditions.",
+      "Equipped Edmond de Rothschild with tools for proactive and optimized collection management — anticipating future movements and personalizing strategies by client segment.",
     isNDA: true,
     year: "2024",
     duration: "3 weeks",
     category: "bdd",
+    contributors: ["Enzo Natali", "Anna Spira", "Alexis Arnaud"],
   },
   {
     slug: "asmodee-bga-game-recommendation",
@@ -434,6 +419,52 @@ export const projects: Project[] = [
     contributors: ["Keira Chang"],
   },
 
+  // ─── CONSULTING MISSIONS ─────────────────────────────
+  {
+    slug: "x-hec-startup-database",
+    title: "Startup Investment Simulation Platform",
+    company: "X-HEC Entrepreneurs",
+    tagline:
+      "Designed a database tracking all startups founded by X-HEC Entrepreneur alumni with their valuations, plus investment simulation tools.",
+    tags: ["Data", "Finance", "Consulting"],
+    context:
+      "X-HEC Entrepreneurs is the entrepreneurship program of Ecole Polytechnique and HEC Paris. They needed a structured way to track the ecosystem of startups founded by their alumni and simulate investment scenarios.",
+    problem:
+      "How to design a comprehensive database tracing all startups founded by X-HEC Entrepreneur alumni, track their valuations, and create investment simulation tools to model portfolio performance?",
+    data: "Alumni startup data, company valuations, funding rounds, sector classifications, and historical performance metrics.",
+    method:
+      "Designed and built a structured database capturing all X-HEC startups with their key metrics. Created investment simulation models allowing users to test portfolio allocation strategies across the alumni startup ecosystem.",
+    result:
+      "Delivered a fully functional database with investment simulation capabilities for the X-HEC Entrepreneurs program.",
+    impact:
+      "Tool enabling the X-HEC ecosystem to track alumni entrepreneurial impact and simulate investment strategies across their startup portfolio.",
+    year: "2025",
+    duration: "Consulting Mission",
+    category: "consulting",
+  },
+  {
+    slug: "villablu-startup-sourcing",
+    title: "Startup Sourcing for Corporate Venture",
+    company: "Villablu (Robertet)",
+    tagline:
+      "Built a startup pipeline for Villablu, Robertet's corporate venture accelerator — sourcing, qualifying, and pitching startups for program integration.",
+    tags: ["Strategy", "Consulting"],
+    context:
+      "Villablu is the corporate venture accelerator of Robertet, a global leader in natural ingredients. They needed to identify and qualify promising startups for integration into their acceleration program.",
+    problem:
+      "How to build a structured pipeline of high-potential startups aligned with Robertet's strategic priorities, qualify them, and present them for integration into the Villablu accelerator?",
+    data: "Startup ecosystem databases, sector mapping, Robertet's strategic priorities, and qualification criteria for the Villablu program.",
+    method:
+      "Built a comprehensive startup database aligned with Robertet's verticals. Qualified candidates through structured analysis. Conducted outreach and meetings with target startups to pitch the Villablu program.",
+    result:
+      "Delivered a curated pipeline of qualified startups and conducted direct outreach to integrate top candidates into the Villablu accelerator.",
+    impact:
+      "End-to-end consulting mission from market intelligence to direct business development — demonstrating startup sourcing and corporate venture advisory skills.",
+    year: "2025",
+    duration: "Consulting Mission",
+    category: "consulting",
+  },
+
   // ─── SCHOOL PROJECTS ──────────────────────────────────
   {
     slug: "finovera",
@@ -460,6 +491,32 @@ export const projects: Project[] = [
     duration: "School Project",
     category: "school",
     contributors: ["Sacha Nardoux", "Guillaume Rabeau"],
+  },
+  {
+    slug: "pca-fifa-player-analysis",
+    title: "PCA Analysis on Football Player Performance",
+    company: "Maths Project",
+    tagline:
+      "Applying Principal Component Analysis (PCA) and SVD to the FIFA 23 dataset to identify key performance factors, segment player profiles, and generate recruitment insights via K-means clustering.",
+    tags: ["Data", "ML"],
+    context:
+      "A mathematics project applying dimensionality reduction techniques to a real-world dataset — European football player statistics from FIFA 23 — to uncover hidden performance patterns.",
+    problem:
+      "How to reduce the high dimensionality of football player statistics to identify the primary factors that differentiate player profiles and support data-driven recruitment strategies?",
+    data: "FIFA 23 Complete Player Dataset from Kaggle — performance metrics for European football players including physical, technical, and tactical attributes.",
+    method:
+      "Data preparation (missing values, outlier detection, Z-score standardization). Constructed correlation matrices and determined optimal components. Applied PCA with correlation circle visualization and player projections onto factorial planes. Implemented SVD on normalized matrices and compared with PCA results. Applied K-means clustering on principal components to segment player profiles.",
+    result:
+      "Identified primary performance factors explaining player variance. Segmented players into distinct profiles using K-means on PCA components. Generated actionable recruitment and training strategy recommendations.",
+    impact:
+      "Demonstrated strong mathematical foundations in statistics and linear algebra applied to real data — from PCA theory to actionable player segmentation insights.",
+    canvaEmbedUrl:
+      "https://www.canva.com/design/DAGgrrrrT6A/KhIfGuKfNVH_RoL3qXZHcQ/view?embed",
+    githubUrl: "https://github.com/jbouniol/maths-project-fifa",
+    year: "2025",
+    duration: "School Project",
+    category: "school",
+    contributors: ["Sacha Nardoux", "Amandine Barcelo", "Enzo Natali"],
   },
 ];
 

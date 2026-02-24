@@ -1,44 +1,44 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Database, Brain, BarChart3, Shield, Zap, Target } from "lucide-react";
+import { Rocket, Brain, BarChart3, Shield, Zap, Target } from "lucide-react";
 
 const capabilities = [
-  {
-    icon: Database,
-    title: "Data Engineering",
-    description:
-      "Structuring complex datasets, building pipelines, and creating data architectures that scale across enterprise systems.",
-  },
   {
     icon: Brain,
     title: "AI for Business",
     description:
-      "Applying machine learning and AI frameworks to real business problems — not demos, but deployed solutions with measurable impact.",
+      "Applying machine learning and AI to real business problems — from predictive models and NLP pipelines to recommendation engines and GenAI tools.",
   },
   {
     icon: BarChart3,
     title: "Strategic Analytics",
     description:
-      "Deep-dive analyses that connect data insights to C-level decisions. 18+ business cases across Fortune 500 companies.",
+      "Deep-dive analyses that connect data insights to real decisions. Projects across industries from luxury to defense to retail.",
+  },
+  {
+    icon: Rocket,
+    title: "Product & Growth",
+    description:
+      "From startup growth to junior consulting VP — building products, acquiring users, and scaling operations with a data-driven mindset.",
   },
   {
     icon: Shield,
     title: "Defense & Sovereign Tech",
     description:
-      "Data structuring for sensitive environments. Experience with French Defense digital transformation and security-first architectures.",
+      "Reservist at the Commissariat du Numérique de Défense. Data and AI missions within the French Army, in security-first environments.",
   },
   {
     icon: Zap,
     title: "Automation",
     description:
-      "Automating workflows, reporting pipelines, and operational processes. Reducing manual overhead by building systems that run themselves.",
+      "Automating workflows and processes with Make, Zapier, and custom scripts. Building systems that reduce manual overhead and scale.",
   },
   {
     icon: Target,
     title: "Business Deep Dives",
     description:
-      "Consulting-grade case studies. Problem definition, data analysis, strategic recommendations, and actionable frameworks.",
+      "Consulting-grade case studies. Problem definition, data analysis, strategic recommendations, and actionable frameworks. 4x winner.",
   },
 ];
 

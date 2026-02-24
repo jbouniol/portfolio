@@ -9,11 +9,11 @@ const toolCategories = [
   },
   {
     label: "ML & AI",
-    items: ["Scikit-learn", "PyTorch", "ResNet / Transfer Learning", "GenAI (Prompt Engineering)"],
+    items: ["Scikit-learn", "PyTorch", "ResNet / Transfer Learning", "GenAI (Prompt Engineering)", "RAG Systems"],
   },
   {
     label: "Visualization & BI",
-    items: ["Qlik Sense", "Power BI", "Matplotlib", "Seaborn"],
+    items: ["Qlik Sense", "Power BI", "Streamlit", "Matplotlib", "Seaborn"],
   },
   {
     label: "Data Engineering",
@@ -25,14 +25,14 @@ const toolCategories = [
   },
   {
     label: "Tools & Productivity",
-    items: ["Notion", "Git / GitHub", "Make", "Zapier", "Canva", "Google Suite"],
+    items: ["Notion", "Git / GitHub", "Make", "Zapier", "Power Platform", "Canva", "Google Suite"],
   },
 ];
 
 const highlights = [
-  { number: "15", label: "Business Deep Dives" },
-  { number: "4", label: "BDD Wins" },
-  { number: "5", label: "Finalists" },
+  { number: "18", label: "Projects Delivered" },
+  { number: "4", label: "Wins" },
+  { number: "12", label: "Podiums" },
   { number: "10+", label: "Industries Covered" },
 ];
 

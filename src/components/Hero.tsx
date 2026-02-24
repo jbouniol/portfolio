@@ -50,13 +50,10 @@ export default function Hero() {
             <span className="text-foreground font-medium">data science</span>,{" "}
             <span className="text-foreground font-medium">AI</span>, and{" "}
             <span className="text-foreground font-medium">business strategy</span>.
-            15 consulting-grade case studies with partners like BCG, Louis Vuitton, BNP
-            Paribas, Asmodee, and Carrefour &mdash; 4x winner, built to deliver real impact.
-            Currently pursuing an MSc at{" "}
-            <span className="text-foreground font-medium">Mines Paris PSL</span>{" "}
-            &times;{" "}
-            <span className="text-foreground font-medium">Albert School</span>,
-            obsessed with using AI to solve business problems that matter.
+            Driven by curiosity and a hands-on approach, I build solutions where
+            data meets real-world decisions. What I&apos;m looking for: a team with
+            real culture, a project that genuinely matters, and the space to make
+            an impact.
           </motion.p>
 
           <motion.div
@@ -66,8 +63,8 @@ export default function Hero() {
             className="mt-8 flex flex-wrap gap-3"
           >
             {[
-              "16 Projects",
-              "4x Winner",
+              "18 Projects",
+              "4 Wins · 12 Podiums",
               "Mines Paris PSL",
               "Reserviste CND",
             ].map((tag) => (
