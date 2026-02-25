@@ -1,19 +1,17 @@
 export type ProjectTag =
   | "AI"
+  | "ML"
   | "Data"
+  | "NLP"
   | "Consulting"
+  | "Strategy"
   | "Automation"
   | "Finance"
   | "Logistics"
   | "Luxury"
-  | "Strategy"
   | "Defense"
-  | "Marketing"
-  | "ML"
   | "Transport"
   | "Retail"
-  | "FinTech"
-  | "NLP"
   | "SaaS";
 
 export type ProjectCategory = "bdd" | "hackathon" | "consulting" | "school";
@@ -130,7 +128,7 @@ export const projects: Project[] = [
     company: "Linkpick",
     tagline:
       "Strategic decisions to promote growth while improving the experience for students, institutions, and partners — featuring ML, new features, and better data collection.",
-    tags: ["Strategy", "Consulting", "AI"],
+    tags: ["Strategy", "Consulting", "ML", "SaaS"],
     context:
       "Linkpick connects students with institutions and partner companies. The platform needed a strategic plan to simultaneously grow its user base and improve the experience across all stakeholders.",
     problem:
@@ -159,7 +157,7 @@ export const projects: Project[] = [
     company: "Louis Vuitton",
     tagline:
       "Strategy to boost Louis Vuitton's position in the South Korean market using sales and client data from the HKMT region.",
-    tags: ["Luxury", "Strategy", "Data"],
+    tags: ["Luxury", "Strategy", "Data", "AI"],
     context:
       "Louis Vuitton identified South Korea as a high-growth luxury market. The challenge was to develop a market penetration strategy leveraging HKMT (Hong Kong, Macau, Taiwan) regional data.",
     problem:
@@ -321,7 +319,7 @@ export const projects: Project[] = [
     company: "CMA-CGM",
     tagline:
       "Developing two custom algorithms to define optimal maritime routes for CMA-CGM — minimizing costs, time, and carbon footprint on the path to carbon neutrality by 2050.",
-    tags: ["Data", "Logistics", "Automation"],
+    tags: ["Data", "Logistics", "Strategy"],
     context:
       "CMA-CGM, a global leader in maritime transport, is targeting carbon neutrality by 2050. The challenge was to optimize their maritime routes to reduce both costs and ecological footprint.",
     problem:
@@ -347,7 +345,7 @@ export const projects: Project[] = [
     company: "Ministere des Armees",
     tagline:
       "Building an analytical and predictive Qlik Sense dashboard for the Minister of Armed Forces to supervise workforce evolution.",
-    tags: ["Data", "Defense", "Automation"],
+    tags: ["Data", "Defense", "Strategy"],
     context:
       "The French Ministry of Armed Forces needed a decision-support tool for senior leadership to monitor workforce dynamics and anticipate strategic human resource challenges.",
     problem:
@@ -373,7 +371,7 @@ export const projects: Project[] = [
     company: "Edmond de Rothschild",
     tagline:
       "3 weeks analyzing the Euro High Yield fund collections — combining data analysis, deep learning, and sentiment analysis to predict and optimize inflows/outflows.",
-    tags: ["Finance", "Data", "AI", "ML"],
+    tags: ["Finance", "Data", "AI", "ML", "NLP"],
     context:
       "Edmond de Rothschild manages the EDR Fund Euro High Yield, one of its key investment vehicles. The challenge was to analyze where, when, and why collections could have been optimized over the past years.",
     problem:
@@ -472,7 +470,7 @@ export const projects: Project[] = [
     company: "ML Project",
     tagline:
       "An AI-powered app that delivers personalized stock portfolio recommendations based on investor profiles, combining financial data with news sentiment analysis.",
-    tags: ["AI", "ML", "Finance", "Data"],
+    tags: ["AI", "ML", "Finance", "NLP"],
     context:
       "Individual investors struggle to make informed stock picks without professional tools. Finovera was built to bridge this gap using AI-driven analysis of market data and news sentiment.",
     problem:
@@ -518,23 +516,47 @@ export const projects: Project[] = [
     category: "school",
     contributors: ["Sacha Nardoux", "Amandine Barcelo", "Enzo Natali"],
   },
+  {
+    slug: "llm-distillation-research-paper",
+    title: "Divide-or-Conquer? LLM Distillation Strategies",
+    company: "ML Research Paper",
+    tagline:
+      "Presentation and analysis of Apple × Cornell's research paper on LLM distillation — separating decomposition (planning) from resolution (solving) to reduce inference costs while maintaining performance.",
+    tags: ["AI", "ML", "NLP"],
+    context:
+      "LLMs are powerful for complex reasoning tasks but expensive and difficult to customize. This Apple × Cornell paper explores whether reasoning can be split into decomposition (planning) and resolution (solving), and which part benefits most from distillation into smaller models.",
+    problem:
+      "Can we effectively separate decomposition and resolution in LLM reasoning to reduce inference costs, facilitate local adaptation via fine-tuning/distillation, and still maintain good performance?",
+    data: "Three benchmark datasets: GSM8K (7.5K math problems, Exact Match), DROP (77.4K QA on long texts, F1 score), and Bamboogle (125 complex nested questions, Accuracy). Models tested: GPT and Vicuna-13B.",
+    method:
+      "Evaluated three strategies: Single-Stage (direct answer), Two-Stage (static decomposition then resolution), and Self-Ask/Interactive (dynamic sub-question generation). Tested distillation of the decomposer (planning) into a smaller model while keeping a large solver, and vice versa. Compared static vs. dynamic decomposition on token efficiency.",
+    result:
+      "Key finding: distilling the decomposer yields the best cost-performance tradeoff — a small distilled decomposer paired with a large solver achieves near-GPT performance at a fraction of the cost. Static two-stage decomposition uses 4x fewer tokens than dynamic approaches with comparable accuracy.",
+    impact:
+      "Deep understanding of LLM reasoning architectures, knowledge distillation, and the cost-performance tradeoffs in deploying AI systems at scale.",
+    canvaEmbedUrl:
+      "https://www.canva.com/design/DAGjN8-GlFk/pAkFvQrBCrwcQD-PKgNvkg/view?embed",
+    githubUrl: "",
+    year: "2025",
+    duration: "School Project",
+    category: "school",
+    contributors: ["Marc Zahwa"],
+  },
 ];
 
 export const allTags: ProjectTag[] = [
   "AI",
   "ML",
   "Data",
-  "Consulting",
-  "Automation",
-  "Finance",
-  "Logistics",
-  "Luxury",
-  "Strategy",
-  "Defense",
-  "Marketing",
-  "Transport",
-  "Retail",
-  "FinTech",
   "NLP",
+  "Consulting",
+  "Strategy",
+  "Finance",
+  "Retail",
+  "Luxury",
+  "Defense",
+  "Transport",
+  "Logistics",
+  "Automation",
   "SaaS",
 ];

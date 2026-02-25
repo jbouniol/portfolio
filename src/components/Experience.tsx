@@ -68,14 +68,14 @@ const education = [
     degree: "MSc Data & AI for Business",
     school: "Mines Paris PSL x Albert School",
     description:
-      "Advanced double-diploma program combining data science, AI engineering, and business strategy at France's #1 engineering school.",
+      "Advanced joint diploma program combining data science, AI engineering, and business strategy at France's #2 engineering school.",
   },
   {
     period: "2023 — 2025",
     degree: "Bachelor Business & Data",
     school: "Albert School x Mines Paris PSL",
     description:
-      "Europe's first data-centric business school. 12 Business Deep Dives with Louis Vuitton, BNP Paribas, Generali, Asmodee, and more. Double diploma with Mines Paris PSL.",
+      "Europe's first data-centric business school. 12 Business Deep Dives with Louis Vuitton, BNP Paribas, Generali, Asmodee, and more. Joint diploma with Mines Paris PSL.",
   },
   {
     period: "2020 — 2023",

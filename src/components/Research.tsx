@@ -30,7 +30,7 @@ const toolCategories = [
 ];
 
 const highlights = [
-  { number: "18", label: "Projects Delivered" },
+  { number: "19", label: "Projects Delivered" },
   { number: "4", label: "Wins" },
   { number: "12", label: "Podiums" },
   { number: "10+", label: "Industries Covered" },

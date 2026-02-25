@@ -63,7 +63,7 @@ export default function Hero() {
             className="mt-8 flex flex-wrap gap-3"
           >
             {[
-              "18 Projects",
+              "19 Projects",
               "4 Wins · 12 Podiums",
               "Mines Paris PSL",
               "Reserviste CND",

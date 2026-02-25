@@ -19,22 +19,29 @@ Impact: ${p.impact}`;
   });
 
   const experienceChunks = experiences.map((e) => {
+    const missionsList = e.isConfidential
+      ? "Classified — cannot be disclosed"
+      : e.missions.map((m, i) => `  ${i + 1}. ${m}`).join("\n");
     return `## ${e.company} — ${e.role}
 Slug: ${e.slug}
+Type: ${e.type === "work" ? "Work Experience" : "Leadership"}
 Period: ${e.period} | Location: ${e.location}
 Tagline: ${e.tagline}
-Description: ${e.description}
-Missions: ${e.isConfidential ? "Classified — cannot be disclosed" : e.missions.join("; ")}${e.tools ? `\nTools: ${e.tools.join(", ")}` : ""}`;
+About the Role: ${e.description}
+Key Missions:
+${missionsList}${e.tools ? `\nTools & Stack: ${e.tools.join(", ")}` : ""}${e.isConfidential ? "\nNote: This is a classified military position. Missions cannot be publicly disclosed." : ""}`;
   });
 
   return `# Jonathan Bouniol — Portfolio Data
 
 ## Profile
 - Student at Albert School x Mines Paris PSL (MSc Data & AI for Business)
-- 12 Business Deep Dives across Louis Vuitton, CMA-CGM, BNP Paribas, Carrefour, SNCF, Henkel, Asmodee, Generali, Edmond de Rothschild, and more
-- 1 ML School Project: Finovera (AI Stock Portfolio Advisor)
-- 4x BDD Winner, 6x Finalist/Podium
-- Skills: Python, SQL, Scikit-learn, PyTorch, Qlik Sense, Power BI, Excel/VBA, Make, Zapier, Notion, GenAI
+- 19 projects total: 12 Business Deep Dives, 2 Hackathons, 2 Consulting Missions, 3 School Projects
+- Companies: Louis Vuitton, CMA-CGM, BNP Paribas, Carrefour, SNCF, Henkel, Asmodee, Generali, Edmond de Rothschild, La French Tech, Linkpick, Ministere des Armees, Capgemini, X-HEC, Villablu (Robertet)
+- 4 Wins, 12 Podiums (finalists, 2nd places, honorable mentions)
+- 3 Work Experiences: Generali France (Data & IT Intern), Sunver (Right-Hand to CEO), CND (Reserviste)
+- 1 Leadership Role: Albert Junior Consulting (VP & CTO — doubled revenue)
+- Skills: Python, SQL, Scikit-learn, PyTorch, Qlik Sense, Power BI, Streamlit, Excel/VBA, Make, Zapier, Notion, Power Platform, GenAI, RAG Systems
 - Email: jbouniol@albertschool.com
 - Education: MSc Mines Paris PSL x Albert School (2025-2027), Bachelor Albert School x Mines Paris PSL (2023-2025), Baccalaureat Ecole Pascal (2020-2023)
 
@@ -48,8 +55,8 @@ ${experienceChunks.join("\n\n")}
 - Slug: capgemini-ambassador | Capgemini Ambassador (2024-2025): Representing Capgemini on campus at Albert School.
 
 ## Education
-- Slug: msc-mines-paris | MSc Data & AI for Business at Mines Paris PSL x Albert School (2025-2027): Advanced double-diploma program combining data science, AI engineering, and business strategy at France's #1 engineering school.
-- Slug: bachelor-albert-school | Bachelor Business & Data at Albert School x Mines Paris PSL (2023-2025): Europe's first data-centric business school. 12 Business Deep Dives. Double diploma with Mines Paris PSL.
+- Slug: msc-mines-paris | MSc Data & AI for Business at Mines Paris PSL x Albert School (2025-2027): Advanced joint diploma program combining data science, AI engineering, and business strategy at France's #2 engineering school.
+- Slug: bachelor-albert-school | Bachelor Business & Data at Albert School x Mines Paris PSL (2023-2025): Europe's first data-centric business school. 12 Business Deep Dives. Joint diploma with Mines Paris PSL.
 - Slug: baccalaureat-ecole-pascal | Baccalaureat High Honors at Ecole Pascal (2020-2023): Specialization in Mathematics and SES, with Maths Expertes option.
 
 ## Projects (Business Deep Dives & School Projects)
@@ -225,7 +232,7 @@ ${PORTFOLIO_CONTEXT}`,
       role: "MSc Data & AI for Business",
       company: "Mines Paris PSL x Albert School",
       period: "2025 — 2027",
-      tagline: "Advanced double-diploma program combining data science, AI engineering, and business strategy.",
+      tagline: "Advanced joint diploma program combining data science, AI engineering, and business strategy at France's #2 engineering school.",
       category: "Education",
       hasPage: false,
     };
@@ -234,7 +241,7 @@ ${PORTFOLIO_CONTEXT}`,
       role: "Bachelor Business & Data",
       company: "Albert School x Mines Paris PSL",
       period: "2023 — 2025",
-      tagline: "Europe's first data-centric business school. 12 Business Deep Dives. Double diploma with Mines Paris PSL.",
+      tagline: "Europe's first data-centric business school. 12 Business Deep Dives. Joint diploma with Mines Paris PSL.",
       category: "Education",
       hasPage: false,
     };
