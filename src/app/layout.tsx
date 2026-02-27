@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -16,7 +17,7 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Jonathan Bouniol — Data, AI & Business",
   description:
-    "Data engineering, AI strategy, and consulting-grade business deep dives. Mines Paris PSL x Albert School. Portfolio showcasing 18+ projects across Fortune 500 companies.",
+    "Data, AI, and business strategy. Mines Paris PSL x Albert School. Portfolio showcasing 19 projects across 10+ industries.",
   keywords: [
     "data engineering",
     "AI strategy",
@@ -59,6 +60,7 @@ export default function RootLayout({
       >
         {children}
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
