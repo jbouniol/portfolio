@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Search,
@@ -347,16 +348,21 @@ export default function AISearch() {
 
                     if (exp.hasPage) {
                       return (
-                        <motion.a
+                        <Link
                           key={exp.slug}
                           href={`/experience/${exp.slug}`}
-                          initial={{ opacity: 0, y: 10 }}
-                          animate={{ opacity: 1, y: 0 }}
-                          transition={{ delay: i * 0.1 }}
-                          className="group block p-4 bg-surface border border-border rounded-xl hover:border-accent/20 transition-colors"
+                          scroll
+                          className="group block"
                         >
-                          {inner}
-                        </motion.a>
+                          <motion.div
+                            initial={{ opacity: 0, y: 10 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ delay: i * 0.1 }}
+                            className="p-4 bg-surface border border-border rounded-xl hover:border-accent/20 transition-colors"
+                          >
+                            {inner}
+                          </motion.div>
+                        </Link>
                       );
                     }
 
@@ -379,59 +385,64 @@ export default function AISearch() {
               {result.relatedProjects.length > 0 && (
                 <div className="space-y-3">
                   {result.relatedProjects.map((project, i) => (
-                    <motion.a
+                    <Link
                       key={project.slug}
                       href={`/projects/${project.slug}`}
-                      initial={{ opacity: 0, y: 10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{
-                        delay:
-                          (result.relatedExperiences.length + i) * 0.1,
-                      }}
-                      className="group block p-4 bg-surface border border-border rounded-xl hover:border-accent/20 transition-colors"
+                      scroll
+                      className="group block"
                     >
-                      <div className="flex items-center gap-2 mb-2">
-                        <span className="font-mono text-xs text-accent">
-                          {project.company}
-                        </span>
-                        {project.badge === "Winner" && (
-                          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-mono bg-amber-500/10 text-amber-500 border border-amber-500/20 rounded-full">
-                            <Trophy size={10} /> Winner
+                      <motion.div
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{
+                          delay:
+                            (result.relatedExperiences.length + i) * 0.1,
+                        }}
+                        className="p-4 bg-surface border border-border rounded-xl hover:border-accent/20 transition-colors"
+                      >
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="font-mono text-xs text-accent">
+                            {project.company}
                           </span>
-                        )}
-                        {project.badge === "Finalist" && (
-                          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-mono bg-purple-500/10 text-purple-500 border border-purple-500/20 rounded-full">
-                            <Award size={10} /> Finalist
-                          </span>
-                        )}
-                        {project.badge === "2nd Place" && (
-                          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-mono bg-zinc-400/10 text-zinc-400 border border-zinc-400/20 rounded-full">
-                            <Award size={10} /> 2nd Place
-                          </span>
-                        )}
-                        {project.badge === "Honorable Mention" && (
-                          <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full">
-                            <Award size={10} /> Mention
-                          </span>
-                        )}
-                      </div>
-                      <h4 className="font-semibold text-sm mb-1">
-                        {project.title}
-                      </h4>
-                      <p className="text-xs text-muted leading-relaxed">
-                        {project.tagline}
-                      </p>
-                      <div className="flex flex-wrap gap-1.5 mt-3">
-                        {project.tags.slice(0, 3).map((tag) => (
-                          <span
-                            key={tag}
-                            className="px-2 py-0.5 text-[10px] font-mono bg-background border border-border rounded-full text-muted"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
-                    </motion.a>
+                          {project.badge === "Winner" && (
+                            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-mono bg-amber-500/10 text-amber-500 border border-amber-500/20 rounded-full">
+                              <Trophy size={10} /> Winner
+                            </span>
+                          )}
+                          {project.badge === "Finalist" && (
+                            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-mono bg-purple-500/10 text-purple-500 border border-purple-500/20 rounded-full">
+                              <Award size={10} /> Finalist
+                            </span>
+                          )}
+                          {project.badge === "2nd Place" && (
+                            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-mono bg-zinc-400/10 text-zinc-400 border border-zinc-400/20 rounded-full">
+                              <Award size={10} /> 2nd Place
+                            </span>
+                          )}
+                          {project.badge === "Honorable Mention" && (
+                            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full">
+                              <Award size={10} /> Mention
+                            </span>
+                          )}
+                        </div>
+                        <h4 className="font-semibold text-sm mb-1">
+                          {project.title}
+                        </h4>
+                        <p className="text-xs text-muted leading-relaxed">
+                          {project.tagline}
+                        </p>
+                        <div className="flex flex-wrap gap-1.5 mt-3">
+                          {project.tags.slice(0, 3).map((tag) => (
+                            <span
+                              key={tag}
+                              className="px-2 py-0.5 text-[10px] font-mono bg-background border border-border rounded-full text-muted"
+                            >
+                              {tag}
+                            </span>
+                          ))}
+                        </div>
+                      </motion.div>
+                    </Link>
                   ))}
                 </div>
               )}

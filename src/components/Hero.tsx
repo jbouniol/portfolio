@@ -3,8 +3,17 @@
 import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Hero() {
+  const scrollToWork = () => {
+    const section = document.getElementById("work");
+    if (!section) return;
+    section.scrollIntoView({ behavior: "smooth", block: "start" });
+    // Keep the URL in sync even if the hash is already present.
+    window.history.replaceState(null, "", "#work");
+  };
+
   return (
     <section className="min-h-screen flex flex-col justify-center px-6 pt-16">
       <div className="max-w-6xl mx-auto w-full">
@@ -65,7 +74,7 @@ export default function Hero() {
             {[
               "19 Projects · 10+ Industries",
               "4x Winner",
-              "Mines Paris PSL",
+              "Mines Paris PSL × Albert School",
               "French Army Reservist",
             ].map((tag) => (
               <span
@@ -83,18 +92,18 @@ export default function Hero() {
             transition={{ delay: 0.8, duration: 0.8 }}
             className="mt-12 flex gap-4"
           >
-            <a
+            <Link
               href="#projects"
               className="px-6 py-3 bg-foreground text-background text-sm font-medium rounded-lg hover:opacity-90 transition-opacity"
             >
               View Projects
-            </a>
-            <a
+            </Link>
+            <Link
               href="#contact"
               className="px-6 py-3 border border-border text-sm font-medium rounded-lg hover:bg-surface transition-colors"
             >
               Get in Touch
-            </a>
+            </Link>
           </motion.div>
         </motion.div>
 
@@ -104,12 +113,14 @@ export default function Hero() {
           transition={{ delay: 1.2, duration: 0.8 }}
           className="absolute bottom-12 left-1/2 -translate-x-1/2 hidden md:block"
         >
-          <a
-            href="#work"
+          <button
+            type="button"
+            onClick={scrollToWork}
+            aria-label="Scroll to work section"
             className="text-muted hover:text-foreground transition-colors"
           >
             <ArrowDown size={20} className="animate-bounce" />
-          </a>
+          </button>
         </motion.div>
       </div>
     </section>

@@ -51,8 +51,9 @@ export default function Contact() {
             <motion.a
               key={link.label}
               href={link.href}
-              target="_blank"
-              rel="noopener noreferrer"
+              {...(link.href.startsWith("http")
+                ? { target: "_blank", rel: "noopener noreferrer" }
+                : {})}
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}

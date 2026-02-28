@@ -1,6 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
+import { useLayoutEffect } from "react";
 import {
   ArrowLeft,
   MapPin,
@@ -18,21 +20,48 @@ export default function ExperienceDetailClient({
 }: {
   experience: Experience;
 }) {
+  useLayoutEffect(() => {
+    const html = document.documentElement;
+    const body = document.body;
+    const previousBehavior = html.style.scrollBehavior;
+    html.style.scrollBehavior = "auto";
+
+    window.scrollTo(0, 0);
+    html.scrollTop = 0;
+    body.scrollTop = 0;
+
+    const frame = requestAnimationFrame(() => {
+      window.scrollTo(0, 0);
+      html.scrollTop = 0;
+      body.scrollTop = 0;
+      html.style.scrollBehavior = previousBehavior;
+    });
+
+    return () => {
+      cancelAnimationFrame(frame);
+      html.style.scrollBehavior = previousBehavior;
+    };
+  }, [experience.slug]);
+
   return (
     <>
       <Navigation />
-      <main className="pt-24 pb-20 px-6">
+      <main id="main-content" className="pt-24 pb-20 px-6">
         <div className="max-w-3xl mx-auto">
           {/* Back link */}
-          <motion.a
+          <Link
             href="/#experience"
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
             className="inline-flex items-center gap-2 text-sm text-muted hover:text-foreground transition-colors mb-12"
           >
-            <ArrowLeft size={16} />
-            Back to experience
-          </motion.a>
+            <motion.span
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="inline-flex items-center gap-2"
+            >
+              <ArrowLeft size={16} />
+              Back to experience
+            </motion.span>
+          </Link>
 
           {/* Header */}
           <motion.div
@@ -146,13 +175,13 @@ export default function ExperienceDetailClient({
 
           {/* Back */}
           <div className="mt-20 pt-12 border-t border-border">
-            <a
+            <Link
               href="/#experience"
               className="group inline-flex items-center gap-2 text-sm text-muted hover:text-accent transition-colors"
             >
               <ArrowLeft size={16} />
               View all experience
-            </a>
+            </Link>
           </div>
         </div>
       </main>

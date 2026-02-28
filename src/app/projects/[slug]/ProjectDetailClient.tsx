@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import {
   ArrowLeft,
   ArrowRight,
@@ -22,7 +23,7 @@ import type { Project } from "@/data/projects";
 import { projects } from "@/data/projects";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
-import { useState } from "react";
+import { useLayoutEffect, useState } from "react";
 
 const sectionConfig = [
   {
@@ -133,21 +134,48 @@ export default function ProjectDetailClient({
   const { prev, next } = getProjectNavigation(project);
   const badgeConfig = getBadgeConfig(project.badge);
 
+  useLayoutEffect(() => {
+    const html = document.documentElement;
+    const body = document.body;
+    const previousBehavior = html.style.scrollBehavior;
+    html.style.scrollBehavior = "auto";
+
+    window.scrollTo(0, 0);
+    html.scrollTop = 0;
+    body.scrollTop = 0;
+
+    const frame = requestAnimationFrame(() => {
+      window.scrollTo(0, 0);
+      html.scrollTop = 0;
+      body.scrollTop = 0;
+      html.style.scrollBehavior = previousBehavior;
+    });
+
+    return () => {
+      cancelAnimationFrame(frame);
+      html.style.scrollBehavior = previousBehavior;
+    };
+  }, [project.slug]);
+
   return (
     <>
       <Navigation />
       <main id="main-content" className="pt-24 pb-20 px-6">
         <div className="max-w-3xl mx-auto">
           {/* Back link */}
-          <motion.a
+          <Link
             href="/#projects"
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
             className="inline-flex items-center gap-2 text-sm text-muted hover:text-foreground transition-colors mb-12"
           >
-            <ArrowLeft size={16} />
-            Back to projects
-          </motion.a>
+            <motion.span
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              className="inline-flex items-center gap-2"
+            >
+              <ArrowLeft size={16} />
+              Back to projects
+            </motion.span>
+          </Link>
 
           {/* Outcome Banner */}
           {badgeConfig && (
@@ -372,8 +400,9 @@ export default function ProjectDetailClient({
           <div className="mt-20 pt-12 border-t border-border">
             <div className="flex items-center justify-between">
               {prev ? (
-                <a
+                <Link
                   href={`/projects/${prev.slug}`}
+                  scroll
                   className="group flex items-center gap-2 text-sm text-muted hover:text-accent transition-colors"
                 >
                   <ArrowLeft size={16} />
@@ -385,20 +414,21 @@ export default function ProjectDetailClient({
                       {prev.title}
                     </span>
                   </div>
-                </a>
+                </Link>
               ) : (
-                <a
+                <Link
                   href="/#projects"
                   className="group inline-flex items-center gap-2 text-sm text-muted hover:text-accent transition-colors"
                 >
                   <ArrowLeft size={16} />
                   All projects
-                </a>
+                </Link>
               )}
 
               {next ? (
-                <a
+                <Link
                   href={`/projects/${next.slug}`}
+                  scroll
                   className="group flex items-center gap-2 text-sm text-muted hover:text-accent transition-colors text-right"
                 >
                   <div>
@@ -410,15 +440,15 @@ export default function ProjectDetailClient({
                     </span>
                   </div>
                   <ArrowRight size={16} />
-                </a>
+                </Link>
               ) : (
-                <a
+                <Link
                   href="/#projects"
                   className="group inline-flex items-center gap-2 text-sm text-muted hover:text-accent transition-colors"
                 >
                   All projects
                   <ArrowRight size={16} />
-                </a>
+                </Link>
               )}
             </div>
           </div>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ArrowUpRight,
@@ -210,75 +211,92 @@ function ProjectCard({
   project: (typeof projects)[number];
   index: number;
 }) {
+  const forceScrollTop = () => {
+    const html = document.documentElement;
+    const previousBehavior = html.style.scrollBehavior;
+    html.style.scrollBehavior = "auto";
+    window.scrollTo(0, 0);
+    html.scrollTop = 0;
+    requestAnimationFrame(() => {
+      html.style.scrollBehavior = previousBehavior;
+    });
+  };
+
   return (
-    <motion.a
+    <Link
       href={`/projects/${project.slug}`}
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -10 }}
-      transition={{ duration: 0.4, delay: index * 0.05 }}
-      className="group block p-6 bg-surface border border-border rounded-xl hover:border-accent/30 transition-all duration-300"
+      scroll
+      onClick={forceScrollTop}
+      className="group block"
     >
-      <div className="flex items-start justify-between mb-4">
-        <div className="flex items-center gap-2 flex-wrap">
-          <span className="font-mono text-xs text-accent">
-            {project.company}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: -10 }}
+        transition={{ duration: 0.4, delay: index * 0.05 }}
+        className="p-6 bg-surface border border-border rounded-xl hover:border-accent/30 transition-all duration-300"
+      >
+        <div className="flex items-start justify-between mb-4">
+          <div className="flex items-center gap-2 flex-wrap">
+            <span className="font-mono text-xs text-accent">
+              {project.company}
+            </span>
+            {project.badge === "Winner" && (
+              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-mono bg-amber-500/10 text-amber-500 border border-amber-500/20 rounded-full">
+                <Trophy size={10} /> Winner
+              </span>
+            )}
+            {project.badge === "Finalist" && (
+              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-mono bg-purple-500/10 text-purple-500 border border-purple-500/20 rounded-full">
+                <Award size={10} /> Finalist
+              </span>
+            )}
+            {project.badge === "2nd Place" && (
+              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-mono bg-zinc-400/10 text-zinc-400 border border-zinc-400/20 rounded-full">
+                <Award size={10} /> 2nd Place
+              </span>
+            )}
+            {project.badge === "Honorable Mention" && (
+              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full">
+                <Award size={10} /> Mention
+              </span>
+            )}
+            {project.isNDA && (
+              <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-mono bg-red-500/10 text-red-400 border border-red-500/20 rounded-full">
+                <ShieldCheck size={10} /> NDA
+              </span>
+            )}
+          </div>
+          <span className="font-mono text-xs text-muted">
+            {project.duration}
           </span>
-          {project.badge === "Winner" && (
-            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-mono bg-amber-500/10 text-amber-500 border border-amber-500/20 rounded-full">
-              <Trophy size={10} /> Winner
-            </span>
-          )}
-          {project.badge === "Finalist" && (
-            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-mono bg-purple-500/10 text-purple-500 border border-purple-500/20 rounded-full">
-              <Award size={10} /> Finalist
-            </span>
-          )}
-          {project.badge === "2nd Place" && (
-            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-mono bg-zinc-400/10 text-zinc-400 border border-zinc-400/20 rounded-full">
-              <Award size={10} /> 2nd Place
-            </span>
-          )}
-          {project.badge === "Honorable Mention" && (
-            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full">
-              <Award size={10} /> Mention
-            </span>
-          )}
-          {project.isNDA && (
-            <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-mono bg-red-500/10 text-red-400 border border-red-500/20 rounded-full">
-              <ShieldCheck size={10} /> NDA
-            </span>
-          )}
         </div>
-        <span className="font-mono text-xs text-muted">
-          {project.duration}
-        </span>
-      </div>
 
-      <h3 className="text-xl font-semibold mb-2 group-hover:text-accent transition-colors">
-        {project.title}
-      </h3>
+        <h3 className="text-xl font-semibold mb-2 group-hover:text-accent transition-colors">
+          {project.title}
+        </h3>
 
-      <p className="text-sm text-muted leading-relaxed mb-4">
-        {project.tagline}
-      </p>
+        <p className="text-sm text-muted leading-relaxed mb-4">
+          {project.tagline}
+        </p>
 
-      <div className="flex items-center justify-between">
-        <div className="flex flex-wrap gap-1.5">
-          {project.tags.slice(0, 3).map((tag) => (
-            <span
-              key={tag}
-              className="px-2 py-0.5 text-[10px] font-mono bg-background border border-border rounded-full text-muted"
-            >
-              {tag}
-            </span>
-          ))}
+        <div className="flex items-center justify-between">
+          <div className="flex flex-wrap gap-1.5">
+            {project.tags.slice(0, 3).map((tag) => (
+              <span
+                key={tag}
+                className="px-2 py-0.5 text-[10px] font-mono bg-background border border-border rounded-full text-muted"
+              >
+                {tag}
+              </span>
+            ))}
+          </div>
+          <ArrowUpRight
+            size={16}
+            className="text-muted group-hover:text-accent transition-colors shrink-0"
+          />
         </div>
-        <ArrowUpRight
-          size={16}
-          className="text-muted group-hover:text-accent transition-colors shrink-0"
-        />
-      </div>
-    </motion.a>
+      </motion.div>
+    </Link>
   );
 }

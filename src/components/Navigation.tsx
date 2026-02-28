@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Sun, Moon } from "lucide-react";
 
@@ -19,10 +20,11 @@ export default function Navigation() {
   const [theme, setTheme] = useState<"dark" | "light">("dark");
 
   useEffect(() => {
-    const saved = localStorage.getItem("theme") as "dark" | "light" | null;
-    const initial = saved || "dark";
-    setTheme(initial);
+    const saved = localStorage.getItem("theme");
+    const initial = saved === "dark" || saved === "light" ? saved : "dark";
     document.documentElement.setAttribute("data-theme", initial);
+    const frame = requestAnimationFrame(() => setTheme(initial));
+    return () => cancelAnimationFrame(frame);
   }, []);
 
   useEffect(() => {
@@ -51,19 +53,19 @@ export default function Navigation() {
         }`}
       >
         <div className="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
-          <a href="#" className="font-mono text-sm font-medium tracking-tight">
+          <Link href="/" className="font-mono text-sm font-medium tracking-tight">
             JB<span className="text-accent">.</span>
-          </a>
+          </Link>
 
           <div className="hidden md:flex items-center gap-8">
             {navItems.map((item) => (
-              <a
+              <Link
                 key={item.href}
                 href={item.href}
                 className="text-sm text-muted hover:text-foreground transition-colors duration-200"
               >
                 {item.label}
-              </a>
+              </Link>
             ))}
             <button
               onClick={toggleTheme}
@@ -104,17 +106,21 @@ export default function Navigation() {
           >
             <div className="flex flex-col items-center justify-center h-full gap-8">
               {navItems.map((item, i) => (
-                <motion.a
+                <Link
                   key={item.href}
                   href={item.href}
                   onClick={() => setIsOpen(false)}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: i * 0.1 }}
                   className="text-2xl font-light text-foreground hover:text-accent transition-colors"
                 >
-                  {item.label}
-                </motion.a>
+                  <motion.span
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: i * 0.1 }}
+                    className="block"
+                  >
+                    {item.label}
+                  </motion.span>
+                </Link>
               ))}
             </div>
           </motion.div>

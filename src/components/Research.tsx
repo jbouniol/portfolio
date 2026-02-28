@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Languages } from "lucide-react";
 
 const toolCategories = [
   {
@@ -27,10 +28,11 @@ const toolCategories = [
     label: "Tools & Productivity",
     items: ["Notion", "Git / GitHub", "Make", "Zapier", "Power Platform", "Canva", "Google Suite"],
   },
-  {
-    label: "Languages",
-    items: ["French — Native", "English — Professional (C1)"],
-  },
+];
+
+const spokenLanguages = [
+  { name: "French", level: "Native" },
+  { name: "English", level: "Professional (C1)" },
 ];
 
 const highlights = [
@@ -103,6 +105,33 @@ export default function Research() {
             </motion.div>
           ))}
         </div>
+
+        {/* Languages */}
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: "-50px" }}
+          transition={{ duration: 0.4, delay: 0.15 }}
+          className="mt-10 p-6 bg-surface border border-border rounded-xl"
+        >
+          <div className="flex items-center gap-2 mb-4">
+            <Languages size={16} className="text-accent" />
+            <h3 className="text-sm font-mono text-accent">Languages</h3>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {spokenLanguages.map((language) => (
+              <div
+                key={language.name}
+                className="flex items-center justify-between px-4 py-3 bg-background border border-border rounded-lg"
+              >
+                <span className="text-sm font-medium">{language.name}</span>
+                <span className="text-xs font-mono text-muted">
+                  {language.level}
+                </span>
+              </div>
+            ))}
+          </div>
+        </motion.div>
       </div>
     </section>
   );

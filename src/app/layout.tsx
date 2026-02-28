@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL } from "@/lib/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -15,9 +16,10 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Jonathan Bouniol — Data, AI & Business",
+  metadataBase: new URL(SITE_URL),
+  title: SITE_NAME,
   description:
-    "Data, AI, and business strategy. Mines Paris PSL x Albert School. Portfolio showcasing 19 projects across 10+ industries.",
+    "Data, AI, and business strategy. Mines Paris PSL × Albert School. Portfolio showcasing 19 projects across 10+ industries.",
   keywords: [
     "data engineering",
     "AI strategy",
@@ -29,18 +31,30 @@ export const metadata: Metadata = {
     "Jonathan Bouniol",
   ],
   authors: [{ name: "Jonathan Bouniol" }],
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
-    title: "Jonathan Bouniol — Data, AI & Business",
+    title: SITE_NAME,
     description:
       "Data engineering, AI strategy, and consulting-grade business deep dives.",
     type: "website",
+    url: SITE_URL,
+    siteName: SITE_NAME,
     locale: "en_US",
+    images: [
+      {
+        url: DEFAULT_OG_IMAGE,
+        alt: "Jonathan Bouniol Portfolio",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Jonathan Bouniol — Data, AI & Business",
+    title: SITE_NAME,
     description:
       "Data engineering, AI strategy, and consulting-grade business deep dives.",
+    images: [DEFAULT_OG_IMAGE],
   },
   robots: {
     index: true,
@@ -55,7 +69,7 @@ const jsonLd = {
   url: "https://jonathanbouniol.com",
   jobTitle: "Data & AI Student",
   description:
-    "Data, AI, and business strategy. Mines Paris PSL x Albert School. 19 projects across 10+ industries.",
+    "Data, AI, and business strategy. Mines Paris PSL × Albert School. 19 projects across 10+ industries.",
   alumniOf: [
     {
       "@type": "CollegeOrUniversity",

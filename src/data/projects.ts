@@ -18,6 +18,7 @@ export type ProjectCategory = "bdd" | "hackathon" | "consulting" | "school";
 
 export interface Project {
   slug: string;
+  updatedAt: string;
   title: string;
   company: string;
   tagline: string;
@@ -43,6 +44,7 @@ export const projects: Project[] = [
   // ─── WINNERS ──────────────────────────────────────────────
   {
     slug: "generali-it-practices",
+    updatedAt: "2026-02-28",
     title: "IT Project Portfolio Optimization",
     company: "Generali",
     tagline:
@@ -62,7 +64,7 @@ export const projects: Project[] = [
     canvaEmbedUrl:
       "https://www.canva.com/design/DAGQ1iFjoI0/zpuuh-DHBZI5CruBac087w/view?embed",
     githubUrl: "",
-    year: "B2",
+    year: "Bachelor 2",
     duration: "3 weeks",
     badge: "Winner",
     category: "bdd",
@@ -70,6 +72,7 @@ export const projects: Project[] = [
   },
   {
     slug: "henkel-commercial-optimization",
+    updatedAt: "2026-02-28",
     title: "Sales Optimization & Resource Reallocation",
     company: "Henkel",
     tagline:
@@ -89,7 +92,7 @@ export const projects: Project[] = [
     canvaEmbedUrl:
       "https://www.canva.com/design/DAGW0n4ghss/3j1y2s9NqWCFFMhvPxt8zw/view?embed",
     githubUrl: "",
-    year: "B1",
+    year: "Bachelor 1",
     duration: "3 weeks",
     badge: "Winner",
     category: "bdd",
@@ -97,6 +100,7 @@ export const projects: Project[] = [
   },
   {
     slug: "la-french-tech-aix-marseille",
+    updatedAt: "2026-02-28",
     title: "Startup Ecosystem Portrait & Growth Strategy",
     company: "La French Tech",
     tagline:
@@ -116,7 +120,7 @@ export const projects: Project[] = [
     canvaEmbedUrl:
       "https://www.canva.com/design/DAF1vnl1DTI/aacddqChXnBDihu6_zGsvg/view?embed",
     githubUrl: "",
-    year: "B1",
+    year: "Bachelor 1",
     duration: "3 weeks",
     badge: "Winner",
     category: "bdd",
@@ -124,6 +128,7 @@ export const projects: Project[] = [
   },
   {
     slug: "linkpick-growth-strategy",
+    updatedAt: "2026-02-28",
     title: "Strategic Growth Plan",
     company: "Linkpick",
     tagline:
@@ -143,7 +148,7 @@ export const projects: Project[] = [
     canvaEmbedUrl:
       "https://www.canva.com/design/DAF58ho6p1Y/-rNxgpDyBH6l1azx8k4UqQ/view?embed",
     githubUrl: "",
-    year: "B1",
+    year: "Bachelor 1",
     duration: "3 weeks",
     badge: "Winner",
     category: "bdd",
@@ -153,6 +158,7 @@ export const projects: Project[] = [
   // ─── FINALISTS / PODIUM ───────────────────────────────────
   {
     slug: "louis-vuitton-south-korea",
+    updatedAt: "2026-02-28",
     title: "South Korean Market Strategy",
     company: "Louis Vuitton",
     tagline:
@@ -170,7 +176,7 @@ export const projects: Project[] = [
     impact:
       "Strategic framework applicable to luxury brand expansion across Asian markets, combining data analytics with digital customer experience innovation.",
     isNDA: true,
-    year: "B1",
+    year: "Bachelor 1",
     duration: "3 weeks",
     badge: "Finalist",
     category: "bdd",
@@ -178,6 +184,7 @@ export const projects: Project[] = [
   },
   {
     slug: "sncf-railway-prediction",
+    updatedAt: "2026-02-28",
     title: "Railway Incident Prediction via ML",
     company: "SNCF",
     tagline:
@@ -197,7 +204,7 @@ export const projects: Project[] = [
     canvaEmbedUrl:
       "https://www.canva.com/design/DAF90X1BVhE/mzURIjhieeJP_lgpR3hpLQ/view?embed",
     githubUrl: "",
-    year: "B2",
+    year: "Bachelor 2",
     duration: "3 weeks",
     badge: "Finalist",
     category: "bdd",
@@ -205,6 +212,7 @@ export const projects: Project[] = [
   },
   {
     slug: "hackathon-ia-ministere-armees",
+    updatedAt: "2026-02-28",
     title: "Military Vehicle Recognition with AI",
     company: "Ministere des Armees",
     tagline:
@@ -232,6 +240,7 @@ export const projects: Project[] = [
   },
   {
     slug: "capgemini-traumatrix-hackathon",
+    updatedAt: "2026-02-28",
     title: "Commercialization Plan for Traumatrix",
     company: "Capgemini",
     tagline:
@@ -259,6 +268,7 @@ export const projects: Project[] = [
   },
   {
     slug: "bnp-paribas-case",
+    updatedAt: "2026-02-28",
     title: "Client Service Optimization via Data",
     company: "BNP Paribas",
     tagline:
@@ -278,7 +288,7 @@ export const projects: Project[] = [
     canvaEmbedUrl:
       "https://www.canva.com/design/DAHBGuOas40/NnKwWMauiM6t5nDjB1idRg/view?embed",
     githubUrl: "https://github.com/jbouniol/bdd-bnpparibas",
-    year: "B3",
+    year: "Bachelor 3",
     duration: "3 weeks",
     badge: "2nd Place",
     category: "bdd",
@@ -286,6 +296,7 @@ export const projects: Project[] = [
   },
   {
     slug: "carrefour-beer-assortment",
+    updatedAt: "2026-02-28",
     title: "Beer Assortment Optimization with AI",
     company: "Carrefour",
     tagline:
@@ -305,7 +316,7 @@ export const projects: Project[] = [
     canvaEmbedUrl:
       "https://www.canva.com/design/DAGjPRbPZts/-bZZXQZRUx7XfNCGYH-WYA/view?embed",
     githubUrl: "",
-    year: "B2",
+    year: "Bachelor 2",
     duration: "3 weeks",
     badge: "Finalist",
     category: "bdd",
@@ -315,6 +326,7 @@ export const projects: Project[] = [
   // ─── OTHER BDDs ───────────────────────────────────────────
   {
     slug: "cma-cgm-sea-routes",
+    updatedAt: "2026-02-28",
     title: "Optimal Sea Route Optimization",
     company: "CMA-CGM",
     tagline:
@@ -334,13 +346,14 @@ export const projects: Project[] = [
     canvaEmbedUrl:
       "https://www.canva.com/design/DAF_-W7vuZQ/rAhI9eN1HvgrcJdpzEK2IA/view?embed",
     githubUrl: "",
-    year: "B1",
+    year: "Bachelor 1",
     duration: "3 weeks",
     category: "bdd",
     contributors: ["Baptiste Thuaudet", "Chloé Dallet", "Alexandre Mouton-Bistondi"],
   },
   {
     slug: "ministere-armees-qlik-dashboard",
+    updatedAt: "2026-02-28",
     title: "Predictive HR Dashboard",
     company: "Ministere des Armees",
     tagline:
@@ -360,13 +373,14 @@ export const projects: Project[] = [
     canvaEmbedUrl:
       "https://www.canva.com/design/DAGT7FNNA6o/lanapZvI07TyWiQ9VDETmg/view?embed",
     githubUrl: "",
-    year: "B2",
+    year: "Bachelor 2",
     duration: "3 weeks",
     category: "bdd",
     contributors: ["Chloé Dallet", "Mathias Bourdet"],
   },
   {
     slug: "edmond-de-rothschild-fund-analysis",
+    updatedAt: "2026-02-28",
     title: "Euro High Yield Fund Flow Analysis & Prediction",
     company: "Edmond de Rothschild",
     tagline:
@@ -384,13 +398,14 @@ export const projects: Project[] = [
     impact:
       "Equipped Edmond de Rothschild with tools for proactive and optimized collection management — anticipating future movements and personalizing strategies by client segment.",
     isNDA: true,
-    year: "B2",
+    year: "Bachelor 2",
     duration: "3 weeks",
     category: "bdd",
     contributors: ["Enzo Natali", "Anna Spira", "Alexis Arnaud"],
   },
   {
     slug: "asmodee-bga-game-recommendation",
+    updatedAt: "2026-02-28",
     title: "Game Recommendation Engine from Player Behavior",
     company: "Asmodee",
     tagline:
@@ -410,7 +425,7 @@ export const projects: Project[] = [
     canvaEmbedUrl:
       "https://www.canva.com/design/DAGg5vod7cI/2-KvH74aUv3g7M7Hp3OWeQ/view?embed",
     githubUrl: "",
-    year: "B2",
+    year: "Bachelor 2",
     duration: "3 weeks",
     badge: "Finalist",
     category: "bdd",
@@ -420,6 +435,7 @@ export const projects: Project[] = [
   // ─── CONSULTING MISSIONS ─────────────────────────────
   {
     slug: "x-hec-startup-database",
+    updatedAt: "2026-02-28",
     title: "Startup Investment Simulation Platform",
     company: "X-HEC Entrepreneurs",
     tagline:
@@ -442,6 +458,7 @@ export const projects: Project[] = [
   },
   {
     slug: "villablu-startup-sourcing",
+    updatedAt: "2026-02-28",
     title: "Startup Sourcing for Corporate Venture",
     company: "Villablu (Robertet)",
     tagline:
@@ -466,6 +483,7 @@ export const projects: Project[] = [
   // ─── SCHOOL PROJECTS ──────────────────────────────────
   {
     slug: "finovera",
+    updatedAt: "2026-02-28",
     title: "Finovera — AI Stock Portfolio Advisor",
     company: "ML Project",
     tagline:
@@ -485,13 +503,14 @@ export const projects: Project[] = [
     canvaEmbedUrl:
       "https://www.canva.com/design/DAGm9bup1tc/rjDPjCaAjYsNOY5MUVb70A/view?embed",
     githubUrl: "https://github.com/jbouniol/finovera",
-    year: "B2",
+    year: "Bachelor 2",
     duration: "School Project",
     category: "school",
     contributors: ["Sacha Nardoux", "Guillaume Rabeau"],
   },
   {
     slug: "pca-fifa-player-analysis",
+    updatedAt: "2026-02-28",
     title: "PCA Analysis on Football Player Performance",
     company: "Maths Project",
     tagline:
@@ -511,13 +530,14 @@ export const projects: Project[] = [
     canvaEmbedUrl:
       "https://www.canva.com/design/DAGgrrrrT6A/KhIfGuKfNVH_RoL3qXZHcQ/view?embed",
     githubUrl: "https://github.com/jbouniol/maths-project-fifa",
-    year: "B2",
+    year: "Bachelor 2",
     duration: "School Project",
     category: "school",
     contributors: ["Sacha Nardoux", "Amandine Barcelo", "Enzo Natali"],
   },
   {
     slug: "llm-distillation-research-paper",
+    updatedAt: "2026-02-28",
     title: "Divide-or-Conquer? LLM Distillation Strategies",
     company: "ML Research Paper",
     tagline:
@@ -537,7 +557,7 @@ export const projects: Project[] = [
     canvaEmbedUrl:
       "https://www.canva.com/design/DAGjN8-GlFk/pAkFvQrBCrwcQD-PKgNvkg/view?embed",
     githubUrl: "",
-    year: "B2",
+    year: "Bachelor 2",
     duration: "School Project",
     category: "school",
     contributors: ["Marc Zahwa"],

@@ -1,5 +1,6 @@
 export interface Experience {
   slug: string;
+  updatedAt: string;
   role: string;
   company: string;
   period: string;
@@ -15,6 +16,7 @@ export interface Experience {
 export const experiences: Experience[] = [
   {
     slug: "generali",
+    updatedAt: "2026-02-28",
     role: "Data & IT Transformation Intern",
     company: "Generali France",
     period: "Jul 2025 — Dec 2025",
@@ -41,6 +43,7 @@ export const experiences: Experience[] = [
   },
   {
     slug: "sunver",
+    updatedAt: "2026-02-28",
     role: "Right-Hand to CEO (Intern)",
     company: "Sunver",
     period: "May 2024 — Jul 2024",
@@ -60,6 +63,7 @@ export const experiences: Experience[] = [
   },
   {
     slug: "cnd",
+    updatedAt: "2026-02-28",
     role: "Sous-Officier Reserviste",
     company: "Commissariat du Numerique de Defense (CND)",
     period: "2024 — Present",
@@ -76,6 +80,7 @@ export const experiences: Experience[] = [
   },
   {
     slug: "albert-junior-consulting",
+    updatedAt: "2026-02-28",
     role: "Vice President & CTO",
     company: "Albert Junior Consulting",
     period: "Jul 2024 — Jul 2025",

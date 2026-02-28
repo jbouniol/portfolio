@@ -1,6 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { Briefcase, GraduationCap, Users, ArrowUpRight } from "lucide-react";
 
 const workExperience = [
@@ -66,14 +67,14 @@ const education = [
   {
     period: "2025 — 2027",
     degree: "MSc Data & AI for Business",
-    school: "Mines Paris PSL x Albert School",
+    school: "Mines Paris PSL × Albert School",
     description:
       "Advanced joint diploma program combining data science, AI engineering, and business strategy at France's #2 engineering school.",
   },
   {
     period: "2023 — 2025",
     degree: "Bachelor Business & Data",
-    school: "Albert School x Mines Paris PSL",
+    school: "Albert School × Mines Paris PSL",
     description:
       "Europe's first data-centric business school. 12 Business Deep Dives with Louis Vuitton, BNP Paribas, Generali, Asmodee, and more. Joint diploma with Mines Paris PSL.",
   },
@@ -119,11 +120,6 @@ export default function Experience() {
 
               <div className="space-y-10">
                 {workExperience.map((exp, i) => {
-                  const Wrapper = exp.slug ? "a" : "div";
-                  const wrapperProps = exp.slug
-                    ? { href: `/experience/${exp.slug}` }
-                    : {};
-
                   return (
                     <motion.div
                       key={i}
@@ -135,35 +131,49 @@ export default function Experience() {
                     >
                       <div className="absolute left-0 top-[10px] w-[7px] h-[7px] rounded-full bg-foreground" />
 
-                      <Wrapper
-                        {...wrapperProps}
-                        className={
-                          exp.slug
-                            ? "group block hover:bg-surface/50 -mx-3 -my-2 px-3 py-2 rounded-lg transition-colors"
-                            : ""
-                        }
-                      >
-                        <span className="font-mono text-xs text-muted block mb-1">
-                          {exp.period}
-                        </span>
-                        <div className="flex items-center gap-1.5">
-                          <h4 className="font-semibold text-sm">
-                            {exp.role}
-                          </h4>
-                          {exp.slug && (
+                      {exp.slug ? (
+                        <Link
+                          href={`/experience/${exp.slug}`}
+                          scroll
+                          className="group block hover:bg-surface/50 -mx-3 -my-2 px-3 py-2 rounded-lg transition-colors"
+                        >
+                          <span className="font-mono text-xs text-muted block mb-1">
+                            {exp.period}
+                          </span>
+                          <div className="flex items-center gap-1.5">
+                            <h4 className="font-semibold text-sm">
+                              {exp.role}
+                            </h4>
                             <ArrowUpRight
                               size={12}
                               className="text-muted group-hover:text-accent transition-colors shrink-0"
                             />
-                          )}
+                          </div>
+                          <p className="text-accent text-sm font-medium mt-0.5">
+                            {exp.company}
+                          </p>
+                          <p className="text-muted text-xs leading-relaxed mt-2">
+                            {exp.description}
+                          </p>
+                        </Link>
+                      ) : (
+                        <div>
+                          <span className="font-mono text-xs text-muted block mb-1">
+                            {exp.period}
+                          </span>
+                          <div className="flex items-center gap-1.5">
+                            <h4 className="font-semibold text-sm">
+                              {exp.role}
+                            </h4>
+                          </div>
+                          <p className="text-accent text-sm font-medium mt-0.5">
+                            {exp.company}
+                          </p>
+                          <p className="text-muted text-xs leading-relaxed mt-2">
+                            {exp.description}
+                          </p>
                         </div>
-                        <p className="text-accent text-sm font-medium mt-0.5">
-                          {exp.company}
-                        </p>
-                        <p className="text-muted text-xs leading-relaxed mt-2">
-                          {exp.description}
-                        </p>
-                      </Wrapper>
+                      )}
                     </motion.div>
                   );
                 })}
@@ -190,12 +200,6 @@ export default function Experience() {
               <div className="space-y-10">
                 {leadership.map((item, i) => {
                   const hasSlug = "slug" in item && item.slug;
-                  const Wrapper = hasSlug ? "a" : "div";
-                  const wrapperProps = hasSlug
-                    ? {
-                        href: `/experience/${(item as { slug: string }).slug}`,
-                      }
-                    : {};
 
                   return (
                     <motion.div
@@ -208,35 +212,49 @@ export default function Experience() {
                     >
                       <div className="absolute left-0 top-[10px] w-[7px] h-[7px] rounded-full bg-purple-500" />
 
-                      <Wrapper
-                        {...wrapperProps}
-                        className={
-                          hasSlug
-                            ? "group block hover:bg-surface/50 -mx-3 -my-2 px-3 py-2 rounded-lg transition-colors"
-                            : ""
-                        }
-                      >
-                        <span className="font-mono text-xs text-muted block mb-1">
-                          {item.period}
-                        </span>
-                        <div className="flex items-center gap-1.5">
-                          <h4 className="font-semibold text-sm">
-                            {item.role}
-                          </h4>
-                          {hasSlug && (
+                      {hasSlug ? (
+                        <Link
+                          href={`/experience/${(item as { slug: string }).slug}`}
+                          scroll
+                          className="group block hover:bg-surface/50 -mx-3 -my-2 px-3 py-2 rounded-lg transition-colors"
+                        >
+                          <span className="font-mono text-xs text-muted block mb-1">
+                            {item.period}
+                          </span>
+                          <div className="flex items-center gap-1.5">
+                            <h4 className="font-semibold text-sm">
+                              {item.role}
+                            </h4>
                             <ArrowUpRight
                               size={12}
                               className="text-muted group-hover:text-accent transition-colors shrink-0"
                             />
-                          )}
+                          </div>
+                          <p className="text-purple-400 text-sm font-medium mt-0.5">
+                            {item.company}
+                          </p>
+                          <p className="text-muted text-xs leading-relaxed mt-2">
+                            {item.description}
+                          </p>
+                        </Link>
+                      ) : (
+                        <div>
+                          <span className="font-mono text-xs text-muted block mb-1">
+                            {item.period}
+                          </span>
+                          <div className="flex items-center gap-1.5">
+                            <h4 className="font-semibold text-sm">
+                              {item.role}
+                            </h4>
+                          </div>
+                          <p className="text-purple-400 text-sm font-medium mt-0.5">
+                            {item.company}
+                          </p>
+                          <p className="text-muted text-xs leading-relaxed mt-2">
+                            {item.description}
+                          </p>
                         </div>
-                        <p className="text-purple-400 text-sm font-medium mt-0.5">
-                          {item.company}
-                        </p>
-                        <p className="text-muted text-xs leading-relaxed mt-2">
-                          {item.description}
-                        </p>
-                      </Wrapper>
+                      )}
                     </motion.div>
                   );
                 })}
