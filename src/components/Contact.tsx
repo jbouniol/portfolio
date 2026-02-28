@@ -13,8 +13,8 @@ const links = [
   {
     icon: Github,
     label: "GitHub",
-    href: "https://github.com/jonathanbouniol",
-    display: "github.com/jonathanbouniol",
+    href: "https://github.com/jbouniol",
+    display: "github.com/jbouniol",
   },
   {
     icon: Linkedin,

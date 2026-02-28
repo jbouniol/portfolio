@@ -62,7 +62,7 @@ export const projects: Project[] = [
     canvaEmbedUrl:
       "https://www.canva.com/design/DAGQ1iFjoI0/zpuuh-DHBZI5CruBac087w/view?embed",
     githubUrl: "",
-    year: "2024",
+    year: "B2",
     duration: "3 weeks",
     badge: "Winner",
     category: "bdd",
@@ -89,7 +89,7 @@ export const projects: Project[] = [
     canvaEmbedUrl:
       "https://www.canva.com/design/DAGW0n4ghss/3j1y2s9NqWCFFMhvPxt8zw/view?embed",
     githubUrl: "",
-    year: "2024",
+    year: "B1",
     duration: "3 weeks",
     badge: "Winner",
     category: "bdd",
@@ -116,7 +116,7 @@ export const projects: Project[] = [
     canvaEmbedUrl:
       "https://www.canva.com/design/DAF1vnl1DTI/aacddqChXnBDihu6_zGsvg/view?embed",
     githubUrl: "",
-    year: "2024",
+    year: "B1",
     duration: "3 weeks",
     badge: "Winner",
     category: "bdd",
@@ -143,7 +143,7 @@ export const projects: Project[] = [
     canvaEmbedUrl:
       "https://www.canva.com/design/DAF58ho6p1Y/-rNxgpDyBH6l1azx8k4UqQ/view?embed",
     githubUrl: "",
-    year: "2024",
+    year: "B1",
     duration: "3 weeks",
     badge: "Winner",
     category: "bdd",
@@ -170,7 +170,7 @@ export const projects: Project[] = [
     impact:
       "Strategic framework applicable to luxury brand expansion across Asian markets, combining data analytics with digital customer experience innovation.",
     isNDA: true,
-    year: "2024",
+    year: "B1",
     duration: "3 weeks",
     badge: "Finalist",
     category: "bdd",
@@ -197,7 +197,7 @@ export const projects: Project[] = [
     canvaEmbedUrl:
       "https://www.canva.com/design/DAF90X1BVhE/mzURIjhieeJP_lgpR3hpLQ/view?embed",
     githubUrl: "",
-    year: "2024",
+    year: "B2",
     duration: "3 weeks",
     badge: "Finalist",
     category: "bdd",
@@ -278,7 +278,7 @@ export const projects: Project[] = [
     canvaEmbedUrl:
       "https://www.canva.com/design/DAHBGuOas40/NnKwWMauiM6t5nDjB1idRg/view?embed",
     githubUrl: "https://github.com/jbouniol/bdd-bnpparibas",
-    year: "2024",
+    year: "B3",
     duration: "3 weeks",
     badge: "2nd Place",
     category: "bdd",
@@ -305,7 +305,7 @@ export const projects: Project[] = [
     canvaEmbedUrl:
       "https://www.canva.com/design/DAGjPRbPZts/-bZZXQZRUx7XfNCGYH-WYA/view?embed",
     githubUrl: "",
-    year: "2025",
+    year: "B2",
     duration: "3 weeks",
     badge: "Finalist",
     category: "bdd",
@@ -334,7 +334,7 @@ export const projects: Project[] = [
     canvaEmbedUrl:
       "https://www.canva.com/design/DAF_-W7vuZQ/rAhI9eN1HvgrcJdpzEK2IA/view?embed",
     githubUrl: "",
-    year: "2024",
+    year: "B1",
     duration: "3 weeks",
     category: "bdd",
     contributors: ["Baptiste Thuaudet", "Chloé Dallet", "Alexandre Mouton-Bistondi"],
@@ -360,7 +360,7 @@ export const projects: Project[] = [
     canvaEmbedUrl:
       "https://www.canva.com/design/DAGT7FNNA6o/lanapZvI07TyWiQ9VDETmg/view?embed",
     githubUrl: "",
-    year: "2024",
+    year: "B2",
     duration: "3 weeks",
     category: "bdd",
     contributors: ["Chloé Dallet", "Mathias Bourdet"],
@@ -384,7 +384,7 @@ export const projects: Project[] = [
     impact:
       "Equipped Edmond de Rothschild with tools for proactive and optimized collection management — anticipating future movements and personalizing strategies by client segment.",
     isNDA: true,
-    year: "2024",
+    year: "B2",
     duration: "3 weeks",
     category: "bdd",
     contributors: ["Enzo Natali", "Anna Spira", "Alexis Arnaud"],
@@ -410,7 +410,7 @@ export const projects: Project[] = [
     canvaEmbedUrl:
       "https://www.canva.com/design/DAGg5vod7cI/2-KvH74aUv3g7M7Hp3OWeQ/view?embed",
     githubUrl: "",
-    year: "2025",
+    year: "B2",
     duration: "3 weeks",
     badge: "Finalist",
     category: "bdd",
@@ -458,7 +458,7 @@ export const projects: Project[] = [
       "Delivered a curated pipeline of qualified startups and conducted direct outreach to integrate top candidates into the Villablu accelerator.",
     impact:
       "End-to-end consulting mission from market intelligence to direct business development — demonstrating startup sourcing and corporate venture advisory skills.",
-    year: "2025",
+    year: "2024",
     duration: "Consulting Mission",
     category: "consulting",
   },
@@ -485,7 +485,7 @@ export const projects: Project[] = [
     canvaEmbedUrl:
       "https://www.canva.com/design/DAGm9bup1tc/rjDPjCaAjYsNOY5MUVb70A/view?embed",
     githubUrl: "https://github.com/jbouniol/finovera",
-    year: "2025",
+    year: "B2",
     duration: "School Project",
     category: "school",
     contributors: ["Sacha Nardoux", "Guillaume Rabeau"],
@@ -511,7 +511,7 @@ export const projects: Project[] = [
     canvaEmbedUrl:
       "https://www.canva.com/design/DAGgrrrrT6A/KhIfGuKfNVH_RoL3qXZHcQ/view?embed",
     githubUrl: "https://github.com/jbouniol/maths-project-fifa",
-    year: "2025",
+    year: "B2",
     duration: "School Project",
     category: "school",
     contributors: ["Sacha Nardoux", "Amandine Barcelo", "Enzo Natali"],
@@ -537,7 +537,7 @@ export const projects: Project[] = [
     canvaEmbedUrl:
       "https://www.canva.com/design/DAGjN8-GlFk/pAkFvQrBCrwcQD-PKgNvkg/view?embed",
     githubUrl: "",
-    year: "2025",
+    year: "B2",
     duration: "School Project",
     category: "school",
     contributors: ["Marc Zahwa"],

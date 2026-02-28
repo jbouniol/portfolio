@@ -9,23 +9,27 @@ const toolCategories = [
   },
   {
     label: "ML & AI",
-    items: ["Scikit-learn", "PyTorch", "ResNet / Transfer Learning", "GenAI (Prompt Engineering)", "RAG Systems"],
+    items: ["Scikit-learn", "PyTorch", "XGBoost", "GenAI (Prompt Engineering)", "RAG Systems"],
   },
   {
     label: "Visualization & BI",
-    items: ["Qlik Sense", "Power BI", "Streamlit", "Matplotlib", "Seaborn"],
+    items: ["Qlik Sense", "Power BI", "Looker Studio", "Streamlit", "Plotly", "Matplotlib", "Seaborn"],
   },
   {
     label: "Data Engineering",
-    items: ["Pandas", "NumPy", "Data Cleaning", "Pipeline Design"],
+    items: ["Pandas", "NumPy", "Web Scraping", "API Integration", "Jupyter Notebooks", "Data Cleaning", "Pipeline Design"],
   },
   {
     label: "Business & Strategy",
-    items: ["Business Plan Modeling", "Market Sizing", "Competitive Analysis", "Financial Modeling"],
+    items: ["Business Plan Modeling", "Market Sizing", "Competitive Analysis", "Financial Modeling", "Go-to-Market Strategy"],
   },
   {
     label: "Tools & Productivity",
     items: ["Notion", "Git / GitHub", "Make", "Zapier", "Power Platform", "Canva", "Google Suite"],
+  },
+  {
+    label: "Languages",
+    items: ["French — Native", "English — Professional (C1)"],
   },
 ];
 

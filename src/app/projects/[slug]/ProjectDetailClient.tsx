@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import {
   ArrowLeft,
+  ArrowRight,
   ExternalLink,
   Github,
   ShieldCheck,
@@ -18,6 +19,7 @@ import {
   Users,
 } from "lucide-react";
 import type { Project } from "@/data/projects";
+import { projects } from "@/data/projects";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import { useState } from "react";
@@ -55,17 +57,86 @@ const sectionConfig = [
   },
 ];
 
+/**
+ * Parse text that contains numbered steps (e.g. "1) ... 2) ..." or "1. ... 2. ...")
+ * into an array of items. Returns null if no numbered pattern is found.
+ */
+function parseNumberedList(text: string): string[] | null {
+  // Match patterns like "1) text" or "1. text" with at least 2 items
+  const pattern = /(?:^|\s)(\d+)[.)]\s+/g;
+  const matches = [...text.matchAll(pattern)];
+
+  if (matches.length < 2) return null;
+
+  const items: string[] = [];
+  for (let i = 0; i < matches.length; i++) {
+    const start = matches[i].index! + matches[i][0].indexOf(matches[i][1]);
+    const numberAndSep = matches[i][0].trimStart();
+    const contentStart = start + numberAndSep.length;
+    const end = i + 1 < matches.length ? matches[i + 1].index! : text.length;
+    const item = text.slice(contentStart, end).trim();
+    if (item) items.push(item);
+  }
+
+  return items.length >= 2 ? items : null;
+}
+
+function getProjectNavigation(currentProject: Project) {
+  const sameCategory = projects.filter(
+    (p) => p.category === currentProject.category
+  );
+  const idx = sameCategory.findIndex((p) => p.slug === currentProject.slug);
+
+  const prev = idx > 0 ? sameCategory[idx - 1] : null;
+  const next = idx < sameCategory.length - 1 ? sameCategory[idx + 1] : null;
+
+  return { prev, next };
+}
+
+function getBadgeConfig(badge: string | undefined) {
+  switch (badge) {
+    case "Winner":
+      return {
+        icon: Trophy,
+        label: "Winner",
+        className: "bg-amber-500/10 text-amber-500 border-amber-500/20",
+      };
+    case "Finalist":
+      return {
+        icon: Award,
+        label: "Finalist",
+        className: "bg-purple-500/10 text-purple-500 border-purple-500/20",
+      };
+    case "2nd Place":
+      return {
+        icon: Award,
+        label: "2nd Place",
+        className: "bg-zinc-400/10 text-zinc-400 border-zinc-400/20",
+      };
+    case "Honorable Mention":
+      return {
+        icon: Award,
+        label: "Honorable Mention",
+        className: "bg-emerald-500/10 text-emerald-400 border-emerald-500/20",
+      };
+    default:
+      return null;
+  }
+}
+
 export default function ProjectDetailClient({
   project,
 }: {
   project: Project;
 }) {
-  const [showCanva, setShowCanva] = useState(false);
+  const [showCanva, setShowCanva] = useState(!!project.canvaEmbedUrl);
+  const { prev, next } = getProjectNavigation(project);
+  const badgeConfig = getBadgeConfig(project.badge);
 
   return (
     <>
       <Navigation />
-      <main className="pt-24 pb-20 px-6">
+      <main id="main-content" className="pt-24 pb-20 px-6">
         <div className="max-w-3xl mx-auto">
           {/* Back link */}
           <motion.a
@@ -77,6 +148,27 @@ export default function ProjectDetailClient({
             <ArrowLeft size={16} />
             Back to projects
           </motion.a>
+
+          {/* Outcome Banner */}
+          {badgeConfig && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className={`flex items-center gap-3 px-5 py-3.5 rounded-xl border mb-8 ${badgeConfig.className}`}
+            >
+              <badgeConfig.icon size={20} strokeWidth={1.5} />
+              <div>
+                <p className="font-mono text-sm font-medium">
+                  {badgeConfig.label}
+                </p>
+                <p className="text-xs opacity-80 mt-0.5">
+                  {project.duration} &middot; {project.company} &middot;{" "}
+                  {project.year}
+                </p>
+              </div>
+            </motion.div>
+          )}
 
           {/* Header */}
           <motion.div
@@ -91,26 +183,6 @@ export default function ProjectDetailClient({
               <span className="inline-flex items-center gap-1 font-mono text-xs text-muted">
                 <Clock size={12} /> {project.duration}
               </span>
-              {project.badge === "Winner" && (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-mono bg-amber-500/10 text-amber-500 border border-amber-500/20 rounded-full">
-                  <Trophy size={10} /> Winner
-                </span>
-              )}
-              {project.badge === "Finalist" && (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-mono bg-purple-500/10 text-purple-500 border border-purple-500/20 rounded-full">
-                  <Award size={10} /> Finalist
-                </span>
-              )}
-              {project.badge === "2nd Place" && (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-mono bg-zinc-400/10 text-zinc-400 border border-zinc-400/20 rounded-full">
-                  <Award size={10} /> 2nd Place
-                </span>
-              )}
-              {project.badge === "Honorable Mention" && (
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-mono bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 rounded-full">
-                  <Award size={10} /> Honorable Mention
-                </span>
-              )}
               {project.isNDA && (
                 <span className="inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-mono bg-red-500/10 text-red-400 border border-red-500/20 rounded-full">
                   <ShieldCheck size={10} /> NDA
@@ -199,6 +271,7 @@ export default function ProjectDetailClient({
                   src={project.canvaEmbedUrl}
                   className="absolute inset-0 w-full h-full"
                   allowFullScreen
+                  loading="lazy"
                   title={`${project.title} presentation`}
                 />
               </div>
@@ -210,28 +283,52 @@ export default function ProjectDetailClient({
 
           {/* Case Study Sections */}
           <div className="space-y-10">
-            {sectionConfig.map((section, i) => (
-              <motion.div
-                key={section.key}
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.4 + i * 0.1 }}
-              >
-                <div className="flex items-center gap-3 mb-3">
-                  <section.icon
-                    size={18}
-                    className="text-accent"
-                    strokeWidth={1.5}
-                  />
-                  <h2 className="text-sm font-mono text-accent uppercase tracking-wider">
-                    {section.label}
-                  </h2>
-                </div>
-                <p className="text-foreground leading-relaxed pl-8">
-                  {project[section.key]}
-                </p>
-              </motion.div>
-            ))}
+            {sectionConfig.map((section, i) => {
+              const content = project[section.key];
+              const listItems =
+                section.key === "method" || section.key === "result"
+                  ? parseNumberedList(content)
+                  : null;
+
+              return (
+                <motion.div
+                  key={section.key}
+                  initial={{ opacity: 0, y: 15 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.4 + i * 0.1 }}
+                >
+                  <div className="flex items-center gap-3 mb-3">
+                    <section.icon
+                      size={18}
+                      className="text-accent"
+                      strokeWidth={1.5}
+                    />
+                    <h2 className="text-sm font-mono text-accent uppercase tracking-wider">
+                      {section.label}
+                    </h2>
+                  </div>
+                  {listItems ? (
+                    <ol className="pl-8 space-y-3">
+                      {listItems.map((item, j) => (
+                        <li
+                          key={j}
+                          className="text-foreground leading-relaxed flex gap-3"
+                        >
+                          <span className="text-accent font-mono text-sm shrink-0 mt-0.5">
+                            {j + 1}.
+                          </span>
+                          <span>{item}</span>
+                        </li>
+                      ))}
+                    </ol>
+                  ) : (
+                    <p className="text-foreground leading-relaxed pl-8">
+                      {content}
+                    </p>
+                  )}
+                </motion.div>
+              );
+            })}
           </div>
 
           {/* Contributors */}
@@ -271,15 +368,59 @@ export default function ProjectDetailClient({
             </motion.div>
           )}
 
-          {/* Next Project */}
+          {/* Project Navigation */}
           <div className="mt-20 pt-12 border-t border-border">
-            <a
-              href="/#projects"
-              className="group inline-flex items-center gap-2 text-sm text-muted hover:text-accent transition-colors"
-            >
-              <ArrowLeft size={16} />
-              View all projects
-            </a>
+            <div className="flex items-center justify-between">
+              {prev ? (
+                <a
+                  href={`/projects/${prev.slug}`}
+                  className="group flex items-center gap-2 text-sm text-muted hover:text-accent transition-colors"
+                >
+                  <ArrowLeft size={16} />
+                  <div>
+                    <span className="text-xs font-mono block opacity-60">
+                      Previous
+                    </span>
+                    <span className="group-hover:text-accent transition-colors">
+                      {prev.title}
+                    </span>
+                  </div>
+                </a>
+              ) : (
+                <a
+                  href="/#projects"
+                  className="group inline-flex items-center gap-2 text-sm text-muted hover:text-accent transition-colors"
+                >
+                  <ArrowLeft size={16} />
+                  All projects
+                </a>
+              )}
+
+              {next ? (
+                <a
+                  href={`/projects/${next.slug}`}
+                  className="group flex items-center gap-2 text-sm text-muted hover:text-accent transition-colors text-right"
+                >
+                  <div>
+                    <span className="text-xs font-mono block opacity-60">
+                      Next
+                    </span>
+                    <span className="group-hover:text-accent transition-colors">
+                      {next.title}
+                    </span>
+                  </div>
+                  <ArrowRight size={16} />
+                </a>
+              ) : (
+                <a
+                  href="/#projects"
+                  className="group inline-flex items-center gap-2 text-sm text-muted hover:text-accent transition-colors"
+                >
+                  All projects
+                  <ArrowRight size={16} />
+                </a>
+              )}
+            </div>
           </div>
         </div>
       </main>

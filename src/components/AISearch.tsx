@@ -191,7 +191,11 @@ export default function AISearch() {
             ) : (
               <Search size={20} className="text-muted shrink-0" />
             )}
+            <label htmlFor="ai-search-input" className="sr-only">
+              Search the portfolio
+            </label>
             <input
+              id="ai-search-input"
               ref={inputRef}
               type="text"
               value={query}

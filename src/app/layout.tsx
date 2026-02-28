@@ -48,6 +48,40 @@ export const metadata: Metadata = {
   },
 };
 
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Jonathan Bouniol",
+  url: "https://jonathanbouniol.com",
+  jobTitle: "Data & AI Student",
+  description:
+    "Data, AI, and business strategy. Mines Paris PSL x Albert School. 19 projects across 10+ industries.",
+  alumniOf: [
+    {
+      "@type": "CollegeOrUniversity",
+      name: "Mines Paris PSL",
+      url: "https://www.minesparis.psl.eu",
+    },
+    {
+      "@type": "CollegeOrUniversity",
+      name: "Albert School",
+      url: "https://www.albertschool.com",
+    },
+  ],
+  sameAs: [
+    "https://github.com/jbouniol",
+    "https://linkedin.com/in/jonathanbouniol",
+  ],
+  knowsAbout: [
+    "Data Engineering",
+    "Artificial Intelligence",
+    "Machine Learning",
+    "Business Strategy",
+    "Python",
+    "SQL",
+  ],
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -55,9 +89,21 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased bg-background text-foreground`}
       >
+        <a
+          href="#main-content"
+          className="sr-only focus:not-sr-only focus:fixed focus:top-4 focus:left-4 focus:z-[100] focus:px-4 focus:py-2 focus:bg-accent focus:text-white focus:rounded-lg focus:text-sm focus:font-medium"
+        >
+          Skip to content
+        </a>
         {children}
         <Analytics />
         <SpeedInsights />

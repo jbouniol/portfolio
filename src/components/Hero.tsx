@@ -63,10 +63,10 @@ export default function Hero() {
             className="mt-8 flex flex-wrap gap-3"
           >
             {[
-              "19 Projects",
-              "4 Wins · 12 Podiums",
+              "19 Projects · 10+ Industries",
+              "4x Winner",
               "Mines Paris PSL",
-              "Reserviste CND",
+              "French Army Reservist",
             ].map((tag) => (
               <span
                 key={tag}

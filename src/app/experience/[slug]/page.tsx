@@ -8,6 +8,21 @@ export function generateStaticParams() {
   }));
 }
 
+export function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  return params.then(({ slug }) => {
+    const experience = experiences.find((e) => e.slug === slug);
+    if (!experience) return { title: "Experience Not Found" };
+    return {
+      title: `${experience.role} — ${experience.company} | Jonathan Bouniol`,
+      description: experience.tagline,
+    };
+  });
+}
+
 export default async function ExperiencePage({
   params,
 }: {
