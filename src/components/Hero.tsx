@@ -105,7 +105,7 @@ export default function Hero() {
               Get in Touch
             </Link>
             <a
-              href="/cv.pdf"
+              href="/CV.pdf"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3 border border-border text-sm font-medium rounded-lg hover:bg-surface transition-colors text-muted hover:text-foreground"
