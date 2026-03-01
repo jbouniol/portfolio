@@ -51,6 +51,7 @@ export default function CommandModal({
 }: {
   pageContext: string;
 }) {
+  const hasContext = pageContext.trim().length > 0;
   const [isOpen, setIsOpen] = useState(false);
   const [query, setQuery] = useState("");
   const [result, setResult] = useState<SearchResult | null>(null);
@@ -187,23 +188,21 @@ export default function CommandModal({
             onClick={(e) => e.stopPropagation()}
           >
             {/* Context badge + close */}
-            <div className="flex items-center justify-between px-4 pt-3 pb-0">
-              {pageContext ? (
+            {hasContext && (
+              <div className="flex items-center justify-between px-4 pt-3 pb-0">
                 <div className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-accent/10 border border-accent/20 rounded-full">
                   <Sparkles size={11} className="text-accent" />
                   <span className="text-[11px] font-mono text-accent">{pageContext}</span>
                 </div>
-              ) : (
-                <div />
-              )}
-              <button
-                onClick={close}
-                className="p-1.5 text-muted hover:text-foreground transition-colors rounded-lg hover:bg-surface"
-                aria-label="Close"
-              >
-                <X size={15} />
-              </button>
-            </div>
+                <button
+                  onClick={close}
+                  className="p-1.5 text-muted hover:text-foreground transition-colors rounded-lg hover:bg-surface"
+                  aria-label="Close"
+                >
+                  <X size={15} />
+                </button>
+              </div>
+            )}
 
             {/* Search form */}
             <form onSubmit={handleSubmit} className="flex items-center gap-3 px-4 py-3 border-b border-border">

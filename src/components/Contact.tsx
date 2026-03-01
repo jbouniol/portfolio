@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, Github, Linkedin, ArrowUpRight } from "lucide-react";
+import { Mail, Github, Linkedin, ArrowUpRight, ArrowUp } from "lucide-react";
 
 const links = [
   {
@@ -25,8 +25,19 @@ const links = [
 ];
 
 export default function Contact() {
+  const scrollToTop = () => {
+    const html = document.documentElement;
+    const previousBehavior = html.style.scrollBehavior;
+    html.style.scrollBehavior = "smooth";
+    window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    window.history.replaceState(null, "", window.location.pathname + window.location.search);
+    requestAnimationFrame(() => {
+      html.style.scrollBehavior = previousBehavior;
+    });
+  };
+
   return (
-    <section id="contact" className="py-32 px-6">
+    <section id="contact" className="pt-32 pb-12 px-6">
       <div className="max-w-6xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -76,6 +87,17 @@ export default function Contact() {
               />
             </motion.a>
           ))}
+        </div>
+
+        <div className="mt-8 flex justify-center">
+          <button
+            type="button"
+            onClick={scrollToTop}
+            aria-label="Back to top"
+            className="inline-flex items-center justify-center text-muted hover:text-foreground transition-colors"
+          >
+            <ArrowUp size={16} className="animate-bounce" />
+          </button>
         </div>
       </div>
     </section>
