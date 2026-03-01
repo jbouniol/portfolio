@@ -6,17 +6,9 @@ import Experience from "@/components/Experience";
 import Research from "@/components/Research";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import dynamic from "next/dynamic";
+import HomeDeferredAI from "@/components/HomeDeferredAI";
 import { getPublishedProjects } from "@/lib/db";
 import { allTags as defaultTags } from "@/data/projects";
-
-const HomeCommandModal = dynamic(() => import("@/components/HomeCommandModal"), {
-  ssr: false,
-});
-
-const AISearch = dynamic(() => import("@/components/AISearch"), {
-  ssr: false,
-});
 
 export default async function Home() {
   const projects = await getPublishedProjects();
@@ -30,11 +22,10 @@ export default async function Home() {
   return (
     <>
       <Navigation />
-      <HomeCommandModal />
+      <HomeDeferredAI />
       <main id="main-content">
         <Hero projectCount={projectCount} winnerCount={winnerCount} />
         <WhatIBuild />
-        <AISearch />
         <Projects projects={projects} allTags={allTags} />
         <Experience />
         <Research
