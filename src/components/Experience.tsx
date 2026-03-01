@@ -53,7 +53,8 @@ const leadership = [
     role: "Student Representative",
     company: "Albert School",
     description:
-      "Student fairs across Paris, Marseille, Lyon, and Geneva. Open days, campus tours, mentoring high schoolers during immersion weeks. Hosted a workshop for 200 students in a Luxembourg high school.",
+      "Student fairs across Paris, Marseille, Lyon, and Geneva. Open days, campus tours, candidate mentoring for admissions, and co-hosted a Data/AI workshop for 245 high school students at the Lycee francais du Luxembourg.",
+    slug: "student-representative",
   },
   {
     period: "2024 — 2025",
