@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { fetchWithTimeout } from "@/lib/fetch";
 
 export async function POST(req: NextRequest) {
   try {
@@ -70,7 +71,7 @@ Rules:
 - Be realistic — don't overstate results
 - Return ONLY the JSON object, no markdown, no code blocks`;
 
-    const response = await fetch(
+    const response = await fetchWithTimeout(
       "https://api.mistral.ai/v1/chat/completions",
       {
         method: "POST",
@@ -88,6 +89,7 @@ Rules:
           max_tokens: 2000,
           response_format: { type: "json_object" },
         }),
+        timeoutMs: 30_000,
       }
     );
 

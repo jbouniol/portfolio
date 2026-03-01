@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { getProjects, addProject } from "@/lib/db";
 import { revalidatePath } from "next/cache";
 import type { Project } from "@/data/projects";
+import { validateProjectPayload } from "@/lib/admin-validation";
 
 // GET — list all projects
 export async function GET() {
@@ -17,9 +18,13 @@ export async function GET() {
 // POST — create a new project
 export async function POST(req: NextRequest) {
   try {
-    const body = await req.json();
+    const payload = await req.json();
+    const validation = validateProjectPayload(payload, "create");
+    if (!validation.ok) {
+      return NextResponse.json({ error: validation.error }, { status: 400 });
+    }
 
-    // Basic validation
+    const body = validation.data;
     if (!body.slug || !body.title || !body.company || !body.category) {
       return NextResponse.json(
         { error: "Missing required fields: slug, title, company, category" },
@@ -52,6 +57,7 @@ export async function POST(req: NextRequest) {
       year: body.year || "",
       duration: body.duration || "",
       category: body.category,
+      status: body.status || "draft",
       ...(body.canvaEmbedUrl && { canvaEmbedUrl: body.canvaEmbedUrl }),
       ...(body.githubUrl && { githubUrl: body.githubUrl }),
       ...(body.isPrivate && { isPrivate: body.isPrivate }),

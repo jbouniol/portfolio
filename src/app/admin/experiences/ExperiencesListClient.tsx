@@ -1,17 +1,97 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { Plus, Search, Briefcase, Users, ShieldCheck, Pencil } from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import { Plus, Briefcase, Users, ShieldCheck, Pencil } from "lucide-react";
 import type { Experience } from "@/data/experiences";
+import {
+  AdminSearchFilter,
+  AdminSelectFilter,
+} from "@/app/admin/_components/AdminListFilters";
+
+const TYPE_FILTER_OPTIONS: Array<{
+  value: "all" | "work" | "leadership";
+  label: string;
+}> = [
+  { value: "all", label: "All Types" },
+  { value: "work", label: "Work Experience" },
+  { value: "leadership", label: "Leadership" },
+];
+
+const STATUS_FILTER_OPTIONS: Array<{
+  value: "all" | "draft" | "published";
+  label: string;
+}> = [
+  { value: "all", label: "All Statuses" },
+  { value: "published", label: "Published" },
+  { value: "draft", label: "Draft" },
+];
+
+const GAP_FILTER_OPTIONS: Array<{
+  value: "all" | "missing-tools" | "missing-core" | "confidential";
+  label: string;
+}> = [
+  { value: "all", label: "All Quality" },
+  { value: "missing-tools", label: "Missing Tools" },
+  { value: "missing-core", label: "Missing Core Content" },
+  { value: "confidential", label: "Confidential Only" },
+];
 
 export default function ExperiencesListClient({
   experiences,
 }: {
   experiences: Experience[];
 }) {
-  const [search, setSearch] = useState("");
-  const [filterType, setFilterType] = useState<"all" | "work" | "leadership">("all");
+  const searchParams = useSearchParams();
+
+  const initialFilters = useMemo(() => {
+    const query = searchParams.get("q") ?? "";
+    const type = searchParams.get("type");
+    const status = searchParams.get("status");
+    const gap = searchParams.get("gap");
+
+    const normalizedType =
+      type === "work" || type === "leadership" || type === "all"
+        ? type
+        : "all";
+    const normalizedStatus =
+      status === "draft" || status === "published" || status === "all"
+        ? status
+        : "all";
+    const normalizedGap =
+      gap === "missing-tools" ||
+      gap === "missing-core" ||
+      gap === "confidential" ||
+      gap === "all"
+        ? gap
+        : "all";
+
+    return {
+      query,
+      type: normalizedType as "all" | "work" | "leadership",
+      status: normalizedStatus as "all" | "draft" | "published",
+      gap: normalizedGap as "all" | "missing-tools" | "missing-core" | "confidential",
+    };
+  }, [searchParams]);
+
+  const [search, setSearch] = useState(initialFilters.query);
+  const [filterType, setFilterType] = useState<"all" | "work" | "leadership">(
+    initialFilters.type
+  );
+  const [filterStatus, setFilterStatus] = useState<
+    "all" | "draft" | "published"
+  >(initialFilters.status);
+  const [filterGap, setFilterGap] = useState<
+    "all" | "missing-tools" | "missing-core" | "confidential"
+  >(initialFilters.gap);
+
+  useEffect(() => {
+    setSearch(initialFilters.query);
+    setFilterType(initialFilters.type);
+    setFilterStatus(initialFilters.status);
+    setFilterGap(initialFilters.gap);
+  }, [initialFilters]);
 
   const filtered = experiences.filter((e) => {
     const matchesSearch =
@@ -19,7 +99,17 @@ export default function ExperiencesListClient({
       e.role.toLowerCase().includes(search.toLowerCase()) ||
       e.company.toLowerCase().includes(search.toLowerCase());
     const matchesType = filterType === "all" || e.type === filterType;
-    return matchesSearch && matchesType;
+    const matchesStatus =
+      filterStatus === "all" || (e.status ?? "published") === filterStatus;
+    const matchesGap =
+      filterGap === "all"
+        ? true
+        : filterGap === "missing-tools"
+          ? !e.tools || e.tools.length === 0
+          : filterGap === "missing-core"
+            ? !e.tagline || !e.description
+            : Boolean(e.isConfidential);
+    return matchesSearch && matchesType && matchesStatus && matchesGap;
   });
 
   return (
@@ -42,28 +132,26 @@ export default function ExperiencesListClient({
 
       {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-3 mb-6">
-        <div className="relative flex-1">
-          <Search
-            size={14}
-            className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500"
-          />
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search experiences..."
-            className="w-full bg-zinc-900 border border-zinc-800 rounded-lg pl-9 pr-3 py-2.5 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-blue-500/50"
-          />
-        </div>
-        <select
+        <AdminSearchFilter
+          value={search}
+          onChange={setSearch}
+          placeholder="Search experiences..."
+        />
+        <AdminSelectFilter<"all" | "work" | "leadership">
           value={filterType}
-          onChange={(e) => setFilterType(e.target.value as "all" | "work" | "leadership")}
-          className="bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500/50"
-        >
-          <option value="all">All Types</option>
-          <option value="work">Work Experience</option>
-          <option value="leadership">Leadership</option>
-        </select>
+          onChange={setFilterType}
+          options={TYPE_FILTER_OPTIONS}
+        />
+        <AdminSelectFilter<"all" | "draft" | "published">
+          value={filterStatus}
+          onChange={setFilterStatus}
+          options={STATUS_FILTER_OPTIONS}
+        />
+        <AdminSelectFilter<"all" | "missing-tools" | "missing-core" | "confidential">
+          value={filterGap}
+          onChange={setFilterGap}
+          options={GAP_FILTER_OPTIONS}
+        />
       </div>
 
       {/* List */}
@@ -89,6 +177,11 @@ export default function ExperiencesListClient({
                 {exp.isConfidential && (
                   <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-mono bg-red-500/10 text-red-400 rounded-full">
                     <ShieldCheck size={8} /> Confidential
+                  </span>
+                )}
+                {(exp.status ?? "published") === "draft" && (
+                  <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-mono bg-zinc-700/40 text-zinc-300 rounded-full">
+                    Draft
                   </span>
                 )}
               </div>

@@ -6,7 +6,6 @@ import {
   LayoutDashboard,
   FolderKanban,
   Briefcase,
-  Sparkles,
   MessageSquare,
   LogOut,
   Menu,
@@ -18,8 +17,7 @@ const navItems = [
   { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
   { label: "Projects", href: "/admin/projects", icon: FolderKanban },
   { label: "Experiences", href: "/admin/experiences", icon: Briefcase },
-  { label: "AI Pre-fill", href: "/admin/ai-prefill", icon: Sparkles },
-  { label: "Chatbot", href: "/admin/chatbot", icon: MessageSquare },
+  { label: "Bob", href: "/admin/chatbot", icon: MessageSquare },
 ];
 
 export default function AdminShell({ children }: { children: React.ReactNode }) {

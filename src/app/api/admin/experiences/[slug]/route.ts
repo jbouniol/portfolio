@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getExperienceBySlug, updateExperience, deleteExperience } from "@/lib/db";
 import { revalidatePath } from "next/cache";
+import { validateExperiencePayload } from "@/lib/admin-validation";
 
 // GET — single experience by slug
 export async function GET(
@@ -27,8 +28,21 @@ export async function PUT(
 ) {
   const { slug } = await params;
   try {
-    const body = await req.json();
-    const updated = await updateExperience(slug, body);
+    const payload = await req.json();
+    const validation = validateExperiencePayload(payload, "update");
+    if (!validation.ok) {
+      return NextResponse.json({ error: validation.error }, { status: 400 });
+    }
+
+    const updates = validation.data;
+    if (updates.slug && updates.slug !== slug) {
+      return NextResponse.json(
+        { error: "Slug cannot be changed from this endpoint" },
+        { status: 400 }
+      );
+    }
+
+    const updated = await updateExperience(slug, updates);
 
     if (!updated) {
       return NextResponse.json({ error: "Experience not found" }, { status: 404 });

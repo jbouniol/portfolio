@@ -1,13 +1,14 @@
 import { NextResponse } from "next/server";
-import { seedDatabase } from "@/lib/db";
+import { seedDatabaseWithMode } from "@/lib/db";
 
-// POST — Seed the database with static data (one-shot setup)
+// POST — Sync static defaults into KV (non-destructive only)
 export async function POST() {
   try {
-    const result = await seedDatabase();
+    const result = await seedDatabaseWithMode({ mode: "merge" });
+    const message = `Sync done: +${result.addedProjects} projects, +${result.addedExperiences} experiences (existing content preserved)`;
     return NextResponse.json({
       success: true,
-      message: `Seeded ${result.projects} projects and ${result.experiences} experiences`,
+      message,
       ...result,
     });
   } catch (error) {

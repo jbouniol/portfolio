@@ -8,11 +8,11 @@ import Research from "@/components/Research";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import HomeCommandModal from "@/components/HomeCommandModal";
-import { getProjects, getAllTags } from "@/lib/db";
+import { getPublishedProjects, getAllTags } from "@/lib/db";
 
 export default async function Home() {
-  const projects = await getProjects();
-  const allTags = getAllTags();
+  const projects = await getPublishedProjects();
+  const allTags = await getAllTags();
   const projectCount = projects.length;
   const winnerCount = projects.filter((project) => project.badge === "Winner").length;
   const podiumCount = projects.filter((project) => Boolean(project.badge)).length;

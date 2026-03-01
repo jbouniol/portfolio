@@ -30,14 +30,47 @@ const KEYS = {
   experiences: "portfolio:experiences",
 } as const;
 
+function parseStoredArray<T>(input: unknown): T[] | null {
+  if (Array.isArray(input)) return input as T[];
+  if (typeof input !== "string") return null;
+  try {
+    const parsed = JSON.parse(input);
+    return Array.isArray(parsed) ? (parsed as T[]) : null;
+  } catch {
+    return null;
+  }
+}
+
+function normalizeStatus(
+  status: unknown
+): "draft" | "published" | undefined {
+  if (status === "draft" || status === "published") return status;
+  return undefined;
+}
+
+function normalizeProjects(items: Project[]) {
+  return items.map((project) => ({
+    ...project,
+    status: normalizeStatus(project.status),
+  }));
+}
+
+function normalizeExperiences(items: Experience[]) {
+  return items.map((experience) => ({
+    ...experience,
+    status: normalizeStatus(experience.status),
+  }));
+}
+
 // ── Read ────────────────────────────────────────────────────────
 
 export async function getProjects(): Promise<Project[]> {
   try {
     const client = getRedis();
     if (!client) return staticProjects;
-    const data = await client.get<Project[]>(KEYS.projects);
-    return data && data.length > 0 ? data : staticProjects;
+    const raw = await client.get<unknown>(KEYS.projects);
+    const parsed = parseStoredArray<Project>(raw);
+    return parsed && parsed.length > 0 ? normalizeProjects(parsed) : staticProjects;
   } catch (error) {
     console.error("[db] Failed to read projects from Redis:", error);
     return staticProjects;
@@ -48,16 +81,33 @@ export async function getExperiences(): Promise<Experience[]> {
   try {
     const client = getRedis();
     if (!client) return staticExperiences;
-    const data = await client.get<Experience[]>(KEYS.experiences);
-    return data && data.length > 0 ? data : staticExperiences;
+    const raw = await client.get<unknown>(KEYS.experiences);
+    const parsed = parseStoredArray<Experience>(raw);
+    return parsed && parsed.length > 0
+      ? normalizeExperiences(parsed)
+      : staticExperiences;
   } catch (error) {
     console.error("[db] Failed to read experiences from Redis:", error);
     return staticExperiences;
   }
 }
 
-export function getAllTags() {
-  return staticAllTags;
+export async function getPublishedProjects(): Promise<Project[]> {
+  const all = await getProjects();
+  return all.filter((project) => project.status !== "draft");
+}
+
+export async function getPublishedExperiences(): Promise<Experience[]> {
+  const all = await getExperiences();
+  return all.filter((experience) => experience.status !== "draft");
+}
+
+export async function getAllTags() {
+  const projects = await getPublishedProjects();
+  const dynamicTags = projects.flatMap((project) => project.tags || []);
+  return Array.from(new Set([...staticAllTags, ...dynamicTags])).sort((a, b) =>
+    a.localeCompare(b)
+  );
 }
 
 // ── Write ───────────────────────────────────────────────────────
@@ -65,28 +115,97 @@ export function getAllTags() {
 export async function setProjects(data: Project[]): Promise<void> {
   const client = getRedis();
   if (!client) throw new Error("Redis is not configured");
-  await client.set(KEYS.projects, JSON.stringify(data));
+  await client.set(KEYS.projects, data);
 }
 
 export async function setExperiences(data: Experience[]): Promise<void> {
   const client = getRedis();
   if (!client) throw new Error("Redis is not configured");
-  await client.set(KEYS.experiences, JSON.stringify(data));
+  await client.set(KEYS.experiences, data);
 }
 
 // ── Seed ────────────────────────────────────────────────────────
 
 export async function seedDatabase(): Promise<{
+  mode: "merge" | "reset";
   projects: number;
   experiences: number;
+  addedProjects: number;
+  addedExperiences: number;
+  preservedProjects: number;
+  preservedExperiences: number;
+}> {
+  return seedDatabaseWithMode({ mode: "merge" });
+}
+
+export async function seedDatabaseWithMode(options?: {
+  mode?: "merge" | "reset";
+}): Promise<{
+  mode: "merge" | "reset";
+  projects: number;
+  experiences: number;
+  addedProjects: number;
+  addedExperiences: number;
+  preservedProjects: number;
+  preservedExperiences: number;
 }> {
   const client = getRedis();
   if (!client) throw new Error("Redis is not configured");
-  await client.set(KEYS.projects, JSON.stringify(staticProjects));
-  await client.set(KEYS.experiences, JSON.stringify(staticExperiences));
+  const mode = options?.mode ?? "merge";
+
+  if (mode === "reset") {
+    await client.set(KEYS.projects, staticProjects);
+    await client.set(KEYS.experiences, staticExperiences);
+    return {
+      mode,
+      projects: staticProjects.length,
+      experiences: staticExperiences.length,
+      addedProjects: staticProjects.length,
+      addedExperiences: staticExperiences.length,
+      preservedProjects: 0,
+      preservedExperiences: 0,
+    };
+  }
+
+  const [rawProjects, rawExperiences] = await Promise.all([
+    client.get<unknown>(KEYS.projects),
+    client.get<unknown>(KEYS.experiences),
+  ]);
+
+  const existingProjects = parseStoredArray<Project>(rawProjects) ?? [];
+  const existingExperiences = parseStoredArray<Experience>(rawExperiences) ?? [];
+
+  const projectMap = new Map(existingProjects.map((project) => [project.slug, project]));
+  for (const staticProject of staticProjects) {
+    if (!projectMap.has(staticProject.slug)) {
+      projectMap.set(staticProject.slug, staticProject);
+    }
+  }
+
+  const experienceMap = new Map(
+    existingExperiences.map((experience) => [experience.slug, experience])
+  );
+  for (const staticExperience of staticExperiences) {
+    if (!experienceMap.has(staticExperience.slug)) {
+      experienceMap.set(staticExperience.slug, staticExperience);
+    }
+  }
+
+  const mergedProjects = Array.from(projectMap.values());
+  const mergedExperiences = Array.from(experienceMap.values());
+  await Promise.all([
+    client.set(KEYS.projects, mergedProjects),
+    client.set(KEYS.experiences, mergedExperiences),
+  ]);
+
   return {
-    projects: staticProjects.length,
-    experiences: staticExperiences.length,
+    mode,
+    projects: mergedProjects.length,
+    experiences: mergedExperiences.length,
+    addedProjects: mergedProjects.length - existingProjects.length,
+    addedExperiences: mergedExperiences.length - existingExperiences.length,
+    preservedProjects: existingProjects.length,
+    preservedExperiences: existingExperiences.length,
   };
 }
 
@@ -100,6 +219,20 @@ export async function getProjectBySlug(slug: string): Promise<Project | undefine
 export async function getExperienceBySlug(slug: string): Promise<Experience | undefined> {
   const all = await getExperiences();
   return all.find((e) => e.slug === slug);
+}
+
+export async function getPublishedProjectBySlug(
+  slug: string
+): Promise<Project | undefined> {
+  const all = await getPublishedProjects();
+  return all.find((project) => project.slug === slug);
+}
+
+export async function getPublishedExperienceBySlug(
+  slug: string
+): Promise<Experience | undefined> {
+  const all = await getPublishedExperiences();
+  return all.find((experience) => experience.slug === slug);
 }
 
 export async function addProject(project: Project): Promise<void> {

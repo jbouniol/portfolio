@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useCallback, useEffect, useMemo, useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import {
   Save,
@@ -10,9 +10,37 @@ import {
   Plus,
   X,
   Sparkles,
+  RotateCcw,
 } from "lucide-react";
 import Link from "next/link";
 import type { Experience } from "@/data/experiences";
+import AIPrefillModal from "./AIPrefillModal";
+import {
+  formatDiffValue,
+  toAdminSlug,
+} from "./admin-form-utils";
+import { AdminTextField, AiPolishTextArea } from "./AdminFormFields";
+import { useAdminLocalDraft } from "./useAdminLocalDraft";
+
+const STATUS_OPTIONS: Array<{ value: "draft" | "published"; label: string }> = [
+  { value: "published", label: "Published" },
+  { value: "draft", label: "Draft" },
+];
+
+const EXPERIENCE_DIFF_LABELS: Record<string, string> = {
+  slug: "Slug",
+  role: "Role",
+  company: "Company",
+  period: "Period",
+  location: "Location",
+  type: "Type",
+  tagline: "Tagline",
+  description: "Description",
+  missions: "Missions",
+  tools: "Tools",
+  isConfidential: "Confidential",
+  status: "Status",
+};
 
 interface Props {
   experience?: Experience;
@@ -34,17 +62,86 @@ export default function ExperienceForm({ experience, mode }: Props) {
   const [description, setDescription] = useState(experience?.description || "");
   const [missions, setMissions] = useState<string[]>(experience?.missions || [""]);
   const [tools, setTools] = useState<string[]>(experience?.tools || []);
-  const [isConfidential, setIsConfidential] = useState(experience?.isConfidential || false);
+  const [isConfidential, setIsConfidential] = useState(
+    experience?.isConfidential || false
+  );
+  const [status, setStatus] = useState<"draft" | "published">(
+    mode === "create" ? "draft" : experience?.status ?? "published"
+  );
   const [newTool, setNewTool] = useState("");
+  const [prefillOpen, setPrefillOpen] = useState(false);
 
-  function autoSlug(value: string) {
-    return value
-      .toLowerCase()
-      .replace(/[^a-z0-9\s-]/g, "")
-      .replace(/\s+/g, "-")
-      .replace(/-+/g, "-")
-      .trim();
-  }
+  const draftStorageKey = useMemo(
+    () => `admin:experience:draft:${mode}:${experience?.slug ?? "new"}`,
+    [mode, experience?.slug]
+  );
+
+  const formSnapshot = useMemo(
+    () => ({
+      slug,
+      role,
+      company,
+      period,
+      location,
+      type,
+      tagline,
+      description,
+      missions,
+      tools,
+      isConfidential,
+      status,
+    }),
+    [
+      slug,
+      role,
+      company,
+      period,
+      location,
+      type,
+      tagline,
+      description,
+      missions,
+      tools,
+      isConfidential,
+      status,
+    ]
+  );
+
+  const initialSnapshot = useMemo(() => {
+    if (mode !== "edit" || !experience) return null;
+    return {
+      slug: experience.slug ?? "",
+      role: experience.role ?? "",
+      company: experience.company ?? "",
+      period: experience.period ?? "",
+      location: experience.location ?? "",
+      type: experience.type ?? "work",
+      tagline: experience.tagline ?? "",
+      description: experience.description ?? "",
+      missions: experience.missions ?? [],
+      tools: experience.tools ?? [],
+      isConfidential: experience.isConfidential ?? false,
+      status: experience.status ?? "published",
+    };
+  }, [experience, mode]);
+
+  const changePreview = useMemo(() => {
+    if (!initialSnapshot) return [];
+
+    return Object.entries(formSnapshot)
+      .filter(([key, value]) => {
+        const before = initialSnapshot[key as keyof typeof initialSnapshot];
+        return JSON.stringify(before) !== JSON.stringify(value);
+      })
+      .map(([key, value]) => ({
+        key,
+        label: EXPERIENCE_DIFF_LABELS[key] || key,
+        before: formatDiffValue(
+          initialSnapshot[key as keyof typeof initialSnapshot]
+        ),
+        after: formatDiffValue(value),
+      }));
+  }, [formSnapshot, initialSnapshot]);
 
   function updateMission(index: number, value: string) {
     const updated = [...missions];
@@ -68,6 +165,81 @@ export default function ExperienceForm({ experience, mode }: Props) {
     }
   }
 
+  const applyDraft = useCallback(
+    (draft: Partial<Experience> & { status?: "draft" | "published" }) => {
+      if (typeof draft.slug === "string") setSlug(draft.slug);
+      if (typeof draft.role === "string") setRole(draft.role);
+      if (typeof draft.company === "string") setCompany(draft.company);
+      if (typeof draft.period === "string") setPeriod(draft.period);
+      if (typeof draft.location === "string") setLocation(draft.location);
+      if (draft.type === "work" || draft.type === "leadership") setType(draft.type);
+      if (typeof draft.tagline === "string") setTagline(draft.tagline);
+      if (typeof draft.description === "string") setDescription(draft.description);
+      if (Array.isArray(draft.missions)) setMissions(draft.missions);
+      if (Array.isArray(draft.tools)) setTools(draft.tools);
+      if (typeof draft.isConfidential === "boolean") {
+        setIsConfidential(draft.isConfidential);
+      }
+      if (draft.status === "draft" || draft.status === "published") {
+        setStatus(draft.status);
+      }
+    },
+    []
+  );
+
+  function applyAIPrefill(dataFromAI: Partial<Experience>) {
+    if (dataFromAI.slug) setSlug(dataFromAI.slug);
+    if (dataFromAI.role) setRole(dataFromAI.role);
+    if (dataFromAI.company) setCompany(dataFromAI.company);
+    if (dataFromAI.period) setPeriod(dataFromAI.period);
+    if (dataFromAI.location) setLocation(dataFromAI.location);
+    if (dataFromAI.type) setType(dataFromAI.type);
+    if (dataFromAI.tagline) setTagline(dataFromAI.tagline);
+    if (dataFromAI.description) setDescription(dataFromAI.description);
+    if (dataFromAI.missions) setMissions(dataFromAI.missions);
+    if (dataFromAI.tools) setTools(dataFromAI.tools);
+    if (typeof dataFromAI.isConfidential === "boolean") {
+      setIsConfidential(dataFromAI.isConfidential);
+    }
+    if (dataFromAI.status) setStatus(dataFromAI.status);
+  }
+
+  useEffect(() => {
+    if (typeof window === "undefined" || mode !== "create") return;
+    const typeInStorage = sessionStorage.getItem("ai-prefill-type");
+    const raw = sessionStorage.getItem("ai-prefill-data");
+    if (typeInStorage !== "experience" || !raw) return;
+
+    try {
+      const parsed = JSON.parse(raw) as Partial<Experience>;
+      applyAIPrefill(parsed);
+    } catch {
+      // Ignore malformed AI payload
+    } finally {
+      sessionStorage.removeItem("ai-prefill-type");
+      sessionStorage.removeItem("ai-prefill-data");
+    }
+  }, [mode]);
+
+  const hasFormChanges = useMemo(() => {
+    if (mode !== "edit" || !initialSnapshot) return true;
+    return JSON.stringify(formSnapshot) !== JSON.stringify(initialSnapshot);
+  }, [formSnapshot, initialSnapshot, mode]);
+  const hasPendingAIPrefill =
+    mode === "create" &&
+    typeof window !== "undefined" &&
+    sessionStorage.getItem("ai-prefill-type") === "experience";
+
+  const { restoredDraft, lastSavedAt, clearLocalDraft } = useAdminLocalDraft({
+    draftStorageKey,
+    mode,
+    updatedAt: experience?.updatedAt,
+    hasPendingAIPrefill,
+    formSnapshot,
+    hasFormChanges,
+    applyDraft,
+  });
+
   async function handleSubmit(e: FormEvent) {
     e.preventDefault();
     setError("");
@@ -82,9 +254,10 @@ export default function ExperienceForm({ experience, mode }: Props) {
       type,
       tagline,
       description,
-      missions: missions.filter((m) => m.trim()),
+      missions: missions.filter((mission) => mission.trim()),
       tools: tools.length > 0 ? tools : undefined,
       isConfidential: isConfidential || undefined,
+      status,
     };
 
     try {
@@ -99,6 +272,7 @@ export default function ExperienceForm({ experience, mode }: Props) {
       });
 
       if (res.ok) {
+        clearLocalDraft();
         router.push("/admin/experiences");
         router.refresh();
       } else {
@@ -120,6 +294,7 @@ export default function ExperienceForm({ experience, mode }: Props) {
         method: "DELETE",
       });
       if (res.ok) {
+        clearLocalDraft();
         router.push("/admin/experiences");
         router.refresh();
       } else {
@@ -134,7 +309,6 @@ export default function ExperienceForm({ experience, mode }: Props) {
 
   return (
     <div>
-      {/* Header */}
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-3">
           <Link
@@ -151,13 +325,14 @@ export default function ExperienceForm({ experience, mode }: Props) {
         </div>
         <div className="flex items-center gap-2">
           {mode === "create" && (
-            <Link
-              href="/admin/ai-prefill?type=experience"
-              className="flex items-center gap-2 px-3 py-2 bg-purple-600/20 text-purple-400 border border-purple-500/30 rounded-lg text-sm hover:bg-purple-600/30 transition-all"
+            <button
+              type="button"
+              onClick={() => setPrefillOpen(true)}
+              className="flex items-center gap-2 px-3 py-2 bg-blue-600/20 text-blue-300 border border-blue-500/30 rounded-lg text-sm hover:bg-blue-600/30 transition-all"
             >
               <Sparkles size={14} />
               AI Pre-fill
-            </Link>
+            </button>
           )}
           {mode === "edit" && (
             <button
@@ -172,6 +347,23 @@ export default function ExperienceForm({ experience, mode }: Props) {
         </div>
       </div>
 
+      {(restoredDraft || lastSavedAt) && (
+        <div className="mb-4 p-3 bg-blue-500/10 border border-blue-500/30 rounded-lg text-blue-200 text-xs flex items-center justify-between gap-3">
+          <span>
+            {restoredDraft ? "Autosaved draft restored." : "Autosave enabled."}
+            {lastSavedAt ? ` Last save: ${new Date(lastSavedAt).toLocaleString()}` : ""}
+          </span>
+          <button
+            type="button"
+            onClick={clearLocalDraft}
+            className="inline-flex items-center gap-1 text-blue-300 hover:text-white transition-colors"
+          >
+            <RotateCcw size={12} />
+            Clear local draft
+          </button>
+        </div>
+      )}
+
       {error && (
         <div className="mb-6 p-3 bg-red-500/10 border border-red-500/30 rounded-lg text-red-400 text-sm">
           {error}
@@ -179,31 +371,47 @@ export default function ExperienceForm({ experience, mode }: Props) {
       )}
 
       <form onSubmit={handleSubmit} className="space-y-6">
-        {/* Basic Info */}
         <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-5 space-y-4">
           <h2 className="text-sm font-mono text-zinc-400 mb-2">Basic Info</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <Field label="Role *" value={role} onChange={(v) => {
-              setRole(v);
-              if (mode === "create" && !slug) setSlug(autoSlug(v));
-            }} />
-            <Field label="Company *" value={company} onChange={setCompany} />
+            <AdminTextField
+              label="Role *"
+              value={role}
+              onChange={(value) => {
+                setRole(value);
+                if (mode === "create" && !slug) setSlug(toAdminSlug(value));
+              }}
+            />
+            <AdminTextField
+              label="Company *"
+              value={company}
+              onChange={setCompany}
+            />
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            <Field
+            <AdminTextField
               label="Slug *"
               value={slug}
               onChange={setSlug}
               mono
               disabled={mode === "edit"}
             />
-            <Field label="Period" value={period} onChange={setPeriod} placeholder="e.g. Jul 2025 — Dec 2025" />
-            <Field label="Location" value={location} onChange={setLocation} />
+            <AdminTextField
+              label="Period"
+              value={period}
+              onChange={setPeriod}
+              placeholder="e.g. Jul 2025 — Dec 2025"
+            />
+            <AdminTextField
+              label="Location"
+              value={location}
+              onChange={setLocation}
+            />
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
               <label className="block text-xs text-zinc-400 mb-1.5">Type *</label>
               <select
@@ -213,6 +421,20 @@ export default function ExperienceForm({ experience, mode }: Props) {
               >
                 <option value="work">Work Experience</option>
                 <option value="leadership">Leadership</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-xs text-zinc-400 mb-1.5">Status</label>
+              <select
+                value={status}
+                onChange={(e) => setStatus(e.target.value as "draft" | "published")}
+                className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500/50"
+              >
+                {STATUS_OPTIONS.map((option) => (
+                  <option key={option.value} value={option.value}>
+                    {option.label}
+                  </option>
+                ))}
               </select>
             </div>
             <div className="flex items-end">
@@ -228,29 +450,42 @@ export default function ExperienceForm({ experience, mode }: Props) {
             </div>
           </div>
 
-          <TextArea label="Tagline" value={tagline} onChange={setTagline} rows={2} />
-          <TextArea label="Description" value={description} onChange={setDescription} rows={4} />
+          <AiPolishTextArea
+            label="Tagline"
+            value={tagline}
+            onChange={setTagline}
+            rows={2}
+            enableAI
+            aiContext="Experience tagline"
+          />
+          <AiPolishTextArea
+            label="Description"
+            value={description}
+            onChange={setDescription}
+            rows={4}
+            enableAI
+            aiContext="Experience description"
+          />
         </div>
 
-        {/* Missions */}
         <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-5">
           <h2 className="text-sm font-mono text-zinc-400 mb-3">Missions</h2>
           <div className="space-y-2">
-            {missions.map((mission, i) => (
-              <div key={i} className="flex gap-2">
+            {missions.map((mission, index) => (
+              <div key={index} className="flex gap-2">
                 <span className="text-xs text-zinc-600 mt-3 w-4 shrink-0 text-right">
-                  {i + 1}.
+                  {index + 1}.
                 </span>
                 <textarea
                   value={mission}
-                  onChange={(e) => updateMission(i, e.target.value)}
+                  onChange={(e) => updateMission(index, e.target.value)}
                   rows={2}
                   className="flex-1 bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-blue-500/50 resize-y"
                 />
                 {missions.length > 1 && (
                   <button
                     type="button"
-                    onClick={() => removeMission(i)}
+                    onClick={() => removeMission(index)}
                     className="p-2 text-zinc-500 hover:text-red-400 self-start"
                   >
                     <X size={14} />
@@ -269,19 +504,18 @@ export default function ExperienceForm({ experience, mode }: Props) {
           </button>
         </div>
 
-        {/* Tools */}
         <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-5">
           <h2 className="text-sm font-mono text-zinc-400 mb-3">Tools & Stack</h2>
           <div className="flex flex-wrap gap-2 mb-3">
-            {tools.map((t, i) => (
+            {tools.map((tool, index) => (
               <span
-                key={i}
+                key={index}
                 className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-zinc-800 border border-zinc-700 rounded-full text-xs"
               >
-                {t}
+                {tool}
                 <button
                   type="button"
-                  onClick={() => setTools(tools.filter((_, j) => j !== i))}
+                  onClick={() => setTools(tools.filter((_, i) => i !== index))}
                   className="text-zinc-500 hover:text-red-400"
                 >
                   <X size={12} />
@@ -313,77 +547,43 @@ export default function ExperienceForm({ experience, mode }: Props) {
           </div>
         </div>
 
-        {/* Submit */}
+        {mode === "edit" && changePreview.length > 0 && (
+          <div className="bg-zinc-900 border border-zinc-800 rounded-xl p-5">
+            <h2 className="text-sm font-mono text-zinc-400 mb-3">
+              Change Preview ({changePreview.length})
+            </h2>
+            <div className="space-y-2 max-h-64 overflow-y-auto pr-1">
+              {changePreview.map((change) => (
+                <div
+                  key={change.key}
+                  className="text-xs border border-zinc-800 rounded-lg p-3 bg-zinc-950/40"
+                >
+                  <p className="text-zinc-300 mb-1">{change.label}</p>
+                  <p className="text-zinc-500">Before: {change.before}</p>
+                  <p className="text-zinc-300">After: {change.after}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        )}
+
         <div className="flex justify-end">
           <button
             type="submit"
             disabled={loading}
             className="flex items-center gap-2 px-6 py-3 bg-white text-black text-sm font-medium rounded-lg hover:bg-zinc-200 disabled:opacity-50 transition-all"
           >
-            {loading ? (
-              <Loader2 size={14} className="animate-spin" />
-            ) : (
-              <Save size={14} />
-            )}
+            {loading ? <Loader2 size={14} className="animate-spin" /> : <Save size={14} />}
             {mode === "create" ? "Create Experience" : "Save Changes"}
           </button>
         </div>
       </form>
-    </div>
-  );
-}
 
-function Field({
-  label,
-  value,
-  onChange,
-  mono,
-  disabled,
-  placeholder,
-}: {
-  label: string;
-  value: string;
-  onChange: (v: string) => void;
-  mono?: boolean;
-  disabled?: boolean;
-  placeholder?: string;
-}) {
-  return (
-    <div>
-      <label className="block text-xs text-zinc-400 mb-1.5">{label}</label>
-      <input
-        type="text"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        disabled={disabled}
-        placeholder={placeholder}
-        className={`w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2.5 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-blue-500/50 disabled:opacity-50 ${
-          mono ? "font-mono" : ""
-        }`}
-      />
-    </div>
-  );
-}
-
-function TextArea({
-  label,
-  value,
-  onChange,
-  rows = 3,
-}: {
-  label: string;
-  value: string;
-  onChange: (v: string) => void;
-  rows?: number;
-}) {
-  return (
-    <div>
-      <label className="block text-xs text-zinc-400 mb-1.5">{label}</label>
-      <textarea
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        rows={rows}
-        className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2.5 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-blue-500/50 resize-y"
+      <AIPrefillModal
+        type="experience"
+        isOpen={prefillOpen}
+        onClose={() => setPrefillOpen(false)}
+        onApply={(dataFromAI) => applyAIPrefill(dataFromAI as Partial<Experience>)}
       />
     </div>
   );

@@ -1,18 +1,4 @@
-export type ProjectTag =
-  | "AI"
-  | "ML"
-  | "Data"
-  | "NLP"
-  | "Consulting"
-  | "Strategy"
-  | "Automation"
-  | "Finance"
-  | "Logistics"
-  | "Luxury"
-  | "Defense"
-  | "Transport"
-  | "Retail"
-  | "SaaS";
+export type ProjectTag = string;
 
 export type ProjectCategory = "bdd" | "hackathon" | "consulting" | "school";
 
@@ -38,7 +24,25 @@ export interface Project {
   badge?: string;
   category: ProjectCategory;
   contributors?: string[];
+  status?: "draft" | "published";
 }
+
+export const DEFAULT_PROJECT_TAGS: ProjectTag[] = [
+  "AI",
+  "ML",
+  "Data",
+  "NLP",
+  "Consulting",
+  "Strategy",
+  "Finance",
+  "Retail",
+  "Luxury",
+  "Defense",
+  "Transport",
+  "Logistics",
+  "Automation",
+  "SaaS",
+];
 
 export const projects: Project[] = [
   // ─── WINNERS ──────────────────────────────────────────────
@@ -564,19 +568,4 @@ export const projects: Project[] = [
   },
 ];
 
-export const allTags: ProjectTag[] = [
-  "AI",
-  "ML",
-  "Data",
-  "NLP",
-  "Consulting",
-  "Strategy",
-  "Finance",
-  "Retail",
-  "Luxury",
-  "Defense",
-  "Transport",
-  "Logistics",
-  "Automation",
-  "SaaS",
-];
+export const allTags: ProjectTag[] = [...DEFAULT_PROJECT_TAGS];

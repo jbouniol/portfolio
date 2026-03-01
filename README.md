@@ -1,92 +1,105 @@
 # Jonathan Bouniol — Portfolio Website
 
-Personal portfolio built with Next.js, focused on Data, AI, and Business case studies.
+Portfolio personnel Next.js avec:
+- Site public (projects, experiences, AI search)
+- Admin panel sécurisé (`/admin`) pour gérer le contenu
+- Assistant admin "Bob" (chat + génération CV/Cover Letter LaTeX/PDF)
 
-## Overview
-
-This website includes:
-- A multi-section homepage (Hero, capabilities, AI search, projects, experience, stack, contact)
-- Detailed project pages (`/projects/[slug]`)
-- Detailed experience pages (`/experience/[slug]`)
-- An AI assistant for contextual portfolio Q&A (section + `Cmd/Ctrl + K` modal)
-- SEO metadata, sitemap, robots, and JSON-LD structured data
-
-## Tech Stack
+## Stack
 
 - Next.js 16 (App Router)
-- React 19
-- TypeScript
+- React 19 + TypeScript
 - Tailwind CSS v4
-- Framer Motion
-- Lucide Icons
-- Vercel Analytics + Speed Insights
-- Mistral API (server route: `src/app/api/search/route.ts`)
+- Upstash Redis (KV) pour persistance runtime
+- Mistral + Gemini (features AI)
 
-## Local Development
-
-Install dependencies:
+## Démarrage local
 
 ```bash
 npm install
-```
-
-Run the development server:
-
-```bash
 npm run dev
 ```
 
-Lint:
+Qualité:
 
 ```bash
 npm run lint
+npx tsc --noEmit
 ```
 
-Production build:
+Build prod:
 
 ```bash
 npm run build
 npm run start
 ```
 
-## Environment Variables
+## Variables d'environnement
 
-Create a `.env.local` file with:
+Créer `.env.local`:
 
 ```bash
-MISTRAL_API_KEY=your_mistral_api_key
+# Admin auth (obligatoire pour /admin)
+ADMIN_PASSWORD=change-me
+ADMIN_JWT_SECRET=change-me-long-random-secret
+
+# Content storage (optionnel en local, requis pour persistance partagée)
+KV_REST_API_URL=...
+KV_REST_API_TOKEN=...
+
+# AI providers
+MISTRAL_API_KEY=...
+GEMINI_API_KEY=...
 ```
 
-Without this key, AI search returns a configuration message.
+Notes:
+- Sans `KV_*`, l'app lit les données statiques `src/data/*`.
+- Sans clé AI, les endpoints AI retournent des messages de configuration.
 
-## Content Management
+## Architecture contenu
 
-Main content is data-driven:
+- Projets statiques: `src/data/projects.ts`
+- Expériences statiques: `src/data/experiences.ts`
+- Profil/skills centralisés (context AI): `src/data/profile.ts`
+- Couche données (lecture/écriture + seed): `src/lib/db.ts`
 
-- Projects: `src/data/projects.ts`
-- Experiences: `src/data/experiences.ts`
+Le bouton `Sync Defaults` de l’admin exécute un merge des defaults statiques vers KV sans écraser les entrées déjà modifiées.
 
-Each project/experience entry feeds:
-- Homepage cards
-- Detail pages
-- AI context and related-item suggestions
-- Sitemap `lastModified` values (via `updatedAt`)
+## Admin panel
 
-## Key App Files
+- Routes: `/admin`, `/admin/projects`, `/admin/experiences`, `/admin/chatbot`
+- Protection auth: `src/proxy.ts` (remplace middleware classique)
+- Login API: `src/app/api/admin/auth/route.ts`
+- Formulaires project/experience:
+  - autosave local draft
+  - AI prefill dans les formulaires de création
+  - AI polish (`improve`, `shorten`, `STAR`) via `/api/admin/ai-polish`
 
-- Root layout and global metadata: `src/app/layout.tsx`
-- Homepage composition: `src/app/page.tsx`
-- AI API route: `src/app/api/search/route.ts`
-- Command modal: `src/components/CommandModal.tsx`
-- AI section: `src/components/AISearch.tsx`
-- Project detail UI: `src/app/projects/[slug]/ProjectDetailClient.tsx`
-- Experience detail UI: `src/app/experience/[slug]/ExperienceDetailClient.tsx`
+## Bob (assistant admin)
 
-## Deployment
+- UI: `src/app/admin/chatbot/page.tsx` + composants `src/app/admin/chatbot/_components/*`
+- API chat: `src/app/api/admin/chatbot/route.ts`
+- Contexte ciblé via mentions `@slug` (projects/experiences)
+- Choix modèle + style de réponse (`concise` / `deep`)
 
-Recommended target: Vercel.
+## Career Docs (CV / Cover Letter)
 
-Requirements:
-- Set `MISTRAL_API_KEY` in environment variables
-- Ensure domain value in `src/lib/site.ts` is correct
-- Run `npm run build` before production release checks
+- Génération LaTeX: `src/app/api/admin/career-docs/generate/route.ts`
+- Compilation PDF: `src/app/api/admin/career-docs/compile/route.ts`
+- Compile via POST tarball vers latexonline.cc (`/data`) pour éviter les erreurs URL 414.
+
+## Site public
+
+- Home: `src/app/page.tsx`
+- Project detail: `src/app/projects/[slug]/page.tsx`
+- Experience detail: `src/app/experience/[slug]/page.tsx`
+- AI search endpoint: `src/app/api/search/route.ts`
+
+## Déploiement
+
+Cible recommandée: Vercel.
+
+Checklist:
+1. Configurer toutes les variables d'environnement en Production/Preview.
+2. Vérifier `npm run build`.
+3. Vérifier accès admin (`/admin/login`) et endpoints AI côté serveur.

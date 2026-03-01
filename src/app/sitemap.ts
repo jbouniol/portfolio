@@ -1,11 +1,11 @@
-import { getProjects, getExperiences } from "@/lib/db";
+import { getPublishedProjects, getPublishedExperiences } from "@/lib/db";
 import { SITE_URL } from "@/lib/site";
 import type { MetadataRoute } from "next";
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const [projects, experiences] = await Promise.all([
-    getProjects(),
-    getExperiences(),
+    getPublishedProjects(),
+    getPublishedExperiences(),
   ]);
 
   const lastUpdated = [...projects, ...experiences]

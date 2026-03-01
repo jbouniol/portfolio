@@ -1,11 +1,11 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { getProjects, getProjectBySlug } from "@/lib/db";
+import { getPublishedProjects, getPublishedProjectBySlug } from "@/lib/db";
 import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL } from "@/lib/site";
 import ProjectDetailClient from "./ProjectDetailClient";
 
 export async function generateStaticParams() {
-  const projects = await getProjects();
+  const projects = await getPublishedProjects();
   return projects.map((project) => ({
     slug: project.slug,
   }));
@@ -17,7 +17,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const project = await getProjectBySlug(slug);
+  const project = await getPublishedProjectBySlug(slug);
   if (!project) return { title: "Project Not Found" };
 
   const canonicalUrl = `${SITE_URL}/projects/${project.slug}`;
@@ -55,7 +55,7 @@ export default async function ProjectPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const project = await getProjectBySlug(slug);
+  const project = await getPublishedProjectBySlug(slug);
 
   if (!project) {
     notFound();

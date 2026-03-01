@@ -1,17 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import {
-  Plus,
-  Search,
-  Trophy,
-  Award,
-  ShieldCheck,
-  ArrowUpRight,
-  Pencil,
-} from "lucide-react";
+import { useSearchParams } from "next/navigation";
+import { Plus, Trophy, Award, ShieldCheck, Pencil } from "lucide-react";
 import type { Project, ProjectCategory } from "@/data/projects";
+import {
+  AdminSearchFilter,
+  AdminSelectFilter,
+} from "@/app/admin/_components/AdminListFilters";
 
 const CATEGORY_LABELS: Record<ProjectCategory, string> = {
   bdd: "Business Deep Dive",
@@ -20,15 +17,96 @@ const CATEGORY_LABELS: Record<ProjectCategory, string> = {
   school: "School Project",
 };
 
+const STATUS_FILTER_OPTIONS: Array<{
+  value: "all" | "draft" | "published";
+  label: string;
+}> = [
+  { value: "all", label: "All Statuses" },
+  { value: "published", label: "Published" },
+  { value: "draft", label: "Draft" },
+];
+
+const GAP_FILTER_OPTIONS: Array<{
+  value: "all" | "missing-links" | "missing-core" | "missing-tags";
+  label: string;
+}> = [
+  { value: "all", label: "All Quality" },
+  { value: "missing-links", label: "Missing Links" },
+  { value: "missing-core", label: "Missing Core Content" },
+  { value: "missing-tags", label: "Missing Tags" },
+];
+
 export default function ProjectsListClient({
   projects,
 }: {
   projects: Project[];
 }) {
-  const [search, setSearch] = useState("");
-  const [filterCategory, setFilterCategory] = useState<
-    ProjectCategory | "all"
-  >("all");
+  const searchParams = useSearchParams();
+
+  const initialFilters = useMemo(() => {
+    const query = searchParams.get("q") ?? "";
+    const category = searchParams.get("category");
+    const status = searchParams.get("status");
+    const gap = searchParams.get("gap");
+
+    const normalizedCategory =
+      category && (Object.keys(CATEGORY_LABELS) as string[]).includes(category)
+        ? (category as ProjectCategory)
+        : "all";
+
+    const normalizedStatus =
+      status === "draft" || status === "published" || status === "all"
+        ? status
+        : "all";
+    const normalizedGap =
+      gap === "missing-links" ||
+      gap === "missing-core" ||
+      gap === "missing-tags" ||
+      gap === "all"
+        ? gap
+        : "all";
+
+    return {
+      query,
+      category: normalizedCategory as ProjectCategory | "all",
+      status: normalizedStatus as "all" | "draft" | "published",
+      gap: normalizedGap as
+        | "all"
+        | "missing-links"
+        | "missing-core"
+        | "missing-tags",
+    };
+  }, [searchParams]);
+
+  const [search, setSearch] = useState(initialFilters.query);
+  const [filterCategory, setFilterCategory] = useState<ProjectCategory | "all">(
+    initialFilters.category
+  );
+  const [filterStatus, setFilterStatus] = useState<
+    "all" | "draft" | "published"
+  >(initialFilters.status);
+  const [filterGap, setFilterGap] = useState<
+    "all" | "missing-links" | "missing-core" | "missing-tags"
+  >(initialFilters.gap);
+  const categoryFilterOptions = useMemo<
+    Array<{ value: ProjectCategory | "all"; label: string }>
+  >(
+    () => [
+      { value: "all", label: "All Categories" },
+      ...(Object.keys(CATEGORY_LABELS) as ProjectCategory[]).map((cat) => ({
+        value: cat,
+        label: CATEGORY_LABELS[cat],
+      })),
+    ],
+    []
+  );
+
+  useEffect(() => {
+    setSearch(initialFilters.query);
+    setFilterCategory(initialFilters.category);
+    setFilterStatus(initialFilters.status);
+    setFilterGap(initialFilters.gap);
+  }, [initialFilters]);
 
   const filtered = projects.filter((p) => {
     const matchesSearch =
@@ -38,7 +116,17 @@ export default function ProjectsListClient({
       p.tags.some((t) => t.toLowerCase().includes(search.toLowerCase()));
     const matchesCategory =
       filterCategory === "all" || p.category === filterCategory;
-    return matchesSearch && matchesCategory;
+    const matchesStatus =
+      filterStatus === "all" || (p.status ?? "published") === filterStatus;
+    const matchesGap =
+      filterGap === "all"
+        ? true
+        : filterGap === "missing-links"
+          ? !p.githubUrl || !p.canvaEmbedUrl
+          : filterGap === "missing-core"
+            ? !p.tagline || !p.result || !p.impact
+            : p.tags.length === 0;
+    return matchesSearch && matchesCategory && matchesStatus && matchesGap;
   });
 
   return (
@@ -61,33 +149,26 @@ export default function ProjectsListClient({
 
       {/* Filters */}
       <div className="flex flex-col sm:flex-row gap-3 mb-6">
-        <div className="relative flex-1">
-          <Search
-            size={14}
-            className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500"
-          />
-          <input
-            type="text"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search projects..."
-            className="w-full bg-zinc-900 border border-zinc-800 rounded-lg pl-9 pr-3 py-2.5 text-sm text-white placeholder:text-zinc-600 focus:outline-none focus:border-blue-500/50"
-          />
-        </div>
-        <select
+        <AdminSearchFilter
+          value={search}
+          onChange={setSearch}
+          placeholder="Search projects..."
+        />
+        <AdminSelectFilter<ProjectCategory | "all">
           value={filterCategory}
-          onChange={(e) =>
-            setFilterCategory(e.target.value as ProjectCategory | "all")
-          }
-          className="bg-zinc-900 border border-zinc-800 rounded-lg px-3 py-2.5 text-sm text-white focus:outline-none focus:border-blue-500/50"
-        >
-          <option value="all">All Categories</option>
-          {(Object.keys(CATEGORY_LABELS) as ProjectCategory[]).map((cat) => (
-            <option key={cat} value={cat}>
-              {CATEGORY_LABELS[cat]}
-            </option>
-          ))}
-        </select>
+          onChange={setFilterCategory}
+          options={categoryFilterOptions}
+        />
+        <AdminSelectFilter<"all" | "draft" | "published">
+          value={filterStatus}
+          onChange={setFilterStatus}
+          options={STATUS_FILTER_OPTIONS}
+        />
+        <AdminSelectFilter<"all" | "missing-links" | "missing-core" | "missing-tags">
+          value={filterGap}
+          onChange={setFilterGap}
+          options={GAP_FILTER_OPTIONS}
+        />
       </div>
 
       {/* List */}
@@ -125,6 +206,11 @@ export default function ProjectsListClient({
                 {project.isNDA && (
                   <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-mono bg-red-500/10 text-red-400 rounded-full">
                     <ShieldCheck size={8} /> NDA
+                  </span>
+                )}
+                {(project.status ?? "published") === "draft" && (
+                  <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-mono bg-zinc-700/40 text-zinc-300 rounded-full">
+                    Draft
                   </span>
                 )}
               </div>

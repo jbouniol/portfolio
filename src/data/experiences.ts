@@ -11,6 +11,7 @@ export interface Experience {
   missions: string[];
   tools?: string[];
   isConfidential?: boolean;
+  status?: "draft" | "published";
 }
 
 export const experiences: Experience[] = [

@@ -1,11 +1,14 @@
-import { getExperiences, getExperienceBySlug } from "@/lib/db";
+import {
+  getPublishedExperiences,
+  getPublishedExperienceBySlug,
+} from "@/lib/db";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL } from "@/lib/site";
 import ExperienceDetailClient from "./ExperienceDetailClient";
 
 export async function generateStaticParams() {
-  const experiences = await getExperiences();
+  const experiences = await getPublishedExperiences();
   return experiences.map((exp) => ({
     slug: exp.slug,
   }));
@@ -17,7 +20,7 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const experience = await getExperienceBySlug(slug);
+  const experience = await getPublishedExperienceBySlug(slug);
   if (!experience) return { title: "Experience Not Found" };
 
   const canonicalUrl = `${SITE_URL}/experience/${experience.slug}`;
@@ -55,7 +58,7 @@ export default async function ExperiencePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const experience = await getExperienceBySlug(slug);
+  const experience = await getPublishedExperienceBySlug(slug);
 
   if (!experience) {
     notFound();

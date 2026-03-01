@@ -1,8 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getProjects, getExperiences } from "@/lib/db";
+import { getPublishedProjects, getPublishedExperiences } from "@/lib/db";
 import { buildPortfolioContext } from "@/lib/portfolio-context";
 import type { Project } from "@/data/projects";
-import type { Experience } from "@/data/experiences";
+import { fetchWithTimeout } from "@/lib/fetch";
+import { SUPPLEMENTAL_EXPERIENCE_ITEMS } from "@/data/profile";
+import { buildDisambiguationContext } from "@/lib/ai-disambiguation";
 
 export async function POST(req: NextRequest) {
   try {
@@ -26,13 +28,24 @@ export async function POST(req: NextRequest) {
 
     // Fetch live data from KV (with fallback to static)
     const [projects, experiences] = await Promise.all([
-      getProjects(),
-      getExperiences(),
+      getPublishedProjects(),
+      getPublishedExperiences(),
     ]);
+    const allExperienceSlugs = Array.from(
+      new Set([
+        ...experiences.map((item) => item.slug),
+        ...SUPPLEMENTAL_EXPERIENCE_ITEMS.map((item) => item.slug),
+      ])
+    ).join('", "');
 
     const portfolioContext = buildPortfolioContext(projects, experiences);
+    const disambiguationContext = buildDisambiguationContext({
+      query,
+      projects,
+      experiences,
+    });
 
-    const response = await fetch("https://api.mistral.ai/v1/chat/completions", {
+    const response = await fetchWithTimeout("https://api.mistral.ai/v1/chat/completions", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -54,6 +67,8 @@ Rules:
 - If asked about something not in the data, say you don't have that information
 - For the CND (Commissariat du Numerique de Defense), missions are classified — only share what is publicly available
 - IMPORTANT: Distinguish between PROJECTS (Business Deep Dives, School Projects) and WORK EXPERIENCE (internships, jobs, leadership roles). They are NOT the same thing.
+- CRITICAL: If the same company appears in both a project and an experience, never merge their details. Keep separate facts.
+- If query is ambiguous for a shared company, answer with 2 explicit sections: "Work Experience" and "Project Case Study".
 - Format your response as JSON with this structure:
   {
     "answer": "Your text answer here",
@@ -64,11 +79,13 @@ Rules:
   }
 - followUpQuestions: always include 2-3 short, natural follow-up questions in the same language as the answer. They should invite the visitor to explore further (e.g. "What tools did Jonathan use for this?", "Which projects involve machine learning?"). Keep them concise and genuinely useful.
 - relatedProjects: use project slugs from the Business Deep Dives / School Projects sections
-- relatedExperiences: use experience slugs: "generali", "sunver", "cnd", "albert-junior-consulting", "notion-campus-leader", "student-representative", "capgemini-ambassador", "msc-mines-paris", "bachelor-albert-school", "baccalaureat-ecole-pascal"
+- relatedExperiences: use experience slugs: "${allExperienceSlugs}"
 - Always include relevant related items. If the question is about experience, include relatedExperiences. If about projects, include relatedProjects. You can include both when relevant.
 
 Portfolio data:
-${portfolioContext}`,
+${portfolioContext}
+
+${disambiguationContext ? `Disambiguation guardrails:\n${disambiguationContext}` : ""}`,
           },
           {
             role: "user",
@@ -79,6 +96,7 @@ ${portfolioContext}`,
         max_tokens: 500,
         response_format: { type: "json_object" },
       }),
+      timeoutMs: 25_000,
     });
 
     if (!response.ok) {
@@ -126,10 +144,17 @@ ${portfolioContext}`,
         tags: p.tags,
       }));
 
-    // Static data for non-clickable experience/education items
     const allExperienceItems: Record<
       string,
-      { slug: string; role: string; company: string; period: string; tagline: string; category: string; hasPage: boolean }
+      {
+        slug: string;
+        role: string;
+        company: string;
+        period: string;
+        tagline: string;
+        category: string;
+        hasPage: boolean;
+      }
     > = {};
 
     // Clickable experiences (have detail pages)
@@ -145,54 +170,11 @@ ${portfolioContext}`,
       };
     }
 
-    // Non-clickable leadership
-    allExperienceItems["student-representative"] = {
-      slug: "student-representative",
-      role: "Student Representative",
-      company: "Albert School",
-      period: "Sep 2023 — Present",
-      tagline: "Student fairs across Paris, Marseille, Lyon, Geneva. Hosted a workshop for 200 students in Luxembourg.",
-      category: "Leadership",
-      hasPage: false,
-    };
-    allExperienceItems["capgemini-ambassador"] = {
-      slug: "capgemini-ambassador",
-      role: "Ambassador",
-      company: "Capgemini",
-      period: "2024 — 2025",
-      tagline: "Representing Capgemini on campus at Albert School.",
-      category: "Leadership",
-      hasPage: false,
-    };
-
-    // Education
-    allExperienceItems["msc-mines-paris"] = {
-      slug: "msc-mines-paris",
-      role: "MSc Data & AI for Business",
-      company: "Mines Paris PSL × Albert School",
-      period: "2025 — 2027",
-      tagline: "Advanced joint diploma program combining data science, AI engineering, and business strategy at France's #2 engineering school.",
-      category: "Education",
-      hasPage: false,
-    };
-    allExperienceItems["bachelor-albert-school"] = {
-      slug: "bachelor-albert-school",
-      role: "Bachelor Business & Data",
-      company: "Albert School × Mines Paris PSL",
-      period: "2023 — 2025",
-      tagline: "Europe's first data-centric business school. 12 Business Deep Dives. Joint diploma with Mines Paris PSL.",
-      category: "Education",
-      hasPage: false,
-    };
-    allExperienceItems["baccalaureat-ecole-pascal"] = {
-      slug: "baccalaureat-ecole-pascal",
-      role: "Baccalaureat — High Honors",
-      company: "Ecole Pascal",
-      period: "2020 — 2023",
-      tagline: "Specialization in Mathematics and SES, with Maths Expertes option.",
-      category: "Education",
-      hasPage: false,
-    };
+    for (const item of SUPPLEMENTAL_EXPERIENCE_ITEMS) {
+      allExperienceItems[item.slug] = {
+        ...item,
+      };
+    }
 
     // Enrich experience data
     const relatedExperienceData = (parsed.relatedExperiences || [])

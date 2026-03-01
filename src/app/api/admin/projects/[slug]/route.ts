@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getProjectBySlug, updateProject, deleteProject } from "@/lib/db";
 import { revalidatePath } from "next/cache";
+import { validateProjectPayload } from "@/lib/admin-validation";
 
 // GET — single project by slug
 export async function GET(
@@ -27,8 +28,21 @@ export async function PUT(
 ) {
   const { slug } = await params;
   try {
-    const body = await req.json();
-    const updated = await updateProject(slug, body);
+    const payload = await req.json();
+    const validation = validateProjectPayload(payload, "update");
+    if (!validation.ok) {
+      return NextResponse.json({ error: validation.error }, { status: 400 });
+    }
+
+    const updates = validation.data;
+    if (updates.slug && updates.slug !== slug) {
+      return NextResponse.json(
+        { error: "Slug cannot be changed from this endpoint" },
+        { status: 400 }
+      );
+    }
+
+    const updated = await updateProject(slug, updates);
 
     if (!updated) {
       return NextResponse.json({ error: "Project not found" }, { status: 404 });
