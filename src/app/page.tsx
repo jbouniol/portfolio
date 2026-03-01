@@ -22,10 +22,11 @@ export default async function Home() {
   return (
     <>
       <Navigation />
-      <HomeDeferredAI />
+      <HomeDeferredAI mode="modal" />
       <main id="main-content">
         <Hero projectCount={projectCount} winnerCount={winnerCount} />
         <WhatIBuild />
+        <HomeDeferredAI mode="search" />
         <Projects projects={projects} allTags={allTags} />
         <Experience />
         <Research

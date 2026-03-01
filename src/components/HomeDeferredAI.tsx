@@ -10,11 +10,15 @@ const AISearch = dynamic(() => import("@/components/AISearch"), {
   ssr: false,
 });
 
-export default function HomeDeferredAI() {
+export default function HomeDeferredAI({
+  mode = "both",
+}: {
+  mode?: "modal" | "search" | "both";
+}) {
   return (
     <>
-      <HomeCommandModal />
-      <AISearch />
+      {(mode === "modal" || mode === "both") && <HomeCommandModal />}
+      {(mode === "search" || mode === "both") && <AISearch />}
     </>
   );
 }
