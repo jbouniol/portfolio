@@ -2,7 +2,6 @@
 
 import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 import { Plus, Trophy, Award, ShieldCheck, Pencil } from "lucide-react";
 import type { Project, ProjectCategory } from "@/data/projects";
 import {
@@ -36,58 +35,57 @@ const GAP_FILTER_OPTIONS: Array<{
   { value: "missing-tags", label: "Missing Tags" },
 ];
 
+type ProjectFilters = {
+  query: string;
+  category: ProjectCategory | "all";
+  status: "all" | "draft" | "published";
+  gap: "all" | "missing-links" | "missing-core" | "missing-tags";
+};
+
+function readFiltersFromUrl(): ProjectFilters {
+  const params = new URLSearchParams(window.location.search);
+  const query = params.get("q") ?? "";
+  const category = params.get("category");
+  const status = params.get("status");
+  const gap = params.get("gap");
+
+  const normalizedCategory =
+    category && (Object.keys(CATEGORY_LABELS) as string[]).includes(category)
+      ? (category as ProjectCategory)
+      : "all";
+  const normalizedStatus =
+    status === "draft" || status === "published" || status === "all"
+      ? status
+      : "all";
+  const normalizedGap =
+    gap === "missing-links" ||
+    gap === "missing-core" ||
+    gap === "missing-tags" ||
+    gap === "all"
+      ? gap
+      : "all";
+
+  return {
+    query,
+    category: normalizedCategory,
+    status: normalizedStatus,
+    gap: normalizedGap,
+  };
+}
+
 export default function ProjectsListClient({
   projects,
 }: {
   projects: Project[];
 }) {
-  const searchParams = useSearchParams();
-
-  const initialFilters = useMemo(() => {
-    const query = searchParams.get("q") ?? "";
-    const category = searchParams.get("category");
-    const status = searchParams.get("status");
-    const gap = searchParams.get("gap");
-
-    const normalizedCategory =
-      category && (Object.keys(CATEGORY_LABELS) as string[]).includes(category)
-        ? (category as ProjectCategory)
-        : "all";
-
-    const normalizedStatus =
-      status === "draft" || status === "published" || status === "all"
-        ? status
-        : "all";
-    const normalizedGap =
-      gap === "missing-links" ||
-      gap === "missing-core" ||
-      gap === "missing-tags" ||
-      gap === "all"
-        ? gap
-        : "all";
-
-    return {
-      query,
-      category: normalizedCategory as ProjectCategory | "all",
-      status: normalizedStatus as "all" | "draft" | "published",
-      gap: normalizedGap as
-        | "all"
-        | "missing-links"
-        | "missing-core"
-        | "missing-tags",
-    };
-  }, [searchParams]);
-
-  const [search, setSearch] = useState(initialFilters.query);
-  const [filterCategory, setFilterCategory] = useState<ProjectCategory | "all">(
-    initialFilters.category
+  const [search, setSearch] = useState("");
+  const [filterCategory, setFilterCategory] = useState<ProjectCategory | "all">("all");
+  const [filterStatus, setFilterStatus] = useState<"all" | "draft" | "published">(
+    "all"
   );
-  const [filterStatus, setFilterStatus] = useState<
-    "all" | "draft" | "published"
-  >(initialFilters.status);
   const [filterGap, setFilterGap] = useState<
     "all" | "missing-links" | "missing-core" | "missing-tags"
-  >(initialFilters.gap);
+  >("all");
   const categoryFilterOptions = useMemo<
     Array<{ value: ProjectCategory | "all"; label: string }>
   >(
@@ -102,11 +100,18 @@ export default function ProjectsListClient({
   );
 
   useEffect(() => {
-    setSearch(initialFilters.query);
-    setFilterCategory(initialFilters.category);
-    setFilterStatus(initialFilters.status);
-    setFilterGap(initialFilters.gap);
-  }, [initialFilters]);
+    function applyFiltersFromUrl() {
+      const next = readFiltersFromUrl();
+      setSearch(next.query);
+      setFilterCategory(next.category);
+      setFilterStatus(next.status);
+      setFilterGap(next.gap);
+    }
+
+    applyFiltersFromUrl();
+    window.addEventListener("popstate", applyFiltersFromUrl);
+    return () => window.removeEventListener("popstate", applyFiltersFromUrl);
+  }, []);
 
   const filtered = projects.filter((p) => {
     const matchesSearch =

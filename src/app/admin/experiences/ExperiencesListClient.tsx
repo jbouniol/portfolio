@@ -1,8 +1,7 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
-import { useSearchParams } from "next/navigation";
 import { Plus, Briefcase, Users, ShieldCheck, Pencil } from "lucide-react";
 import type { Experience } from "@/data/experiences";
 import {
@@ -38,60 +37,69 @@ const GAP_FILTER_OPTIONS: Array<{
   { value: "confidential", label: "Confidential Only" },
 ];
 
+type ExperienceFilters = {
+  query: string;
+  type: "all" | "work" | "leadership";
+  status: "all" | "draft" | "published";
+  gap: "all" | "missing-tools" | "missing-core" | "confidential";
+};
+
+function readFiltersFromUrl(): ExperienceFilters {
+  const params = new URLSearchParams(window.location.search);
+  const query = params.get("q") ?? "";
+  const type = params.get("type");
+  const status = params.get("status");
+  const gap = params.get("gap");
+
+  const normalizedType =
+    type === "work" || type === "leadership" || type === "all" ? type : "all";
+  const normalizedStatus =
+    status === "draft" || status === "published" || status === "all"
+      ? status
+      : "all";
+  const normalizedGap =
+    gap === "missing-tools" ||
+    gap === "missing-core" ||
+    gap === "confidential" ||
+    gap === "all"
+      ? gap
+      : "all";
+
+  return {
+    query,
+    type: normalizedType,
+    status: normalizedStatus,
+    gap: normalizedGap,
+  };
+}
+
 export default function ExperiencesListClient({
   experiences,
 }: {
   experiences: Experience[];
 }) {
-  const searchParams = useSearchParams();
-
-  const initialFilters = useMemo(() => {
-    const query = searchParams.get("q") ?? "";
-    const type = searchParams.get("type");
-    const status = searchParams.get("status");
-    const gap = searchParams.get("gap");
-
-    const normalizedType =
-      type === "work" || type === "leadership" || type === "all"
-        ? type
-        : "all";
-    const normalizedStatus =
-      status === "draft" || status === "published" || status === "all"
-        ? status
-        : "all";
-    const normalizedGap =
-      gap === "missing-tools" ||
-      gap === "missing-core" ||
-      gap === "confidential" ||
-      gap === "all"
-        ? gap
-        : "all";
-
-    return {
-      query,
-      type: normalizedType as "all" | "work" | "leadership",
-      status: normalizedStatus as "all" | "draft" | "published",
-      gap: normalizedGap as "all" | "missing-tools" | "missing-core" | "confidential",
-    };
-  }, [searchParams]);
-
-  const [search, setSearch] = useState(initialFilters.query);
-  const [filterType, setFilterType] = useState<"all" | "work" | "leadership">(
-    initialFilters.type
+  const [search, setSearch] = useState("");
+  const [filterType, setFilterType] = useState<"all" | "work" | "leadership">("all");
+  const [filterStatus, setFilterStatus] = useState<"all" | "draft" | "published">(
+    "all"
   );
-  const [filterStatus, setFilterStatus] = useState<
-    "all" | "draft" | "published"
-  >(initialFilters.status);
   const [filterGap, setFilterGap] = useState<
     "all" | "missing-tools" | "missing-core" | "confidential"
-  >(initialFilters.gap);
+  >("all");
 
   useEffect(() => {
-    setSearch(initialFilters.query);
-    setFilterType(initialFilters.type);
-    setFilterStatus(initialFilters.status);
-    setFilterGap(initialFilters.gap);
-  }, [initialFilters]);
+    function applyFiltersFromUrl() {
+      const next = readFiltersFromUrl();
+      setSearch(next.query);
+      setFilterType(next.type);
+      setFilterStatus(next.status);
+      setFilterGap(next.gap);
+    }
+
+    applyFiltersFromUrl();
+    window.addEventListener("popstate", applyFiltersFromUrl);
+    return () => window.removeEventListener("popstate", applyFiltersFromUrl);
+  }, []);
 
   const filtered = experiences.filter((e) => {
     const matchesSearch =
