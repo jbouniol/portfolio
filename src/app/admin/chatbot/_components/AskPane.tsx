@@ -1,7 +1,8 @@
 "use client";
 
 import type React from "react";
-import { ArrowRight, Search, Loader2, X } from "lucide-react";
+import { useState } from "react";
+import { ArrowRight, Search, Loader2, X, Copy, Check, ExternalLink } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import type { MentionCandidate, Message } from "../types";
@@ -17,6 +18,41 @@ function linkifyProjectMentions(
       if (!href) return full;
       return `${prefix}[@${slug}](${href})`;
     }
+  );
+}
+
+function CopyButton({ text }: { text: string }) {
+  const [copied, setCopied] = useState(false);
+
+  async function handleCopy() {
+    try {
+      await navigator.clipboard.writeText(text);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      // Fallback silently
+    }
+  }
+
+  return (
+    <button
+      type="button"
+      onClick={handleCopy}
+      className="no-focus-outline inline-flex items-center gap-1 rounded-md px-2 py-1 text-[10px] text-zinc-500 hover:text-zinc-200 hover:bg-zinc-800 transition-all opacity-0 group-hover:opacity-100"
+      title={copied ? "Copied!" : "Copy message"}
+    >
+      {copied ? (
+        <>
+          <Check size={11} className="text-emerald-400" />
+          <span className="text-emerald-400">Copied</span>
+        </>
+      ) : (
+        <>
+          <Copy size={11} />
+          <span>Copy</span>
+        </>
+      )}
+    </button>
   );
 }
 
@@ -78,7 +114,7 @@ export default function AskPane({
   messagesEndRef: React.RefObject<HTMLDivElement | null>;
 }) {
   return (
-    <section className="relative flex-1 rounded-2xl border border-zinc-800 bg-zinc-950/95 min-h-0 overflow-hidden">
+    <section className="relative flex-1 min-h-0 overflow-hidden">
       <div className="pointer-events-none absolute inset-0">
         <div className="absolute inset-x-0 top-0 h-40 bg-gradient-to-b from-blue-500/[0.08] to-transparent" />
         <div className="absolute left-1/2 top-20 h-40 w-[62%] -translate-x-1/2 rounded-full bg-white/[0.05] blur-3xl" />
@@ -284,15 +320,20 @@ export default function AskPane({
               {messages.map((message, index) => (
                 <article
                   key={`${index}-${message.role}`}
-                  className={`rounded-xl border px-4 py-3 ${
+                  className={`group relative rounded-xl px-4 py-3 ${
                     message.role === "assistant"
-                      ? "bg-zinc-900 border-zinc-800 text-zinc-200"
-                      : "bg-zinc-950 border-zinc-800 text-zinc-400"
+                      ? "bg-zinc-900/60 border border-zinc-800/60 text-zinc-200"
+                      : "bg-zinc-950/40 border border-zinc-800/40 text-zinc-400"
                   }`}
                 >
-                  <p className="text-[10px] uppercase tracking-wide mb-2 text-zinc-500">
-                    {message.role === "assistant" ? "Bob" : "Query"}
-                  </p>
+                  <div className="flex items-center justify-between mb-2">
+                    <p className="text-[10px] uppercase tracking-wide text-zinc-500">
+                      {message.role === "assistant" ? "Bob" : "Query"}
+                    </p>
+                    {message.role === "assistant" && message.content && (
+                      <CopyButton text={message.content} />
+                    )}
+                  </div>
                   {message.role === "assistant" ? (
                     <div className="prose-chat">
                       <ReactMarkdown
@@ -303,8 +344,10 @@ export default function AskPane({
                               href={href}
                               target="_blank"
                               rel="noreferrer noopener"
+                              className="inline-flex items-center gap-1 text-blue-400 hover:text-blue-300 underline decoration-blue-400/30 hover:decoration-blue-300/50 transition-colors"
                             >
                               {children}
+                              <ExternalLink size={11} className="inline shrink-0" />
                             </a>
                           ),
                         }}
@@ -321,7 +364,7 @@ export default function AskPane({
                 </article>
               ))}
               {loading && (
-                <div className="rounded-xl border border-zinc-800 bg-zinc-900/70 px-4 py-3 text-zinc-300">
+                <div className="rounded-xl border border-zinc-800/60 bg-zinc-900/50 px-4 py-3 text-zinc-300">
                   <div className="flex items-center flex-wrap gap-1.5">
                     {chatActivitySteps.map((step, index) => {
                       const isActive = index === chatPhaseIndex;

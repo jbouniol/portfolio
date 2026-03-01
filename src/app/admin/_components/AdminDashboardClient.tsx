@@ -14,7 +14,7 @@ import {
   Cloud,
   ExternalLink,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useMemo } from "react";
 
 interface DashboardStats {
   totalProjects: number;
@@ -75,12 +75,30 @@ export default function AdminDashboardClient({
     }
   }
 
+  const greeting = useMemo(() => {
+    const hour = new Date().getHours();
+    if (hour < 12) return "Bonjour";
+    if (hour < 18) return "Bon après-midi";
+    return "Bonne soirée";
+  }, []);
+
+  const todayFormatted = useMemo(() => {
+    return new Date().toLocaleDateString("fr-FR", {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+    });
+  }, []);
+
   return (
     <div>
       <div className="mb-8">
-        <h1 className="text-2xl font-semibold tracking-tight">Dashboard</h1>
-        <p className="text-zinc-500 text-sm mt-1">
-          Overview of your portfolio content
+        <h1 className="text-2xl font-semibold tracking-tight">
+          {greeting} Jonathan
+        </h1>
+        <p className="text-zinc-500 text-sm mt-1 capitalize">
+          {todayFormatted}
         </p>
       </div>
 

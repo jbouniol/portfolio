@@ -58,7 +58,7 @@ async function runMistralChat({
       temperature,
       max_tokens: maxTokens,
     }),
-    timeoutMs: 25_000,
+    timeoutMs: 45_000,
   });
 
   if (response.status === 408) {
@@ -127,7 +127,7 @@ async function runGeminiChat({
           maxOutputTokens: maxTokens,
         },
       }),
-      timeoutMs: 25_000,
+      timeoutMs: 45_000,
     }
   );
 

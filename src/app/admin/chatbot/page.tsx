@@ -554,13 +554,37 @@ export default function ChatbotPage() {
     activeDocType === "cv" ? CV_ACTIVITY_STEPS : COVER_ACTIVITY_STEPS;
 
   return (
-    <div className="h-[calc(100vh-8rem)] flex flex-col gap-4">
-      <header className="rounded-2xl border border-zinc-800 bg-zinc-950/95 px-4 py-3 flex items-center justify-between gap-3">
-        <div className="flex items-center gap-2">
-          <div className="w-7 h-7 rounded-md border border-zinc-800 bg-zinc-900 text-zinc-200 flex items-center justify-center">
-            <Bot size={14} />
+    <div className="h-[calc(100vh-8rem)] flex flex-col">
+      {/* Toolbar */}
+      <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2 pb-3 mb-1 border-b border-zinc-800/60">
+        <div className="flex items-center gap-4">
+          <div className="flex items-center gap-2">
+            <div className="w-7 h-7 rounded-md border border-zinc-800 bg-zinc-900 text-zinc-200 flex items-center justify-center">
+              <Bot size={14} />
+            </div>
+            <span className="text-sm font-semibold tracking-tight">Bob</span>
           </div>
-          <span className="text-sm font-semibold tracking-tight">Bob</span>
+
+          <div className="inline-flex gap-1">
+            <TabButton
+              label="Ask"
+              active={activeTab === "ask"}
+              onClick={() => setActiveTab("ask")}
+              icon={Search}
+            />
+            <TabButton
+              label="CV PDF"
+              active={activeTab === "cv"}
+              onClick={() => setActiveTab("cv")}
+              icon={FileText}
+            />
+            <TabButton
+              label="Cover Letter PDF"
+              active={activeTab === "cover"}
+              onClick={() => setActiveTab("cover")}
+              icon={Upload}
+            />
+          </div>
         </div>
 
         <div className="flex items-center gap-2">
@@ -596,27 +620,6 @@ export default function ChatbotPage() {
             </button>
           </div>
         </div>
-      </header>
-
-      <div className="rounded-2xl border border-zinc-800 bg-zinc-950/95 p-2 inline-flex gap-2 self-start">
-        <TabButton
-          label="Ask"
-          active={activeTab === "ask"}
-          onClick={() => setActiveTab("ask")}
-          icon={Search}
-        />
-        <TabButton
-          label="CV PDF"
-          active={activeTab === "cv"}
-          onClick={() => setActiveTab("cv")}
-          icon={FileText}
-        />
-        <TabButton
-          label="Cover Letter PDF"
-          active={activeTab === "cover"}
-          onClick={() => setActiveTab("cover")}
-          icon={Upload}
-        />
       </div>
 
       {activeTab === "ask" ? (

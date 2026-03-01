@@ -10,8 +10,10 @@ import {
   LogOut,
   Menu,
   X,
+  Search,
 } from "lucide-react";
 import { useState } from "react";
+import CommandPalette from "./CommandPalette";
 
 const navItems = [
   { label: "Dashboard", href: "/admin", icon: LayoutDashboard },
@@ -68,8 +70,26 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
             </Link>
           </div>
 
+          {/* CMD+K trigger */}
+          <div className="px-3 pt-4 pb-2">
+            <button
+              onClick={() => {
+                window.dispatchEvent(
+                  new KeyboardEvent("keydown", { key: "k", metaKey: true })
+                );
+              }}
+              className="w-full flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-zinc-500 bg-zinc-900 border border-zinc-800 hover:border-zinc-700 hover:text-zinc-300 transition-all"
+            >
+              <Search size={14} />
+              <span className="flex-1 text-left text-xs">Search...</span>
+              <kbd className="hidden sm:inline text-[10px] font-mono text-zinc-600 bg-zinc-800 border border-zinc-700 rounded px-1.5 py-0.5">
+                ⌘K
+              </kbd>
+            </button>
+          </div>
+
           {/* Nav */}
-          <nav className="flex-1 px-3 py-4 space-y-1">
+          <nav className="flex-1 px-3 py-2 space-y-1">
             {navItems.map((item) => {
               const isActive =
                 pathname === item.href ||
@@ -125,6 +145,9 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
           <div className="max-w-5xl mx-auto px-6 py-8">{children}</div>
         </main>
       </div>
+
+      {/* Global Command Palette */}
+      <CommandPalette />
     </div>
   );
 }

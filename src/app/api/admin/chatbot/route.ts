@@ -115,7 +115,7 @@ Règles :
       turns: recentTurns,
       systemPrompt,
       temperature: responseStyle === "deep" ? 0.45 : 0.35,
-      maxTokens: responseStyle === "deep" ? 1200 : 850,
+      maxTokens: responseStyle === "deep" ? 4096 : 2048,
     });
 
     return NextResponse.json({ content, model, responseStyle });
