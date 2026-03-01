@@ -227,14 +227,14 @@ function ProjectCard({
       href={`/projects/${project.slug}`}
       scroll
       onClick={forceScrollTop}
-      className="group block"
+      className="group block h-full"
     >
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -10 }}
         transition={{ duration: 0.4, delay: index * 0.05 }}
-        className="p-6 bg-surface border border-border rounded-xl hover:border-accent/30 transition-all duration-300"
+        className="h-full flex flex-col p-6 bg-surface border border-border rounded-xl hover:border-accent/30 transition-all duration-300"
       >
         <div className="flex items-start justify-between mb-4">
           <div className="flex items-center gap-2 flex-wrap">
@@ -267,7 +267,7 @@ function ProjectCard({
               </span>
             )}
           </div>
-          <span className="font-mono text-xs text-muted">
+          <span className="font-mono text-xs text-muted shrink-0 ml-2">
             {project.duration}
           </span>
         </div>
@@ -276,7 +276,7 @@ function ProjectCard({
           {project.title}
         </h3>
 
-        <p className="text-sm text-muted leading-relaxed mb-4">
+        <p className="text-sm text-muted leading-relaxed mb-4 flex-1">
           {project.tagline}
         </p>
 

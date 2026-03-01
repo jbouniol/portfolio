@@ -40,9 +40,10 @@ export default function Contact() {
             Let&apos;s connect
           </h2>
           <p className="mt-4 text-muted text-lg leading-relaxed">
-            Open to opportunities in data engineering, AI strategy, and
-            consulting. Available for conversations about how data transforms
-            business.
+            Currently looking for an{" "}
+            <span className="text-foreground font-medium">apprenticeship </span>{" "}
+            in Data, AI applied to Business — 4 days in-company / 1 day at school.
+            Available for conversations about how data transforms business.
           </p>
         </motion.div>
 

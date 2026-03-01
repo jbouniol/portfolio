@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ArrowDown } from "lucide-react";
+import { ArrowDown, Download } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -104,6 +104,15 @@ export default function Hero() {
             >
               Get in Touch
             </Link>
+            <a
+              href="/cv.pdf"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 border border-border text-sm font-medium rounded-lg hover:bg-surface transition-colors text-muted hover:text-foreground"
+            >
+              <Download size={14} />
+              CV
+            </a>
           </motion.div>
         </motion.div>
 

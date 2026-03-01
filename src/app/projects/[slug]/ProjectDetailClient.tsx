@@ -23,6 +23,7 @@ import type { Project } from "@/data/projects";
 import { projects } from "@/data/projects";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import CommandModal from "@/components/CommandModal";
 import { useLayoutEffect, useState } from "react";
 
 const sectionConfig = [
@@ -160,6 +161,7 @@ export default function ProjectDetailClient({
   return (
     <>
       <Navigation />
+      <CommandModal pageContext={`${project.title} — ${project.company} project`} />
       <main id="main-content" className="pt-24 pb-20 px-6">
         <div className="max-w-3xl mx-auto">
           {/* Back link */}

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Link from "next/link";
+import { track } from "@vercel/analytics";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Search,
@@ -47,6 +48,7 @@ interface RelatedExperience {
 
 interface SearchResult {
   answer: string;
+  followUpQuestions: string[];
   relatedProjects: RelatedProject[];
   relatedExperiences: RelatedExperience[];
   type: "project" | "experience" | "skill" | "general";
@@ -74,6 +76,8 @@ export default function AISearch() {
     setIsLoading(true);
     setError(null);
     setResult(null);
+
+    track("ai_search", { query: searchQuery, source: "ai-search-section" });
 
     try {
       const res = await fetch("/api/search", {
@@ -292,6 +296,29 @@ export default function AISearch() {
                 <p className="text-foreground leading-relaxed text-sm">
                   {result.answer}
                 </p>
+
+                {/* Follow-up questions */}
+                {result.followUpQuestions?.length > 0 && (
+                  <div className="mt-4 pt-4 border-t border-border">
+                    <p className="text-[10px] font-mono text-muted mb-2 uppercase tracking-wider">
+                      Follow-up
+                    </p>
+                    <div className="flex flex-wrap gap-2">
+                      {result.followUpQuestions.map((q) => (
+                        <button
+                          key={q}
+                          onClick={() => {
+                            setQuery(q);
+                            handleSearch(q);
+                          }}
+                          className="px-3 py-1.5 text-xs text-muted bg-background border border-border rounded-full hover:border-accent/40 hover:text-foreground transition-all text-left"
+                        >
+                          {q}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
               </div>
 
               {/* Related items count */}

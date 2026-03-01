@@ -14,6 +14,7 @@ import {
 import type { Experience } from "@/data/experiences";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
+import CommandModal from "@/components/CommandModal";
 
 export default function ExperienceDetailClient({
   experience,
@@ -46,6 +47,7 @@ export default function ExperienceDetailClient({
   return (
     <>
       <Navigation />
+      <CommandModal pageContext={`${experience.role} at ${experience.company} experience`} />
       <main id="main-content" className="pt-24 pb-20 px-6">
         <div className="max-w-3xl mx-auto">
           {/* Back link */}

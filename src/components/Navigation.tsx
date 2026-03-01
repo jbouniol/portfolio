@@ -6,12 +6,12 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Sun, Moon } from "lucide-react";
 
 const navItems = [
-  { label: "Work", href: "#work" },
-  { label: "Ask AI", href: "#ai-search" },
-  { label: "Projects", href: "#projects" },
-  { label: "Experience", href: "#experience" },
-  { label: "Stack", href: "#research" },
-  { label: "Contact", href: "#contact" },
+  { label: "Work", href: "/#work" },
+  { label: "Ask AI", href: "/#ai-search" },
+  { label: "Projects", href: "/#projects" },
+  { label: "Experience", href: "/#experience" },
+  { label: "Stack", href: "/#research" },
+  { label: "Contact", href: "/#contact" },
 ];
 
 export default function Navigation() {
@@ -67,6 +67,14 @@ export default function Navigation() {
                 {item.label}
               </Link>
             ))}
+            <button
+              onClick={() => window.dispatchEvent(new CustomEvent("command-modal:open"))}
+              className="hidden md:flex items-center gap-1.5 px-2.5 py-1 text-xs font-mono text-muted border border-border rounded-lg hover:border-accent/40 hover:text-foreground transition-all"
+              aria-label="Open AI search (⌘K)"
+            >
+              <span>Ask AI</span>
+              <kbd className="px-1 py-0.5 bg-surface rounded text-[10px]">⌘K</kbd>
+            </button>
             <button
               onClick={toggleTheme}
               className="p-2 text-muted hover:text-foreground transition-colors"

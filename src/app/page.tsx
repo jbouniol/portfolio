@@ -7,11 +7,13 @@ import AISearch from "@/components/AISearch";
 import Research from "@/components/Research";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import HomeCommandModal from "@/components/HomeCommandModal";
 
 export default function Home() {
   return (
     <>
       <Navigation />
+      <HomeCommandModal />
       <main id="main-content">
         <Hero />
         <WhatIBuild />
