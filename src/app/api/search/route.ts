@@ -4,6 +4,14 @@ import { experiences } from "@/data/experiences";
 
 // Build the full context from all projects and experience data
 function buildPortfolioContext(): string {
+  const totalProjects = projects.length;
+  const bddCount = projects.filter((project) => project.category === "bdd").length;
+  const hackathonCount = projects.filter((project) => project.category === "hackathon").length;
+  const consultingCount = projects.filter((project) => project.category === "consulting").length;
+  const schoolCount = projects.filter((project) => project.category === "school").length;
+  const winnerCount = projects.filter((project) => project.badge === "Winner").length;
+  const podiumCount = projects.filter((project) => Boolean(project.badge)).length;
+
   const projectChunks = projects.map((p) => {
     return `## ${p.company} — ${p.title}
 Slug: ${p.slug}
@@ -36,9 +44,9 @@ ${missionsList}${e.tools ? `\nTools & Stack: ${e.tools.join(", ")}` : ""}${e.isC
 
 ## Profile
 - Student at Albert School × Mines Paris PSL (MSc Data & AI for Business)
-- 19 projects total: 12 Business Deep Dives, 2 Hackathons, 2 Consulting Missions, 3 School Projects
+- ${totalProjects} projects total: ${bddCount} Business Deep Dives, ${hackathonCount} Hackathons, ${consultingCount} Consulting Missions, ${schoolCount} School Projects
 - Companies: Louis Vuitton, CMA-CGM, BNP Paribas, Carrefour, SNCF, Henkel, Asmodee, Generali, Edmond de Rothschild, La French Tech, Linkpick, Ministere des Armees, Capgemini, X-HEC, Villablu (Robertet)
-- 4 Wins, 12 Podiums (finalists, 2nd places, honorable mentions)
+- ${winnerCount} Wins, ${podiumCount} Podiums (finalists, 2nd places, honorable mentions)
 - 3 Work Experiences: Generali France (Data & IT Intern), Sunver (Right-Hand to CEO), CND (Reserviste)
 - 1 Leadership Role: Albert Junior Consulting (VP & CTO — doubled revenue)
 - Skills: Python, SQL, Scikit-learn, PyTorch, Qlik Sense, Power BI, Streamlit, Excel/VBA, Make, Zapier, Notion, Power Platform, GenAI, RAG Systems
@@ -50,7 +58,6 @@ ${missionsList}${e.tools ? `\nTools & Stack: ${e.tools.join(", ")}` : ""}${e.isC
 ${experienceChunks.join("\n\n")}
 
 ## Other Leadership
-- Slug: notion-campus-leader | Notion Campus Leader (Sep 2025 — Present): Selected for Notion's international program. Developing the Notion community at Albert School.
 - Slug: student-representative | Student Representative at Albert School (Sep 2023 — Present): Student fairs across Paris, Marseille, Lyon, Geneva. Hosted workshop for 200 students in Luxembourg.
 - Slug: capgemini-ambassador | Capgemini Ambassador (2024-2025): Representing Capgemini on campus at Albert School.
 
@@ -200,15 +207,6 @@ ${PORTFOLIO_CONTEXT}`,
     }
 
     // Non-clickable leadership
-    allExperienceItems["notion-campus-leader"] = {
-      slug: "notion-campus-leader",
-      role: "Campus Leader",
-      company: "Notion",
-      period: "Sep 2025 — Present",
-      tagline: "Selected for Notion's international Campus Leader program. Developing the Notion community at Albert School.",
-      category: "Leadership",
-      hasPage: false,
-    };
     allExperienceItems["student-representative"] = {
       slug: "student-representative",
       role: "Student Representative",

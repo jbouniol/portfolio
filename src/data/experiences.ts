@@ -99,4 +99,32 @@ export const experiences: Experience[] = [
     ],
     tools: ["Notion", "Zapier", "Web Development", "CRM"],
   },
+  {
+    slug: "notion-campus-leader",
+    updatedAt: "2026-03-01",
+    role: "Campus Leader",
+    company: "Notion",
+    period: "Sep 2025 — Present",
+    location: "Paris, Ile-de-France",
+    type: "leadership",
+    tagline:
+      "Built and activated the Notion student community at Albert School through workshops, 1:1 coaching, templates, and co-created webinar formats.",
+    description:
+      "As a Notion Campus Leader, I developed Notion adoption on campus for students and associations through training, hands-on implementation, and community events. The objective was to turn Notion into a practical operating system for study, project management, and student organization workflows.",
+    missions: [
+      "Organized multiple onboarding workshops to implement Notion and helped 4 student associations structure project management, CRM, and HR workflows directly in Notion",
+      "Ran 1:1 coaching sessions with students to improve personal use cases: note-taking systems, personal organization, and side projects",
+      "Co-organized a campus event with the BDE: crepes and New Year's resolutions with Notion, designed to grow and activate the Albert School Notion community",
+      "Created 3 reusable Notion templates for students to accelerate setup and daily adoption",
+      "Co-founded the 'Learning Break with Notion' webinar format and co-hosted the first session with Hugo Foucault and Anais Gissinger: Learning Break with Notion #1 — Note-taking",
+    ],
+    tools: [
+      "Notion",
+      "Workshop Facilitation",
+      "Community Building",
+      "CRM Design",
+      "HR Workflow Design",
+      "Template Design",
+    ],
+  },
 ];

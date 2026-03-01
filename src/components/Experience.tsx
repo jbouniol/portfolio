@@ -46,6 +46,7 @@ const leadership = [
     company: "Notion",
     description:
       "Selected for Notion's international Campus Leader program. In charge of developing the Notion community at Albert School — promoting productivity and project management tools among students, professors, and campus associations.",
+    slug: "notion-campus-leader",
   },
   {
     period: "Sep 2023 — Present",

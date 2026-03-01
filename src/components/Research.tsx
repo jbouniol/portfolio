@@ -35,14 +35,22 @@ const spokenLanguages = [
   { name: "English", level: "Professional (C1)" },
 ];
 
-const highlights = [
-  { number: "19", label: "Projects Delivered" },
-  { number: "4", label: "Wins" },
-  { number: "12", label: "Podiums" },
-  { number: "10+", label: "Industries Covered" },
-];
+export default function Research({
+  projectCount,
+  winnerCount,
+  podiumCount,
+}: {
+  projectCount: number;
+  winnerCount: number;
+  podiumCount: number;
+}) {
+  const highlights = [
+    { number: String(projectCount), label: "Projects Delivered" },
+    { number: String(winnerCount), label: "Wins" },
+    { number: String(podiumCount), label: "Podiums" },
+    { number: "10+", label: "Industries Covered" },
+  ];
 
-export default function Research() {
   return (
     <section id="research" className="py-32 px-6">
       <div className="max-w-6xl mx-auto">

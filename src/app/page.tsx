@@ -8,19 +8,28 @@ import Research from "@/components/Research";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import HomeCommandModal from "@/components/HomeCommandModal";
+import { projects } from "@/data/projects";
 
 export default function Home() {
+  const projectCount = projects.length;
+  const winnerCount = projects.filter((project) => project.badge === "Winner").length;
+  const podiumCount = projects.filter((project) => Boolean(project.badge)).length;
+
   return (
     <>
       <Navigation />
       <HomeCommandModal />
       <main id="main-content">
-        <Hero />
+        <Hero projectCount={projectCount} winnerCount={winnerCount} />
         <WhatIBuild />
         <AISearch />
         <Projects />
         <Experience />
-        <Research />
+        <Research
+          projectCount={projectCount}
+          winnerCount={winnerCount}
+          podiumCount={podiumCount}
+        />
         <Contact />
       </main>
       <Footer />

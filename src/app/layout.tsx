@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL } from "@/lib/site";
+import { projects } from "@/data/projects";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -15,11 +16,12 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const projectCount = projects.length;
+
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: SITE_NAME,
-  description:
-    "Data, AI, and business strategy. Mines Paris PSL × Albert School. Portfolio showcasing 19 projects across 10+ industries.",
+  description: `Data, AI, and business strategy. Mines Paris PSL × Albert School. Portfolio showcasing ${projectCount} projects across 10+ industries.`,
   keywords: [
     "data engineering",
     "AI strategy",
@@ -68,8 +70,7 @@ const jsonLd = {
   name: "Jonathan Bouniol",
   url: "https://jonathanbouniol.com",
   jobTitle: "Data & AI Student",
-  description:
-    "Data, AI, and business strategy. Mines Paris PSL × Albert School. 19 projects across 10+ industries.",
+  description: `Data, AI, and business strategy. Mines Paris PSL × Albert School. ${projectCount} projects across 10+ industries.`,
   alumniOf: [
     {
       "@type": "CollegeOrUniversity",

@@ -5,7 +5,13 @@ import { ArrowDown, Download } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Hero() {
+export default function Hero({
+  projectCount,
+  winnerCount,
+}: {
+  projectCount: number;
+  winnerCount: number;
+}) {
   const scrollToWork = () => {
     const section = document.getElementById("work");
     if (!section) return;
@@ -72,8 +78,8 @@ export default function Hero() {
             className="mt-8 flex flex-wrap gap-3"
           >
             {[
-              "19 Projects · 10+ Industries",
-              "4x Winner",
+              `${projectCount} Projects · 10+ Industries`,
+              `${winnerCount}x Winner`,
               "Mines Paris PSL × Albert School",
               "French Army Reservist",
             ].map((tag) => (
