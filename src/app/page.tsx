@@ -8,9 +8,11 @@ import Research from "@/components/Research";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import HomeCommandModal from "@/components/HomeCommandModal";
-import { projects } from "@/data/projects";
+import { getProjects, getAllTags } from "@/lib/db";
 
-export default function Home() {
+export default async function Home() {
+  const projects = await getProjects();
+  const allTags = getAllTags();
   const projectCount = projects.length;
   const winnerCount = projects.filter((project) => project.badge === "Winner").length;
   const podiumCount = projects.filter((project) => Boolean(project.badge)).length;
@@ -23,7 +25,7 @@ export default function Home() {
         <Hero projectCount={projectCount} winnerCount={winnerCount} />
         <WhatIBuild />
         <AISearch />
-        <Projects />
+        <Projects projects={projects} allTags={allTags} />
         <Experience />
         <Research
           projectCount={projectCount}

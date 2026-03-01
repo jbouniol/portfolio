@@ -129,3 +129,141 @@ html {
   border: 0;
   outline-offset: 0;
 }
+
+/* ── Admin Chatbot Markdown ──────────────────────────────────── */
+.prose-chat {
+  line-height: 1.65;
+}
+
+.prose-chat > *:first-child {
+  margin-top: 0;
+}
+
+.prose-chat > *:last-child {
+  margin-bottom: 0;
+}
+
+.prose-chat h1,
+.prose-chat h2,
+.prose-chat h3,
+.prose-chat h4 {
+  font-weight: 600;
+  margin-top: 1.25em;
+  margin-bottom: 0.5em;
+  color: #f4f4f5;
+}
+
+.prose-chat h1 { font-size: 1.15em; }
+.prose-chat h2 { font-size: 1.05em; }
+.prose-chat h3 { font-size: 1em; }
+.prose-chat h4 { font-size: 0.95em; color: #a1a1aa; }
+
+.prose-chat p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+}
+
+.prose-chat strong {
+  color: #e4e4e7;
+  font-weight: 600;
+}
+
+.prose-chat em {
+  color: #a1a1aa;
+  font-style: italic;
+}
+
+.prose-chat ul,
+.prose-chat ol {
+  margin-top: 0.4em;
+  margin-bottom: 0.4em;
+  padding-left: 1.5em;
+}
+
+.prose-chat ul {
+  list-style-type: disc;
+}
+
+.prose-chat ol {
+  list-style-type: decimal;
+}
+
+.prose-chat li {
+  margin-top: 0.15em;
+  margin-bottom: 0.15em;
+}
+
+.prose-chat li > ul,
+.prose-chat li > ol {
+  margin-top: 0.15em;
+  margin-bottom: 0.15em;
+}
+
+.prose-chat code {
+  font-family: var(--font-geist-mono), ui-monospace, monospace;
+  font-size: 0.85em;
+  background: rgba(63, 63, 70, 0.5);
+  padding: 0.15em 0.35em;
+  border-radius: 4px;
+  color: #e4e4e7;
+}
+
+.prose-chat pre {
+  margin-top: 0.75em;
+  margin-bottom: 0.75em;
+  padding: 0.75em 1em;
+  background: rgba(24, 24, 27, 0.8);
+  border: 1px solid #27272a;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+.prose-chat pre code {
+  background: none;
+  padding: 0;
+  font-size: 0.8em;
+}
+
+.prose-chat blockquote {
+  border-left: 3px solid #3b82f6;
+  padding-left: 1em;
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
+  color: #a1a1aa;
+}
+
+.prose-chat hr {
+  border: none;
+  border-top: 1px solid #27272a;
+  margin: 1em 0;
+}
+
+.prose-chat a {
+  color: #60a5fa;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.prose-chat a:hover {
+  color: #93bbfd;
+}
+
+.prose-chat table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 0.75em 0;
+  font-size: 0.85em;
+}
+
+.prose-chat th,
+.prose-chat td {
+  border: 1px solid #27272a;
+  padding: 0.4em 0.6em;
+  text-align: left;
+}
+
+.prose-chat th {
+  background: rgba(39, 39, 42, 0.5);
+  font-weight: 600;
+  color: #e4e4e7;
+}

@@ -1,9 +1,13 @@
-import { projects } from "@/data/projects";
-import { experiences } from "@/data/experiences";
+import { getProjects, getExperiences } from "@/lib/db";
 import { SITE_URL } from "@/lib/site";
 import type { MetadataRoute } from "next";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const [projects, experiences] = await Promise.all([
+    getProjects(),
+    getExperiences(),
+  ]);
+
   const lastUpdated = [...projects, ...experiences]
     .map((item) => item.updatedAt)
     .sort()

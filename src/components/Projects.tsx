@@ -12,12 +12,7 @@ import {
   Zap,
   Handshake,
 } from "lucide-react";
-import { projects, allTags, type ProjectTag } from "@/data/projects";
-
-const bddProjects = projects.filter((p) => p.category === "bdd");
-const hackathonProjects = projects.filter((p) => p.category === "hackathon");
-const consultingProjects = projects.filter((p) => p.category === "consulting");
-const schoolProjects = projects.filter((p) => p.category === "school");
+import type { Project, ProjectTag } from "@/data/projects";
 
 function filterByTag<T extends { tags: ProjectTag[] }>(
   items: T[],
@@ -26,8 +21,18 @@ function filterByTag<T extends { tags: ProjectTag[] }>(
   return tag === "All" ? items : items.filter((p) => p.tags.includes(tag));
 }
 
-export default function Projects() {
+interface ProjectsProps {
+  projects: Project[];
+  allTags: ProjectTag[];
+}
+
+export default function Projects({ projects, allTags }: ProjectsProps) {
   const [activeTag, setActiveTag] = useState<ProjectTag | "All">("All");
+
+  const bddProjects = projects.filter((p) => p.category === "bdd");
+  const hackathonProjects = projects.filter((p) => p.category === "hackathon");
+  const consultingProjects = projects.filter((p) => p.category === "consulting");
+  const schoolProjects = projects.filter((p) => p.category === "school");
 
   const filteredBDD = filterByTag(bddProjects, activeTag);
   const filteredHackathon = filterByTag(hackathonProjects, activeTag);
@@ -208,7 +213,7 @@ function ProjectCard({
   project,
   index,
 }: {
-  project: (typeof projects)[number];
+  project: Project;
   index: number;
 }) {
   const forceScrollTop = () => {

@@ -1,53 +1,52 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import { projects } from "@/data/projects";
+import { getProjects, getProjectBySlug } from "@/lib/db";
 import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL } from "@/lib/site";
 import ProjectDetailClient from "./ProjectDetailClient";
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const projects = await getProjects();
   return projects.map((project) => ({
     slug: project.slug,
   }));
 }
 
-export function generateMetadata({
+export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  // We need to handle this synchronously for static generation
-  return params.then(({ slug }) => {
-    const project = projects.find((p) => p.slug === slug);
-    if (!project) return { title: "Project Not Found" };
+  const { slug } = await params;
+  const project = await getProjectBySlug(slug);
+  if (!project) return { title: "Project Not Found" };
 
-    const canonicalUrl = `${SITE_URL}/projects/${project.slug}`;
+  const canonicalUrl = `${SITE_URL}/projects/${project.slug}`;
 
-    return {
+  return {
+    title: `${project.title} — ${project.company} | Jonathan Bouniol`,
+    description: project.tagline,
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      title: `${project.title} — ${project.company} | ${SITE_NAME}`,
+      description: project.tagline,
+      url: canonicalUrl,
+      type: "article",
+      images: [
+        {
+          url: DEFAULT_OG_IMAGE,
+          alt: `${project.title} case study`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
       title: `${project.title} — ${project.company} | Jonathan Bouniol`,
       description: project.tagline,
-      alternates: {
-        canonical: canonicalUrl,
-      },
-      openGraph: {
-        title: `${project.title} — ${project.company} | ${SITE_NAME}`,
-        description: project.tagline,
-        url: canonicalUrl,
-        type: "article",
-        images: [
-          {
-            url: DEFAULT_OG_IMAGE,
-            alt: `${project.title} case study`,
-          },
-        ],
-      },
-      twitter: {
-        card: "summary_large_image",
-        title: `${project.title} — ${project.company} | Jonathan Bouniol`,
-        description: project.tagline,
-        images: [DEFAULT_OG_IMAGE],
-      },
-    };
-  });
+      images: [DEFAULT_OG_IMAGE],
+    },
+  };
 }
 
 export default async function ProjectPage({
@@ -56,7 +55,7 @@ export default async function ProjectPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const project = projects.find((p) => p.slug === slug);
+  const project = await getProjectBySlug(slug);
 
   if (!project) {
     notFound();

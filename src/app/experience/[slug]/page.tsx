@@ -1,52 +1,52 @@
-import { experiences } from "@/data/experiences";
+import { getExperiences, getExperienceBySlug } from "@/lib/db";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { DEFAULT_OG_IMAGE, SITE_NAME, SITE_URL } from "@/lib/site";
 import ExperienceDetailClient from "./ExperienceDetailClient";
 
-export function generateStaticParams() {
+export async function generateStaticParams() {
+  const experiences = await getExperiences();
   return experiences.map((exp) => ({
     slug: exp.slug,
   }));
 }
 
-export function generateMetadata({
+export async function generateMetadata({
   params,
 }: {
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
-  return params.then(({ slug }) => {
-    const experience = experiences.find((e) => e.slug === slug);
-    if (!experience) return { title: "Experience Not Found" };
+  const { slug } = await params;
+  const experience = await getExperienceBySlug(slug);
+  if (!experience) return { title: "Experience Not Found" };
 
-    const canonicalUrl = `${SITE_URL}/experience/${experience.slug}`;
+  const canonicalUrl = `${SITE_URL}/experience/${experience.slug}`;
 
-    return {
+  return {
+    title: `${experience.role} — ${experience.company} | Jonathan Bouniol`,
+    description: experience.tagline,
+    alternates: {
+      canonical: canonicalUrl,
+    },
+    openGraph: {
+      title: `${experience.role} — ${experience.company} | ${SITE_NAME}`,
+      description: experience.tagline,
+      url: canonicalUrl,
+      type: "article",
+      images: [
+        {
+          url: DEFAULT_OG_IMAGE,
+          alt: `${experience.role} at ${experience.company}`,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
       title: `${experience.role} — ${experience.company} | Jonathan Bouniol`,
       description: experience.tagline,
-      alternates: {
-        canonical: canonicalUrl,
-      },
-      openGraph: {
-        title: `${experience.role} — ${experience.company} | ${SITE_NAME}`,
-        description: experience.tagline,
-        url: canonicalUrl,
-        type: "article",
-        images: [
-          {
-            url: DEFAULT_OG_IMAGE,
-            alt: `${experience.role} at ${experience.company}`,
-          },
-        ],
-      },
-      twitter: {
-        card: "summary_large_image",
-        title: `${experience.role} — ${experience.company} | Jonathan Bouniol`,
-        description: experience.tagline,
-        images: [DEFAULT_OG_IMAGE],
-      },
-    };
-  });
+      images: [DEFAULT_OG_IMAGE],
+    },
+  };
 }
 
 export default async function ExperiencePage({
@@ -55,7 +55,7 @@ export default async function ExperiencePage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const experience = experiences.find((e) => e.slug === slug);
+  const experience = await getExperienceBySlug(slug);
 
   if (!experience) {
     notFound();
