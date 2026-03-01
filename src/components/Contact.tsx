@@ -1,26 +1,36 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Mail, Github, Linkedin, ArrowUpRight, ArrowUp } from "lucide-react";
+import { Mail, Github, Linkedin, Calendar, ArrowUpRight, ArrowUp } from "lucide-react";
 
 const links = [
   {
+    kind: "meeting",
+    icon: Calendar,
+    label: "Schedule a chat",
+    href: "https://calendar.notion.so/meet/jbouniol/apprenticeship",
+    display: "Open to apprenticeship, projects, and collaborations",
+  },
+  {
+    kind: "email",
     icon: Mail,
     label: "Email",
     href: "mailto:jbouniol@albertschool.com",
     display: "jbouniol@albertschool.com",
   },
   {
-    icon: Github,
-    label: "GitHub",
-    href: "https://github.com/jbouniol",
-    display: "github.com/jbouniol",
-  },
-  {
+    kind: "linkedin",
     icon: Linkedin,
     label: "LinkedIn",
     href: "https://linkedin.com/in/jonathanbouniol",
     display: "linkedin.com/in/jonathanbouniol",
+  },
+  {
+    kind: "github",
+    icon: Github,
+    label: "GitHub",
+    href: "https://github.com/jbouniol",
+    display: "github.com/jbouniol",
   },
 ];
 
@@ -51,10 +61,11 @@ export default function Contact() {
             Let&apos;s connect
           </h2>
           <p className="mt-4 text-muted text-lg leading-relaxed">
-            Currently looking for an{" "}
-            <span className="text-foreground font-medium">apprenticeship </span>{" "}
-            in Data, AI applied to Business — 4 days in-company / 1 day at school.
-            Available for conversations about how data transforms business.
+            I&apos;m currently looking for a{" "}
+            <span className="text-foreground font-medium">Data/AI apprenticeship</span>{" "}
+            from September (4 days in-company / 1 day at school), and I&apos;m
+            also open to project collaborations, portfolio discussions, and broader
+            professional exchanges.
           </p>
         </motion.div>
 
@@ -70,20 +81,38 @@ export default function Contact() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.1 }}
-              className="group flex items-center gap-4 p-4 border border-border rounded-xl hover:border-accent/30 transition-all"
+              className={`group flex items-center gap-4 p-4 border rounded-xl transition-all ${
+                link.kind === "meeting"
+                  ? "bg-accent/5 border-accent/30 hover:bg-accent/10"
+                  : "border-border hover:border-accent/30"
+              }`}
             >
               <link.icon
                 size={20}
-                className="text-muted group-hover:text-accent transition-colors"
+                className={
+                  link.kind === "meeting"
+                    ? "text-accent"
+                    : "text-muted group-hover:text-accent transition-colors"
+                }
                 strokeWidth={1.5}
               />
               <div className="flex-1">
                 <p className="text-sm font-medium">{link.label}</p>
-                <p className="text-xs text-muted">{link.display}</p>
+                <p
+                  className={`text-xs ${
+                    link.kind === "meeting" ? "text-accent/80" : "text-muted"
+                  }`}
+                >
+                  {link.display}
+                </p>
               </div>
               <ArrowUpRight
                 size={16}
-                className="text-muted group-hover:text-accent transition-colors"
+                className={
+                  link.kind === "meeting"
+                    ? "text-accent"
+                    : "text-muted group-hover:text-accent transition-colors"
+                }
               />
             </motion.a>
           ))}

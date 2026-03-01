@@ -61,14 +61,37 @@ export default function AISearch() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [placeholderIndex, setPlaceholderIndex] = useState(0);
+  const [placeholderText, setPlaceholderText] = useState("");
+  const [isDeletingPlaceholder, setIsDeletingPlaceholder] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setPlaceholderIndex((prev) => (prev + 1) % suggestions.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, []);
+    const currentSuggestion = suggestions[placeholderIndex];
+    const typingSpeed = isDeletingPlaceholder ? 35 : 60;
+
+    if (!isDeletingPlaceholder && placeholderText === currentSuggestion) {
+      const pause = setTimeout(() => setIsDeletingPlaceholder(true), 1200);
+      return () => clearTimeout(pause);
+    }
+
+    if (isDeletingPlaceholder && placeholderText === "") {
+      const next = setTimeout(() => {
+        setIsDeletingPlaceholder(false);
+        setPlaceholderIndex((prev) => (prev + 1) % suggestions.length);
+      }, 250);
+      return () => clearTimeout(next);
+    }
+
+    const timer = setTimeout(() => {
+      setPlaceholderText((prev) =>
+        isDeletingPlaceholder
+          ? currentSuggestion.slice(0, Math.max(0, prev.length - 1))
+          : currentSuggestion.slice(0, prev.length + 1)
+      );
+    }, typingSpeed);
+
+    return () => clearTimeout(timer);
+  }, [isDeletingPlaceholder, placeholderIndex, placeholderText]);
 
   const handleSearch = async (searchQuery: string) => {
     if (!searchQuery.trim()) return;
@@ -207,7 +230,7 @@ export default function AISearch() {
               onChange={(e) => setQuery(e.target.value)}
               onFocus={() => setIsFocused(true)}
               onBlur={() => setIsFocused(false)}
-              placeholder={suggestions[placeholderIndex]}
+              placeholder={placeholderText}
               disabled={isLoading}
               className="no-focus-outline flex-1 bg-transparent text-foreground placeholder:text-muted/50 outline-none text-base disabled:opacity-50"
             />

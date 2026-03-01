@@ -19,6 +19,15 @@ import {
   X,
 } from "lucide-react";
 
+const modalSuggestions = [
+  "Ask me anything...",
+  "What projects involve AI?",
+  "Tell me about the Generali internship",
+  "Where did Jonathan study?",
+  "What leadership roles does Jonathan hold?",
+  "Summarize the CMA-CGM supply chain analysis",
+];
+
 interface RelatedProject {
   slug: string;
   title: string;
@@ -57,6 +66,9 @@ export default function CommandModal({
   const [result, setResult] = useState<SearchResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [placeholderIndex, setPlaceholderIndex] = useState(0);
+  const [placeholderText, setPlaceholderText] = useState("");
+  const [isDeletingPlaceholder, setIsDeletingPlaceholder] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   const overlayRef = useRef<HTMLDivElement>(null);
 
@@ -65,6 +77,9 @@ export default function CommandModal({
     setQuery("");
     setResult(null);
     setError(null);
+    setPlaceholderIndex(0);
+    setPlaceholderText("");
+    setIsDeletingPlaceholder(false);
   }, []);
 
   const close = useCallback(() => {
@@ -101,6 +116,36 @@ export default function CommandModal({
       return () => clearTimeout(t);
     }
   }, [isOpen]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+
+    const currentSuggestion = modalSuggestions[placeholderIndex];
+    const typingSpeed = isDeletingPlaceholder ? 35 : 60;
+
+    if (!isDeletingPlaceholder && placeholderText === currentSuggestion) {
+      const pause = setTimeout(() => setIsDeletingPlaceholder(true), 1200);
+      return () => clearTimeout(pause);
+    }
+
+    if (isDeletingPlaceholder && placeholderText === "") {
+      const next = setTimeout(() => {
+        setIsDeletingPlaceholder(false);
+        setPlaceholderIndex((prev) => (prev + 1) % modalSuggestions.length);
+      }, 250);
+      return () => clearTimeout(next);
+    }
+
+    const timer = setTimeout(() => {
+      setPlaceholderText((prev) =>
+        isDeletingPlaceholder
+          ? currentSuggestion.slice(0, Math.max(0, prev.length - 1))
+          : currentSuggestion.slice(0, prev.length + 1)
+      );
+    }, typingSpeed);
+
+    return () => clearTimeout(timer);
+  }, [isDeletingPlaceholder, isOpen, placeholderIndex, placeholderText]);
 
   const handleSearch = async (searchQuery: string) => {
     if (!searchQuery.trim()) return;
@@ -218,7 +263,7 @@ export default function CommandModal({
                 type="text"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
-                placeholder="Ask me anything…"
+                placeholder={placeholderText}
                 disabled={isLoading}
                 className="no-focus-outline flex-1 bg-transparent text-foreground placeholder:text-muted/50 outline-none text-sm disabled:opacity-50"
               />

@@ -123,7 +123,7 @@ export const experiences: Experience[] = [
       "Workshop Facilitation",
       "Community Building",
       "CRM Design",
-      "HR Workflow Design",
+      "Workflow Design",
       "Template Design",
     ],
   },
