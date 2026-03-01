@@ -51,16 +51,6 @@ export const PROFILE_SKILLS = [
 
 export const SUPPLEMENTAL_EXPERIENCE_ITEMS: SupplementalExperienceItem[] = [
   {
-    slug: "student-representative",
-    role: "Student Representative",
-    company: "Albert School",
-    period: "Sep 2023 — Present",
-    tagline:
-      "Student fairs across Paris, Marseille, Lyon, Geneva. Hosted workshop for 200 students in Luxembourg.",
-    category: "Leadership",
-    hasPage: false,
-  },
-  {
     slug: "capgemini-ambassador",
     role: "Ambassador",
     company: "Capgemini",

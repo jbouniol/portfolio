@@ -128,4 +128,31 @@ export const experiences: Experience[] = [
       "Template Design",
     ],
   },
+  {
+    slug: "student-representative",
+    updatedAt: "2026-03-01",
+    role: "Student Representative",
+    company: "Albert School",
+    period: "Sep 2023 — Present",
+    location: "Paris, Marseille, Lyon, Geneve, Luxembourg",
+    type: "leadership",
+    tagline:
+      "Representation d'Albert School lors des salons et JPO, accompagnement des candidats, et sensibilisation aux metiers Data & IA.",
+    description:
+      "En tant que Student Representative, je represente Albert School sur des evenements de recrutement, des interventions lycees et des ateliers d'acculturation Data/IA. Mon role consiste a accompagner les lyceens et etudiants dans leur orientation, partager mon retour d'experience sur l'admission, et incarner concretement la pedagogie orientee projets de l'ecole.",
+    missions: [
+      "Participation aux salons etudiants sur Paris, Marseille, Lyon et Geneve pour presenter Albert School et echanger avec les candidats",
+      "Participation aux Journees Portes Ouvertes: visite du campus, reponse aux interrogations des lyceens, accompagnement lors des immersions, presentation des cas pratiques realises a Albert School",
+      "Presentation de l'ecole dans des lycees, avec partage de mon parcours et des debouches en Data et IA",
+      "Echanges individuels avec des etudiants pour preparer leur admission et partager mon experience",
+      "Co-animation d'un workshop Data/IA au Lycee francais du Luxembourg pour 245 eleves de terminale: decouverte des metiers IA/Data et atelier pratique de test d'outils d'intelligence artificielle selon l'approche Albert School",
+    ],
+    tools: [
+      "Public Speaking",
+      "Workshop Facilitation",
+      "Mentoring",
+      "Community Outreach",
+      "Admissions Coaching",
+    ],
+  },
 ];

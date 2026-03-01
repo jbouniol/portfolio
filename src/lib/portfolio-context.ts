@@ -24,6 +24,8 @@ export function buildPortfolioContext(
   const schoolCount = projects.filter((p) => p.category === "school").length;
   const winnerCount = projects.filter((p) => p.badge === "Winner").length;
   const podiumCount = projects.filter((p) => Boolean(p.badge)).length;
+  const workExperienceItems = experiences.filter((item) => item.type === "work");
+  const leadershipItems = experiences.filter((item) => item.type === "leadership");
 
   const supplementalLeadership = SUPPLEMENTAL_EXPERIENCE_ITEMS.filter(
     (item) => item.category === "Leadership"
@@ -69,8 +71,12 @@ ${missionsList}${e.tools ? `\nTools & Stack: ${e.tools.join(", ")}` : ""}${e.isC
 - ${totalProjects} projects total: ${bddCount} Business Deep Dives, ${hackathonCount} Hackathons, ${consultingCount} Consulting Missions, ${schoolCount} School Projects
 - Companies: ${PROFILE_COMPANIES.join(", ")}
 - ${winnerCount} Wins, ${podiumCount} Podiums (finalists, 2nd places, honorable mentions)
-- 3 Work Experiences: Generali France (Data & IT Intern), Sunver (Right-Hand to CEO), CND (Reserviste)
-- 1 Leadership Role: Albert Junior Consulting (VP & CTO — doubled revenue)
+- ${workExperienceItems.length} Work Experiences: ${workExperienceItems
+    .map((item) => `${item.company} (${item.role})`)
+    .join(", ")}
+- ${leadershipItems.length} Leadership Roles with detail pages: ${leadershipItems
+    .map((item) => `${item.company} (${item.role})`)
+    .join(", ")}
 - Skills: ${PROFILE_SKILLS.join(", ")}
 - Email: ${PROFILE_BASICS.email}
 - Education: MSc Mines Paris PSL × Albert School (2025-2027), Bachelor Albert School × Mines Paris PSL (2023-2025), Baccalaureat Ecole Pascal (2020-2023)
