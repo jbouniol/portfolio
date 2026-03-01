@@ -134,18 +134,19 @@ export const experiences: Experience[] = [
     role: "Student Representative",
     company: "Albert School",
     period: "Sep 2023 — Present",
-    location: "Paris, Marseille, Lyon, Geneve, Luxembourg",
+    location: "Paris, Marseille, Lyon, Geneva, Luxembourg",
     type: "leadership",
     tagline:
-      "Representation d'Albert School lors des salons et JPO, accompagnement des candidats, et sensibilisation aux metiers Data & IA.",
+      "Representing Albert School at student fairs and open days, supporting applicants, and introducing high school students to Data and AI careers; awarded the Distinguished Ambassador certification.",
     description:
-      "En tant que Student Representative, je represente Albert School sur des evenements de recrutement, des interventions lycees et des ateliers d'acculturation Data/IA. Mon role consiste a accompagner les lyceens et etudiants dans leur orientation, partager mon retour d'experience sur l'admission, et incarner concretement la pedagogie orientee projets de l'ecole.",
+      "As a Student Representative, I represent Albert School at recruitment events, high school presentations, and Data/AI workshops. My role includes guiding prospective students, sharing my admissions experience, and showcasing Albert School's hands-on, project-based learning approach. In recognition of these contributions, I was awarded the Distinguished Ambassador certification by Albert School.",
     missions: [
-      "Participation aux salons etudiants sur Paris, Marseille, Lyon et Geneve pour presenter Albert School et echanger avec les candidats",
-      "Participation aux Journees Portes Ouvertes: visite du campus, reponse aux interrogations des lyceens, accompagnement lors des immersions, presentation des cas pratiques realises a Albert School",
-      "Presentation de l'ecole dans des lycees, avec partage de mon parcours et des debouches en Data et IA",
-      "Echanges individuels avec des etudiants pour preparer leur admission et partager mon experience",
-      "Co-animation d'un workshop Data/IA au Lycee francais du Luxembourg pour 245 eleves de terminale: decouverte des metiers IA/Data et atelier pratique de test d'outils d'intelligence artificielle selon l'approche Albert School",
+      "Participated in student fairs in Paris, Marseille, Lyon, and Geneva to present Albert School and answer applicant questions",
+      "Contributed to Open Days: campus tours, Q&A sessions with high school students, immersion support, and presentations of practical case studies completed at Albert School",
+      "Presented Albert School in high schools, sharing my academic journey and career opportunities in Data and AI",
+      "Held one-on-one exchanges with prospective students to support admissions preparation and share practical guidance",
+      "Co-hosted a Data/AI workshop at Lycee Francais du Luxembourg for 245 final-year students: introduced Data and AI career paths and led a hands-on session where students tested AI tools while discovering Albert School's learning approach",
+      "Received the Distinguished Ambassador certification from Albert School for sustained impact in student outreach, admissions support, and school representation",
     ],
     tools: [
       "Public Speaking",
