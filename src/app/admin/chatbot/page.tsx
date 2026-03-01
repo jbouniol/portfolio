@@ -7,7 +7,6 @@ import {
   DEFAULT_ADMIN_CHAT_MODEL,
   type AdminChatModel,
 } from "@/lib/admin-chat-models";
-import { useSearchParams } from "next/navigation";
 import AskPane from "./_components/AskPane";
 import CareerDocBuilder from "./_components/CareerDocBuilder";
 import TabButton from "./_components/TabButton";
@@ -91,7 +90,6 @@ function stripMentionTokens(text: string) {
 }
 
 export default function ChatbotPage() {
-  const searchParams = useSearchParams();
   const [activeTab, setActiveTab] = useState<BobTab>("ask");
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
@@ -158,7 +156,6 @@ export default function ChatbotPage() {
 
   const cvGenerating = docs.cv.generating;
   const coverGenerating = docs["cover-letter"].generating;
-  const requestedTab = searchParams.get("tab");
   const hasConversation = messages.length > 0;
 
   useEffect(() => {
@@ -231,18 +228,25 @@ export default function ChatbotPage() {
   }, []);
 
   useEffect(() => {
-    if (requestedTab === "cv") {
-      setActiveTab("cv");
-      return;
+    function applyTabFromUrl() {
+      const requestedTab = new URLSearchParams(window.location.search).get("tab");
+      if (requestedTab === "cv") {
+        setActiveTab("cv");
+        return;
+      }
+      if (requestedTab === "cover" || requestedTab === "cover-letter") {
+        setActiveTab("cover");
+        return;
+      }
+      if (requestedTab === "ask") {
+        setActiveTab("ask");
+      }
     }
-    if (requestedTab === "cover" || requestedTab === "cover-letter") {
-      setActiveTab("cover");
-      return;
-    }
-    if (requestedTab === "ask") {
-      setActiveTab("ask");
-    }
-  }, [requestedTab]);
+
+    applyTabFromUrl();
+    window.addEventListener("popstate", applyTabFromUrl);
+    return () => window.removeEventListener("popstate", applyTabFromUrl);
+  }, []);
 
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
