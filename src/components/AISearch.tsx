@@ -209,7 +209,7 @@ export default function AISearch() {
               onBlur={() => setIsFocused(false)}
               placeholder={suggestions[placeholderIndex]}
               disabled={isLoading}
-              className="flex-1 bg-transparent text-foreground placeholder:text-muted/50 outline-none text-base disabled:opacity-50"
+              className="no-focus-outline flex-1 bg-transparent text-foreground placeholder:text-muted/50 outline-none text-base disabled:opacity-50"
             />
             <button
               type="submit"
