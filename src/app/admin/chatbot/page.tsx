@@ -153,6 +153,14 @@ export default function ChatbotPage() {
       .map((slug) => bySlug.get(slug))
       .filter((candidate): candidate is MentionCandidate => Boolean(candidate));
   }, [mentionCandidates, selectedMentionSlugs]);
+  const projectMentionTargets = useMemo(() => {
+    const targets: Record<string, string> = {};
+    for (const candidate of mentionCandidates) {
+      if (candidate.type !== "project") continue;
+      targets[candidate.slug.toLowerCase()] = `/projects/${candidate.slug}`;
+    }
+    return targets;
+  }, [mentionCandidates]);
 
   const cvGenerating = docs.cv.generating;
   const coverGenerating = docs["cover-letter"].generating;
@@ -635,6 +643,7 @@ export default function ChatbotPage() {
           onRemoveMentionContext={removeMentionContext}
           onSubmitPrompt={() => sendPrompt()}
           messages={messages}
+          projectMentionTargets={projectMentionTargets}
           starters={STARTERS}
           onStarterPrompt={sendPrompt}
           chatInputRef={chatInputRef}

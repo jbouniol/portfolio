@@ -6,6 +6,20 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import type { MentionCandidate, Message } from "../types";
 
+function linkifyProjectMentions(
+  content: string,
+  projectMentionTargets: Record<string, string>
+) {
+  return content.replace(
+    /(^|[\s(])@([a-z0-9][a-z0-9-]{1,80})(?=$|[\s),.:;!?])/gi,
+    (full, prefix: string, slug: string) => {
+      const href = projectMentionTargets[slug.toLowerCase()];
+      if (!href) return full;
+      return `${prefix}[@${slug}](${href})`;
+    }
+  );
+}
+
 export default function AskPane({
   hasConversation,
   loading,
@@ -29,6 +43,7 @@ export default function AskPane({
   onRemoveMentionContext,
   onSubmitPrompt,
   messages,
+  projectMentionTargets,
   starters,
   onStarterPrompt,
   chatInputRef,
@@ -56,6 +71,7 @@ export default function AskPane({
   onRemoveMentionContext: (slug: string) => void;
   onSubmitPrompt: () => void;
   messages: Message[];
+  projectMentionTargets: Record<string, string>;
   starters: string[];
   onStarterPrompt: (starter: string) => void;
   chatInputRef: React.RefObject<HTMLInputElement | null>;
@@ -279,8 +295,24 @@ export default function AskPane({
                   </p>
                   {message.role === "assistant" ? (
                     <div className="prose-chat">
-                      <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                        {message.content}
+                      <ReactMarkdown
+                        remarkPlugins={[remarkGfm]}
+                        components={{
+                          a: ({ href, children }) => (
+                            <a
+                              href={href}
+                              target="_blank"
+                              rel="noreferrer noopener"
+                            >
+                              {children}
+                            </a>
+                          ),
+                        }}
+                      >
+                        {linkifyProjectMentions(
+                          message.content,
+                          projectMentionTargets
+                        )}
                       </ReactMarkdown>
                     </div>
                   ) : (
