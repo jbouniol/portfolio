@@ -63,7 +63,7 @@ export const SUPPLEMENTAL_EXPERIENCE_ITEMS: SupplementalExperienceItem[] = [
     slug: "msc-mines-paris",
     role: "MSc Data & AI for Business",
     company: "Mines Paris PSL × Albert School",
-    period: "2025 — 2027",
+    period: "2026 — 2028",
     tagline:
       "Advanced joint diploma program combining data science, AI engineering, and business strategy at France's #2 engineering school.",
     category: "Education",
