@@ -346,12 +346,12 @@ export default function ProjectForm({ project, mode }: Props) {
       year,
       duration,
       category,
-      badge: badge || undefined,
-      canvaEmbedUrl: canvaEmbedUrl || undefined,
-      githubUrl: githubUrl || undefined,
-      isPrivate: isPrivate || undefined,
-      isNDA: isNDA || undefined,
-      contributors: contributors.length > 0 ? contributors : undefined,
+      badge,
+      canvaEmbedUrl,
+      githubUrl,
+      isPrivate,
+      isNDA,
+      contributors,
       status,
     };
 
