@@ -136,7 +136,7 @@ export default function ProjectsListClient({
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">Projects</h1>
           <p className="text-zinc-500 text-sm mt-1">
@@ -145,7 +145,7 @@ export default function ProjectsListClient({
         </div>
         <Link
           href="/admin/projects/new"
-          className="flex items-center gap-2 px-4 py-2.5 bg-white text-black text-sm font-medium rounded-lg hover:bg-zinc-200 transition-all"
+          className="flex items-center gap-2 px-4 py-2.5 bg-white text-black text-sm font-medium rounded-lg hover:bg-zinc-200 transition-all self-start sm:self-auto shrink-0"
         >
           <Plus size={14} />
           New Project
@@ -182,15 +182,15 @@ export default function ProjectsListClient({
           <Link
             key={project.slug}
             href={`/admin/projects/${project.slug}`}
-            className="group flex items-center gap-4 p-4 bg-zinc-900 border border-zinc-800 rounded-xl hover:border-zinc-700 transition-all"
+            className="group flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-zinc-900 border border-zinc-800 rounded-xl hover:border-zinc-700 transition-all"
           >
             <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2 flex-wrap">
+              <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
                 <span className="font-mono text-xs text-blue-400">
                   {project.company}
                 </span>
-                <span className="text-zinc-700">·</span>
-                <span className="text-xs text-zinc-500">
+                <span className="text-zinc-700 hidden sm:inline">·</span>
+                <span className="text-xs text-zinc-500 hidden sm:inline">
                   {CATEGORY_LABELS[project.category]}
                 </span>
                 {project.badge === "Winner" && (
@@ -227,7 +227,7 @@ export default function ProjectsListClient({
               </p>
             </div>
             <div className="flex items-center gap-2 shrink-0">
-              <span className="text-[10px] font-mono text-zinc-600">
+              <span className="text-[10px] font-mono text-zinc-600 hidden sm:inline">
                 {project.updatedAt}
               </span>
               <Pencil

@@ -39,7 +39,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
   }
 
   return (
-    <div className="min-h-screen bg-[#09090b] text-white">
+    <div className="min-h-screen bg-[#09090b] text-white overflow-x-hidden">
       {/* Mobile header */}
       <div className="md:hidden flex items-center justify-between px-4 py-3 border-b border-zinc-800">
         <span className="font-mono text-sm font-medium">
@@ -53,7 +53,7 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
         </button>
       </div>
 
-      <div className="flex">
+      <div className="flex min-w-0">
         {/* Sidebar */}
         <aside
           className={`
@@ -141,8 +141,8 @@ export default function AdminShell({ children }: { children: React.ReactNode }) 
         )}
 
         {/* Main */}
-        <main className="flex-1 min-h-screen">
-          <div className="max-w-5xl mx-auto px-6 py-8">{children}</div>
+        <main className="flex-1 min-w-0 min-h-screen">
+          <div className="max-w-5xl mx-auto px-4 sm:px-6 py-6 sm:py-8">{children}</div>
         </main>
       </div>
 

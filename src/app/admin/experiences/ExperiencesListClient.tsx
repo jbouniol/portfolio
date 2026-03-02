@@ -122,7 +122,7 @@ export default function ExperiencesListClient({
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-6">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">Experiences</h1>
           <p className="text-zinc-500 text-sm mt-1">
@@ -131,7 +131,7 @@ export default function ExperiencesListClient({
         </div>
         <Link
           href="/admin/experiences/new"
-          className="flex items-center gap-2 px-4 py-2.5 bg-white text-black text-sm font-medium rounded-lg hover:bg-zinc-200 transition-all"
+          className="flex items-center gap-2 px-4 py-2.5 bg-white text-black text-sm font-medium rounded-lg hover:bg-zinc-200 transition-all self-start sm:self-auto shrink-0"
         >
           <Plus size={14} />
           New Experience
@@ -168,9 +168,9 @@ export default function ExperiencesListClient({
           <Link
             key={exp.slug}
             href={`/admin/experiences/${exp.slug}`}
-            className="group flex items-center gap-4 p-4 bg-zinc-900 border border-zinc-800 rounded-xl hover:border-zinc-700 transition-all"
+            className="group flex items-center gap-3 sm:gap-4 p-3 sm:p-4 bg-zinc-900 border border-zinc-800 rounded-xl hover:border-zinc-700 transition-all"
           >
-            <div className="p-2 bg-zinc-800 rounded-lg shrink-0">
+            <div className="p-2 bg-zinc-800 rounded-lg shrink-0 hidden sm:block">
               {exp.type === "work" ? (
                 <Briefcase size={16} className="text-emerald-400" />
               ) : (
@@ -178,7 +178,7 @@ export default function ExperiencesListClient({
               )}
             </div>
             <div className="flex-1 min-w-0">
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-1.5 sm:gap-2 flex-wrap">
                 <span className={`text-xs font-mono ${exp.type === "work" ? "text-emerald-400" : "text-purple-400"}`}>
                   {exp.company}
                 </span>
@@ -193,13 +193,13 @@ export default function ExperiencesListClient({
                   </span>
                 )}
               </div>
-              <p className="text-sm font-medium mt-0.5">{exp.role}</p>
-              <p className="text-xs text-zinc-500 mt-0.5">
+              <p className="text-sm font-medium mt-0.5 truncate">{exp.role}</p>
+              <p className="text-xs text-zinc-500 mt-0.5 truncate">
                 {exp.period} · {exp.location}
               </p>
             </div>
             <div className="flex items-center gap-2 shrink-0">
-              <span className="text-[10px] font-mono text-zinc-600">
+              <span className="text-[10px] font-mono text-zinc-600 hidden sm:inline">
                 {exp.updatedAt}
               </span>
               <Pencil
