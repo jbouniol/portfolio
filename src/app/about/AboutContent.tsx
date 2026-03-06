@@ -103,7 +103,7 @@ export default function AboutContent() {
           >
             <div className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-border shrink-0">
               <Image
-                src="/me.png"
+                src="/jonathanbouniol.png"
                 alt="Jonathan Bouniol"
                 fill
                 className="object-cover"
