@@ -3,8 +3,9 @@
   "configurations": [
     {
       "name": "Portfolio Dev",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeExecutable": "/Users/jo/.nvm/versions/node/v20.14.0/bin/node",
+      "env": { "PATH": "/Users/jo/.nvm/versions/node/v20.14.0/bin:/usr/local/bin:/usr/bin:/bin" },
+      "runtimeArgs": ["/Users/jo/.nvm/versions/node/v20.14.0/lib/node_modules/npm/bin/npm-cli.js", "run", "dev"],
       "port": 3000
     }
   ]

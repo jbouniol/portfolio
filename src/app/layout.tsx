@@ -20,7 +20,10 @@ const projectCount = projects.length;
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
-  title: SITE_NAME,
+  title: {
+    default: SITE_NAME,
+    template: "%s | Jonathan Bouniol",
+  },
   description: `Data, AI, and business strategy. Mines Paris PSL × Albert School. Portfolio showcasing ${projectCount} projects across 10+ industries.`,
   keywords: [
     "data engineering",
@@ -31,8 +34,11 @@ export const metadata: Metadata = {
     "Albert School",
     "portfolio",
     "Jonathan Bouniol",
+    "machine learning",
+    "data science",
   ],
-  authors: [{ name: "Jonathan Bouniol" }],
+  authors: [{ name: "Jonathan Bouniol", url: SITE_URL }],
+  creator: "Jonathan Bouniol",
   alternates: {
     canonical: "/",
   },
@@ -46,8 +52,10 @@ export const metadata: Metadata = {
     locale: "en_US",
     images: [
       {
-        url: DEFAULT_OG_IMAGE,
-        alt: "Jonathan Bouniol Portfolio",
+        url: `/opengraph-image`,
+        width: 1200,
+        height: 630,
+        alt: "Jonathan Bouniol — Data, AI & Business",
       },
     ],
   },
@@ -56,7 +64,7 @@ export const metadata: Metadata = {
     title: SITE_NAME,
     description:
       "Data engineering, AI strategy, and consulting-grade business deep dives.",
-    images: [DEFAULT_OG_IMAGE],
+    images: [`/opengraph-image`],
   },
   robots: {
     index: true,
@@ -66,34 +74,70 @@ export const metadata: Metadata = {
 
 const jsonLd = {
   "@context": "https://schema.org",
-  "@type": "Person",
-  name: "Jonathan Bouniol",
-  url: "https://jonathanbouniol.com",
-  jobTitle: "Data & AI Student",
-  description: `Data, AI, and business strategy. Mines Paris PSL × Albert School. ${projectCount} projects across 10+ industries.`,
-  alumniOf: [
+  "@graph": [
     {
-      "@type": "CollegeOrUniversity",
-      name: "Mines Paris PSL",
-      url: "https://www.minesparis.psl.eu",
+      "@type": "WebSite",
+      "@id": `${SITE_URL}/#website`,
+      name: SITE_NAME,
+      url: SITE_URL,
+      description: `Data, AI, and business strategy. Mines Paris PSL × Albert School. ${projectCount} projects across 10+ industries.`,
+      publisher: { "@id": `${SITE_URL}/#person` },
+      potentialAction: {
+        "@type": "SearchAction",
+        target: {
+          "@type": "EntryPoint",
+          urlTemplate: `${SITE_URL}/?q={search_term_string}`,
+        },
+        "query-input": "required name=search_term_string",
+      },
+      inLanguage: "en",
     },
     {
-      "@type": "CollegeOrUniversity",
-      name: "Albert School",
-      url: "https://www.albertschool.com",
+      "@type": "Person",
+      "@id": `${SITE_URL}/#person`,
+      name: "Jonathan Bouniol",
+      givenName: "Jonathan",
+      familyName: "Bouniol",
+      url: SITE_URL,
+      image: {
+        "@type": "ImageObject",
+        url: `${SITE_URL}/profile.png`,
+        caption: "Jonathan Bouniol",
+      },
+      jobTitle: "Data & AI Student",
+      description: `Data, AI, and business strategy. Mines Paris PSL × Albert School. ${projectCount} projects across 10+ industries.`,
+      email: "jbouniol@albertschool.com",
+      nationality: {
+        "@type": "Country",
+        name: "France",
+      },
+      alumniOf: [
+        {
+          "@type": "CollegeOrUniversity",
+          name: "Mines Paris PSL",
+          url: "https://www.minesparis.psl.eu",
+        },
+        {
+          "@type": "CollegeOrUniversity",
+          name: "Albert School",
+          url: "https://www.albertschool.com",
+        },
+      ],
+      sameAs: [
+        "https://github.com/jbouniol",
+        "https://linkedin.com/in/jonathanbouniol",
+      ],
+      knowsAbout: [
+        "Data Engineering",
+        "Artificial Intelligence",
+        "Machine Learning",
+        "Business Strategy",
+        "Python",
+        "SQL",
+        "Consulting",
+        "Process Optimization",
+      ],
     },
-  ],
-  sameAs: [
-    "https://github.com/jbouniol",
-    "https://linkedin.com/in/jonathanbouniol",
-  ],
-  knowsAbout: [
-    "Data Engineering",
-    "Artificial Intelligence",
-    "Machine Learning",
-    "Business Strategy",
-    "Python",
-    "SQL",
   ],
 };
 

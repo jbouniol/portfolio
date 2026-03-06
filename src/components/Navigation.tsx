@@ -6,8 +6,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X, Sun, Moon } from "lucide-react";
 
 const navItems = [
-  { label: "Work", href: "/#work" },
-  { label: "Ask AI", href: "/#ai-search" },
+  { label: "About", href: "/about" },
   { label: "Projects", href: "/#projects" },
   { label: "Experience", href: "/#experience" },
   { label: "Stack", href: "/#research" },
