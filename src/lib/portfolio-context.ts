@@ -5,6 +5,7 @@ import {
   PROFILE_COMPANIES,
   PROFILE_SKILLS,
   SUPPLEMENTAL_EXPERIENCE_ITEMS,
+  PERSONAL_PROFILE,
 } from "@/data/profile";
 
 /**
@@ -100,6 +101,23 @@ ${supplementalEducation
       `- Slug: ${item.slug} | ${item.role} at ${item.company} (${item.period}): ${item.tagline}`
   )
   .join("\n")}
+
+## Personal Profile
+
+Mindset: ${PERSONAL_PROFILE.mindset}
+
+Values:
+${PERSONAL_PROFILE.values.map((v) => `- ${v}`).join("\n")}
+
+Traits:
+${PERSONAL_PROFILE.traits.map((t) => `- ${t}`).join("\n")}
+
+Interests:
+${PERSONAL_PROFILE.interests.map((i) => `- ${i}`).join("\n")}
+
+Goals: ${PERSONAL_PROFILE.goals}
+
+Quote: "${PERSONAL_PROFILE.quote}"
 
 ## Projects (Business Deep Dives & School Projects)
 

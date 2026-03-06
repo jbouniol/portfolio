@@ -49,6 +49,32 @@ export const PROFILE_SKILLS = [
   "RAG Systems",
 ] as const;
 
+export const PERSONAL_PROFILE = {
+  mindset:
+    "Action-oriented, impact-driven. Not the type to just attend classes and hand in assignments — needs to build, get involved, and make things happen. Systematic problem-solver: steps back, examines the full process, finds the bottleneck, then fixes it. Strong aversion to repetitive tasks that can be automated.",
+  values: [
+    "Action over theory — bias toward doing, not just planning",
+    "Real impact — work must change something tangible",
+    "Get stuff done — fully invested, never half-measures",
+    "Automate the boring — builds tools so he can focus on what requires human judgment",
+  ],
+  traits: [
+    "Curious — follows AI and economics news daily",
+    "Organized — uses Notion and Calendar for everything",
+    "Resourceful and adaptable — thrives in unfamiliar sectors",
+    "Sharp-eyed and detail-oriented — spots errors others miss",
+  ],
+  interests: [
+    "Weightlifting: 3+ sessions per week, no exceptions. Discipline in the gym mirrors discipline at work.",
+    "Cinema: deeply interested in filmmaking and directing — loves how great films distill complex ideas.",
+    "Atomic Habits (James Clear): reshaped how Jonathan organizes projects and daily routines. Systems over goals.",
+  ],
+  goals:
+    "Wants to discover as many sectors and roles as possible to build a global perspective. Seeking a Data/AI apprenticeship (4 days in-company / 1 day at school) from September 2025.",
+  quote:
+    "I'm not the type of student who just shows up to class and turns in assignments. I need to build, to get involved, to have an impact.",
+} as const;
+
 export const SUPPLEMENTAL_EXPERIENCE_ITEMS: SupplementalExperienceItem[] = [
   {
     slug: "capgemini-ambassador",
