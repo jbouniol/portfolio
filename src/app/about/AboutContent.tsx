@@ -27,13 +27,13 @@ const values = [
     icon: Zap,
     title: "Action Over Theory",
     description:
-      "I don't wait for things to happen — I make them happen. Whether it's a hackathon prototype at 3 AM or an automation that saves hours of manual work, I bias toward doing.",
+      "I don't wait for things to happen. I make them happen. Whether it's a hackathon prototype at 3 AM or an automation that saves hours of manual work, I bias toward doing.",
   },
   {
     icon: Target,
     title: "Real Impact",
     description:
-      "Every project I take on must matter. I need my work to change something tangible — a process improved, a decision informed, a problem solved.",
+      "Every project I take on must matter. I need my work to change something tangible: a process improved, a decision informed, a problem solved.",
   },
   {
     icon: Search,
@@ -60,13 +60,13 @@ const interests = [
     icon: Clapperboard,
     title: "Cinema",
     description:
-      "Deeply interested in filmmaking — from directing to storytelling. I love how great films distill complex ideas into something everyone can feel.",
+      "Deeply interested in filmmaking, from directing to storytelling. I love how great films distill complex ideas into something everyone can feel.",
   },
   {
     icon: BookOpen,
     title: "Atomic Habits",
     description:
-      "This book reshaped how I organize everything. Systems over goals, small improvements compounding over time — it's how I track my projects and daily routines.",
+      "This book reshaped how I organize everything. Systems over goals, small improvements compounding over time. It's how I structure my projects and daily routines.",
   },
 ];
 
@@ -135,14 +135,17 @@ export default function AboutContent() {
               Studying Data & AI at{" "}
               <span className="text-foreground">Mines Paris PSL</span> and{" "}
               <span className="text-foreground">Albert School</span>, I&apos;ve
-              worked across 10+ industries — from luxury goods to defense — always
+              worked across 10+ industries (from luxury goods to defense), always
               at the intersection of data, AI, and business strategy.
             </p>
             <p className="text-lg text-muted leading-relaxed mt-4">
-              I want to discover as many sectors and roles as possible to build a
-              global perspective. Every new problem is a chance to learn something
-              fundamental about how businesses actually work — and how data can
-              make them work better.
+              Each industry I&apos;ve worked in taught me something the others
+              couldn&apos;t. Right now I&apos;m looking for an apprenticeship
+              where I can be thrown into the deep end: a real mandate, a real
+              team, real stakes.{" "}
+              <span className="text-foreground font-medium">
+                That&apos;s where I learn the most.
+              </span>
             </p>
           </motion.section>
 
@@ -229,43 +232,6 @@ export default function AboutContent() {
             </div>
           </motion.section>
 
-          {/* FAQ */}
-          <motion.section
-            {...fadeUp}
-            transition={{ duration: 0.6, delay: 0.55 }}
-            className="mb-16"
-          >
-            <p className="font-mono text-sm text-accent mb-3">Quick answers</p>
-            <h2 className="text-2xl font-semibold tracking-tight mb-8">
-              Frequently asked
-            </h2>
-            <div className="space-y-5">
-              {[
-                {
-                  q: "Who is Jonathan Bouniol?",
-                  a: "Jonathan Bouniol is a French Data & AI student at Mines Paris PSL and Albert School in Paris. He specializes in data engineering, AI systems, and business strategy, with experience across 10+ industries including luxury goods, finance, logistics, and defense.",
-                },
-                {
-                  q: "What does Jonathan Bouniol study?",
-                  a: "Jonathan is pursuing a joint MSc in Data & AI for Business at Mines Paris PSL × Albert School (2025–2027), following a Bachelor in Business & Data at Albert School × Mines Paris PSL (2023–2025). Albert School is Europe's first data-centric business school.",
-                },
-                {
-                  q: "What has Jonathan Bouniol worked on?",
-                  a: "18+ projects spanning Business Deep Dives (Louis Vuitton, BNP Paribas, CMA-CGM…), hackathons (multiple podiums), consulting missions, and AI tooling. He has built RAG systems, automation pipelines, predictive models, and data dashboards across real-world mandates.",
-                },
-                {
-                  q: "How to contact Jonathan Bouniol?",
-                  a: "By email at jbouniol@albertschool.com, on LinkedIn at linkedin.com/in/jonathanbouniol, or via the contact section of this site.",
-                },
-              ].map(({ q, a }) => (
-                <div key={q} className="border border-border rounded-xl p-5">
-                  <p className="font-medium text-foreground mb-2">{q}</p>
-                  <p className="text-sm text-muted leading-relaxed">{a}</p>
-                </div>
-              ))}
-            </div>
-          </motion.section>
-
           {/* CTA */}
           <motion.section
             {...fadeUp}
@@ -276,7 +242,7 @@ export default function AboutContent() {
               Want to work together?
             </h2>
             <p className="text-muted mb-8">
-              I&apos;m looking for a Data/AI apprenticeship from September 2025.
+              I&apos;m looking for a Data/AI apprenticeship from September 2026.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <Link

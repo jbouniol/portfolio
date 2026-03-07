@@ -70,7 +70,7 @@ export const PERSONAL_PROFILE = {
     "Atomic Habits (James Clear): reshaped how Jonathan organizes projects and daily routines. Systems over goals.",
   ],
   goals:
-    "Wants to discover as many sectors and roles as possible to build a global perspective. Seeking a Data/AI apprenticeship (4 days in-company / 1 day at school) from September 2025.",
+    "Wants to discover as many sectors and roles as possible to build a global perspective. Seeking a Data/AI apprenticeship (4 days in-company / 1 day at school) from September 2026.",
   quote:
     "I'm not the type of student who just shows up to class and turns in assignments. I need to build, to get involved, to have an impact.",
 } as const;
