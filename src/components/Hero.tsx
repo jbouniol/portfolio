@@ -82,6 +82,7 @@ export default function Hero({
               `${winnerCount}x Winner`,
               "Mines Paris PSL × Albert School",
               "French Army Reservist",
+              "Available Sep 2026",
             ].map((tag) => (
               <span
                 key={tag}

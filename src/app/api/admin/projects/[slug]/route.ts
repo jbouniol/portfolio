@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getProjectBySlug, updateProject, deleteProject } from "@/lib/db";
-import { revalidatePath } from "next/cache";
+import {
+  CACHE_TAGS,
+  getProjectBySlug,
+  updateProject,
+  deleteProject,
+} from "@/lib/db";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { validateProjectPayload } from "@/lib/admin-validation";
 
 // GET — single project by slug
@@ -49,6 +54,8 @@ export async function PUT(
     }
 
     revalidatePath("/");
+    revalidateTag(CACHE_TAGS.publishedProjects, "max");
+    revalidatePath("/sitemap.xml");
     revalidatePath(`/projects/${slug}`, "page");
 
     return NextResponse.json(updated);
@@ -72,6 +79,8 @@ export async function DELETE(
     }
 
     revalidatePath("/");
+    revalidateTag(CACHE_TAGS.publishedProjects, "max");
+    revalidatePath("/sitemap.xml");
     revalidatePath(`/projects/${slug}`, "page");
 
     return NextResponse.json({ success: true });

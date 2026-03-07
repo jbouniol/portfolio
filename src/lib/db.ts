@@ -1,4 +1,5 @@
 import { Redis } from "@upstash/redis";
+import { unstable_cache } from "next/cache";
 import { projects as staticProjects, allTags as staticAllTags } from "@/data/projects";
 import { experiences as staticExperiences } from "@/data/experiences";
 import type { Project } from "@/data/projects";
@@ -29,6 +30,13 @@ const KEYS = {
   projects: "portfolio:projects",
   experiences: "portfolio:experiences",
 } as const;
+
+export const CACHE_TAGS = {
+  publishedProjects: "published-projects",
+  publishedExperiences: "published-experiences",
+} as const;
+
+const PUBLIC_CACHE_REVALIDATE_SECONDS = 60 * 15;
 
 function parseStoredArray<T>(input: unknown): T[] | null {
   if (Array.isArray(input)) return input as T[];
@@ -93,13 +101,11 @@ export async function getExperiences(): Promise<Experience[]> {
 }
 
 export async function getPublishedProjects(): Promise<Project[]> {
-  const all = await getProjects();
-  return all.filter((project) => project.status !== "draft");
+  return getCachedPublishedProjects();
 }
 
 export async function getPublishedExperiences(): Promise<Experience[]> {
-  const all = await getExperiences();
-  return all.filter((experience) => experience.status !== "draft");
+  return getCachedPublishedExperiences();
 }
 
 export async function getAllTags() {
@@ -109,6 +115,30 @@ export async function getAllTags() {
     a.localeCompare(b)
   );
 }
+
+const getCachedPublishedProjects = unstable_cache(
+  async (): Promise<Project[]> => {
+    const all = await getProjects();
+    return all.filter((project) => project.status !== "draft");
+  },
+  ["published-projects"],
+  {
+    tags: [CACHE_TAGS.publishedProjects],
+    revalidate: PUBLIC_CACHE_REVALIDATE_SECONDS,
+  }
+);
+
+const getCachedPublishedExperiences = unstable_cache(
+  async (): Promise<Experience[]> => {
+    const all = await getExperiences();
+    return all.filter((experience) => experience.status !== "draft");
+  },
+  ["published-experiences"],
+  {
+    tags: [CACHE_TAGS.publishedExperiences],
+    revalidate: PUBLIC_CACHE_REVALIDATE_SECONDS,
+  }
+);
 
 // ── Write ───────────────────────────────────────────────────────
 

@@ -1,6 +1,11 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getExperienceBySlug, updateExperience, deleteExperience } from "@/lib/db";
-import { revalidatePath } from "next/cache";
+import {
+  CACHE_TAGS,
+  getExperienceBySlug,
+  updateExperience,
+  deleteExperience,
+} from "@/lib/db";
+import { revalidatePath, revalidateTag } from "next/cache";
 import { validateExperiencePayload } from "@/lib/admin-validation";
 
 // GET — single experience by slug
@@ -49,6 +54,8 @@ export async function PUT(
     }
 
     revalidatePath("/");
+    revalidateTag(CACHE_TAGS.publishedExperiences, "max");
+    revalidatePath("/sitemap.xml");
     revalidatePath(`/experience/${slug}`, "page");
 
     return NextResponse.json(updated);
@@ -72,6 +79,8 @@ export async function DELETE(
     }
 
     revalidatePath("/");
+    revalidateTag(CACHE_TAGS.publishedExperiences, "max");
+    revalidatePath("/sitemap.xml");
     revalidatePath(`/experience/${slug}`, "page");
 
     return NextResponse.json({ success: true });

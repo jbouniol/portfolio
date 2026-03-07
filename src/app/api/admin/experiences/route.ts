@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getExperiences, addExperience } from "@/lib/db";
-import { revalidatePath } from "next/cache";
+import { CACHE_TAGS, getExperiences, addExperience } from "@/lib/db";
+import { revalidatePath, revalidateTag } from "next/cache";
 import type { Experience } from "@/data/experiences";
 import { validateExperiencePayload } from "@/lib/admin-validation";
 
@@ -57,7 +57,9 @@ export async function POST(req: NextRequest) {
     };
 
     await addExperience(experience);
+    revalidateTag(CACHE_TAGS.publishedExperiences, "max");
     revalidatePath("/");
+    revalidatePath("/sitemap.xml");
     revalidatePath("/experience/[slug]", "page");
 
     return NextResponse.json(experience, { status: 201 });

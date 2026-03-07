@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import { getProjects, addProject } from "@/lib/db";
-import { revalidatePath } from "next/cache";
+import { CACHE_TAGS, getProjects, addProject } from "@/lib/db";
+import { revalidatePath, revalidateTag } from "next/cache";
 import type { Project } from "@/data/projects";
 import { validateProjectPayload } from "@/lib/admin-validation";
 
@@ -67,7 +67,9 @@ export async function POST(req: NextRequest) {
     };
 
     await addProject(project);
+    revalidateTag(CACHE_TAGS.publishedProjects, "max");
     revalidatePath("/");
+    revalidatePath("/sitemap.xml");
     revalidatePath("/projects/[slug]", "page");
 
     return NextResponse.json(project, { status: 201 });
