@@ -112,7 +112,7 @@ export default function AboutContent() {
             </div>
             <div>
               <h1 className="text-3xl sm:text-4xl font-semibold tracking-tight">
-                About me
+                Jonathan Bouniol
               </h1>
               <p className="text-muted mt-1">
                 Builder, problem-solver, impact-driven.
@@ -224,6 +224,43 @@ export default function AboutContent() {
                 >
                   <p className="font-medium text-foreground">{trait.label}</p>
                   <p className="text-xs text-muted mt-1">{trait.detail}</p>
+                </div>
+              ))}
+            </div>
+          </motion.section>
+
+          {/* FAQ */}
+          <motion.section
+            {...fadeUp}
+            transition={{ duration: 0.6, delay: 0.55 }}
+            className="mb-16"
+          >
+            <p className="font-mono text-sm text-accent mb-3">Quick answers</p>
+            <h2 className="text-2xl font-semibold tracking-tight mb-8">
+              Frequently asked
+            </h2>
+            <div className="space-y-5">
+              {[
+                {
+                  q: "Who is Jonathan Bouniol?",
+                  a: "Jonathan Bouniol is a French Data & AI student at Mines Paris PSL and Albert School in Paris. He specializes in data engineering, AI systems, and business strategy, with experience across 10+ industries including luxury goods, finance, logistics, and defense.",
+                },
+                {
+                  q: "What does Jonathan Bouniol study?",
+                  a: "Jonathan is pursuing a joint MSc in Data & AI for Business at Mines Paris PSL × Albert School (2025–2027), following a Bachelor in Business & Data at Albert School × Mines Paris PSL (2023–2025). Albert School is Europe's first data-centric business school.",
+                },
+                {
+                  q: "What has Jonathan Bouniol worked on?",
+                  a: "18+ projects spanning Business Deep Dives (Louis Vuitton, BNP Paribas, CMA-CGM…), hackathons (multiple podiums), consulting missions, and AI tooling. He has built RAG systems, automation pipelines, predictive models, and data dashboards across real-world mandates.",
+                },
+                {
+                  q: "How to contact Jonathan Bouniol?",
+                  a: "By email at jbouniol@albertschool.com, on LinkedIn at linkedin.com/in/jonathanbouniol, or via the contact section of this site.",
+                },
+              ].map(({ q, a }) => (
+                <div key={q} className="border border-border rounded-xl p-5">
+                  <p className="font-medium text-foreground mb-2">{q}</p>
+                  <p className="text-sm text-muted leading-relaxed">{a}</p>
                 </div>
               ))}
             </div>

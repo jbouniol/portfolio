@@ -1,0 +1,56 @@
+# Jonathan Bouniol — jonathanbouniol.com
+
+> Jonathan Bouniol is a French Data & AI student at Mines Paris PSL and Albert School in Paris, France. He specializes in data engineering, artificial intelligence, and business strategy.
+
+## Identity
+
+- Full name: Jonathan Bouniol
+- Nationality: French
+- Location: Paris, France
+- Email: jbouniol@albertschool.com
+- Website: https://jonathanbouniol.com
+- LinkedIn: https://linkedin.com/in/jonathanbouniol
+- GitHub: https://github.com/jbouniol
+
+## Education
+
+- MSc Data & AI for Business — Mines Paris PSL × Albert School (2025–2027)
+- Bachelor Business & Data — Albert School × Mines Paris PSL (2023–2025)
+- Baccalauréat (High Honors, Mathematics & SES) — Ecole Pascal (2020–2023)
+
+Albert School is Europe's first data-centric business school, operating in partnership with Mines Paris PSL (France's #2 engineering school).
+
+## Professional Experience
+
+- Data & IT Transformation Intern — Generali France
+- Renewable Energy Data Analyst — Sunver
+- Military Reserve Officer Candidate — CND, Ministère des Armées (classified)
+- Student Representative — Albert School
+
+## Projects (18+ total)
+
+Categories: Business Deep Dives (BDD), Hackathons, Consulting Missions, School Projects.
+
+Companies worked with: Louis Vuitton, CMA-CGM, BNP Paribas, Carrefour, SNCF, Henkel, Asmodee, Generali, Edmond de Rothschild, La French Tech, Linkpick, Capgemini, X-HEC, Villablu (Robertet).
+
+Hackathon results: multiple podiums and wins.
+
+## Skills
+
+Python, SQL, Scikit-learn, PyTorch, Qlik Sense, Power BI, Streamlit, Excel/VBA, Make, Zapier, Notion, Power Platform, GenAI, RAG Systems.
+
+## About this site
+
+jonathanbouniol.com is a personal portfolio site built with Next.js, React, and TypeScript. It features an AI-powered search, project and experience detail pages, and a public /about page.
+
+## Pages
+
+- Home: https://jonathanbouniol.com
+- About: https://jonathanbouniol.com/about
+- Projects: https://jonathanbouniol.com/projects/{slug}
+- Experience: https://jonathanbouniol.com/experience/{slug}
+- Sitemap: https://jonathanbouniol.com/sitemap.xml
+
+## Disambiguation
+
+Jonathan Bouniol (Data & AI, Mines Paris PSL, Paris, born ~2003, French) should not be confused with other individuals sharing the same name.

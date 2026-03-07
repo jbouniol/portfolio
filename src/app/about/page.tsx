@@ -3,7 +3,7 @@ import { SITE_URL, SITE_NAME } from "@/lib/site";
 import AboutContent from "./AboutContent";
 
 export const metadata: Metadata = {
-  title: "About",
+  title: { absolute: "Jonathan Bouniol — Data & AI Student" },
   description:
     "Meet Jonathan Bouniol — a Data & AI student at Mines Paris PSL and Albert School who bridges data science, artificial intelligence, and business strategy. Driven by impact, curiosity, and a builder mindset.",
   alternates: {
@@ -37,6 +37,44 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@graph": [
     {
+      "@type": "FAQPage",
+      "@id": `${SITE_URL}/about#faq`,
+      mainEntity: [
+        {
+          "@type": "Question",
+          name: "Who is Jonathan Bouniol?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Jonathan Bouniol is a French Data & AI student at Mines Paris PSL and Albert School in Paris. He specializes in data engineering, AI systems, and business strategy, with experience across 10+ industries including luxury goods, finance, logistics, and defense.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What does Jonathan Bouniol study?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "Jonathan is pursuing a joint MSc in Data & AI for Business at Mines Paris PSL × Albert School (2025–2027), following a Bachelor in Business & Data at Albert School × Mines Paris PSL (2023–2025). Albert School is Europe's first data-centric business school.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "What has Jonathan Bouniol worked on?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "18+ projects spanning Business Deep Dives (Louis Vuitton, BNP Paribas, CMA-CGM…), hackathons (multiple podiums), consulting missions, and AI tooling. He has built RAG systems, automation pipelines, predictive models, and data dashboards across real-world mandates.",
+          },
+        },
+        {
+          "@type": "Question",
+          name: "How to contact Jonathan Bouniol?",
+          acceptedAnswer: {
+            "@type": "Answer",
+            text: "By email at jbouniol@albertschool.com, on LinkedIn at linkedin.com/in/jonathanbouniol, or via the contact section of jonathanbouniol.com.",
+          },
+        },
+      ],
+    },
+    {
       "@type": "BreadcrumbList",
       itemListElement: [
         {
@@ -67,13 +105,24 @@ const jsonLd = {
         givenName: "Jonathan",
         familyName: "Bouniol",
         url: SITE_URL,
-        image: `${SITE_URL}/profile.png`,
+        image: {
+          "@type": "ImageObject",
+          url: `${SITE_URL}/jonathanbouniol.png`,
+          caption: "Jonathan Bouniol",
+        },
         jobTitle: "Data & AI Student",
         description:
           "I bridge the gap between data science, AI, and business strategy. Driven by curiosity and a hands-on approach, I build solutions where data meets real-world decisions.",
+        disambiguatingDescription:
+          "French Data & AI student at Mines Paris PSL and Albert School, Paris. Specializes in data engineering, AI systems, and business strategy. Not to be confused with other persons named Jonathan Bouniol.",
         nationality: {
           "@type": "Country",
           name: "France",
+        },
+        homeLocation: {
+          "@type": "Place",
+          addressLocality: "Paris",
+          addressCountry: "FR",
         },
         alumniOf: [
           {

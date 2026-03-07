@@ -26,7 +26,7 @@ export async function generateMetadata({
   const canonicalUrl = `${SITE_URL}/experience/${experience.slug}`;
 
   return {
-    title: `${experience.role} — ${experience.company} | Jonathan Bouniol`,
+    title: { absolute: `${experience.role} — ${experience.company} | Jonathan Bouniol` },
     description: experience.tagline,
     alternates: {
       canonical: canonicalUrl,

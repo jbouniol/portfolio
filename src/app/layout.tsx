@@ -101,15 +101,22 @@ const jsonLd = {
       url: SITE_URL,
       image: {
         "@type": "ImageObject",
-        url: `${SITE_URL}/profile.png`,
+        url: `${SITE_URL}/jonathanbouniol.png`,
         caption: "Jonathan Bouniol",
       },
       jobTitle: "Data & AI Student",
       description: `Data, AI, and business strategy. Mines Paris PSL × Albert School. ${projectCount} projects across 10+ industries.`,
+      disambiguatingDescription:
+        "French Data & AI student at Mines Paris PSL and Albert School, Paris. Specializes in data engineering, AI systems, and business strategy. Not to be confused with other persons named Jonathan Bouniol.",
       email: "jbouniol@albertschool.com",
       nationality: {
         "@type": "Country",
         name: "France",
+      },
+      homeLocation: {
+        "@type": "Place",
+        addressLocality: "Paris",
+        addressCountry: "FR",
       },
       alumniOf: [
         {

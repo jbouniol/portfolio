@@ -23,7 +23,7 @@ export async function generateMetadata({
   const canonicalUrl = `${SITE_URL}/projects/${project.slug}`;
 
   return {
-    title: `${project.title} — ${project.company} | Jonathan Bouniol`,
+    title: { absolute: `${project.title} — ${project.company} | Jonathan Bouniol` },
     description: project.tagline,
     alternates: {
       canonical: canonicalUrl,
