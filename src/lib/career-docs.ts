@@ -114,7 +114,7 @@ export const GENERIC_CV_LATEX_TEMPLATE = String.raw`%-------------------------
 % ===== EXPERIENCE =====
 \sectionheading{Work Experience}
 
-\entry{2025 -- Present}{Commissariat au Numérique de Défense (CND)}{Data Analyst -- Data Engineer \textbar{} Reserve Sergeant}{France}
+\entry{2025 -- Present}{Commissariat du Numerique de Defense (CND)}{Sous-Officier Reserviste}{France}
 \begin{bullets}
   \item Performed confidential analytics for the French Armed Forces, focusing on data structuring and operational analysis.
   \item Built structured datasets to improve operational efficiency, enabling faster and more reliable access to key information.
@@ -127,7 +127,7 @@ export const GENERIC_CV_LATEX_TEMPLATE = String.raw`%-------------------------
   \item Developed internal tools and AI agents to improve information access and project execution across Tech \& Ops teams (Copilot Studio, Python).
 \end{bullets}
 
-\entry{May -- Jul 2024}{Sunver}{CEO Right-Hand (Growth and Operations)}{Boulogne-Billancourt}
+\entry{May -- Jul 2024}{Sunver}{Right-Hand to CEO (Intern)}{Boulogne-Billancourt}
 \begin{bullets}
   \item Built a GenAI chatbot prototype (Mistral) integrated into the Sunver app, improving onboarding and overall user experience.
   \item Launched and monitored 2 Meta Ads campaigns (3,000+ reach, 14\% lead conversion rate).

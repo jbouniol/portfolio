@@ -67,7 +67,7 @@ const leadership = [
 
 const education = [
   {
-    period: "2025 — 2027",
+    period: "2026 — 2028",
     degree: "MSc Data & AI for Business",
     school: "Mines Paris PSL × Albert School",
     description:

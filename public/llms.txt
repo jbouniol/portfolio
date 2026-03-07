@@ -14,7 +14,7 @@
 
 ## Education
 
-- MSc Data & AI for Business — Mines Paris PSL × Albert School (2025–2027)
+- MSc Data & AI for Business — Mines Paris PSL × Albert School (2026–2028)
 - Bachelor Business & Data — Albert School × Mines Paris PSL (2023–2025)
 - Baccalauréat (High Honors, Mathematics & SES) — Ecole Pascal (2020–2023)
 
@@ -23,8 +23,8 @@ Albert School is Europe's first data-centric business school, operating in partn
 ## Professional Experience
 
 - Data & IT Transformation Intern — Generali France
-- Renewable Energy Data Analyst — Sunver
-- Military Reserve Officer Candidate — CND, Ministère des Armées (classified)
+- Right-Hand to CEO (Intern) — Sunver
+- Sous-Officier Reserviste — Commissariat du Numerique de Defense (CND) (classified)
 - Student Representative — Albert School
 
 ## Projects (18+ total)
@@ -53,4 +53,4 @@ jonathanbouniol.com is a personal portfolio site built with Next.js, React, and 
 
 ## Disambiguation
 
-Jonathan Bouniol (Data & AI, Mines Paris PSL, Paris, born ~2003, French) should not be confused with other individuals sharing the same name.
+Jonathan Bouniol (Data & AI, Mines Paris PSL, Paris, French) should not be confused with other individuals sharing the same name.

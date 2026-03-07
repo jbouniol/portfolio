@@ -80,7 +80,7 @@ ${missionsList}${e.tools ? `\nTools & Stack: ${e.tools.join(", ")}` : ""}${e.isC
     .join(", ")}
 - Skills: ${PROFILE_SKILLS.join(", ")}
 - Email: ${PROFILE_BASICS.email}
-- Education: MSc Mines Paris PSL × Albert School (2025-2027), Bachelor Albert School × Mines Paris PSL (2023-2025), Baccalaureat Ecole Pascal (2020-2023)
+- Education: MSc Mines Paris PSL × Albert School (2026-2028), Bachelor Albert School × Mines Paris PSL (2023-2025), Baccalaureat Ecole Pascal (2020-2023)
 
 ## Work Experience & Leadership
 

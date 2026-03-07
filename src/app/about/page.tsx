@@ -53,7 +53,7 @@ const jsonLd = {
           name: "What does Jonathan Bouniol study?",
           acceptedAnswer: {
             "@type": "Answer",
-            text: "Jonathan is pursuing a joint MSc in Data & AI for Business at Mines Paris PSL × Albert School (2025–2027), following a Bachelor in Business & Data at Albert School × Mines Paris PSL (2023–2025). Albert School is Europe's first data-centric business school.",
+            text: "Jonathan is pursuing a joint MSc in Data & AI for Business at Mines Paris PSL × Albert School (2026–2028), following a Bachelor in Business & Data at Albert School × Mines Paris PSL (2023–2025). Albert School is Europe's first data-centric business school.",
           },
         },
         {
