@@ -55,11 +55,19 @@ export default async function ProjectPage({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const project = await getPublishedProjectBySlug(slug);
+  const [project, allProjects] = await Promise.all([
+    getPublishedProjectBySlug(slug),
+    getPublishedProjects(),
+  ]);
 
   if (!project) {
     notFound();
   }
+
+  const sameCategory = allProjects.filter((p) => p.category === project.category);
+  const idx = sameCategory.findIndex((p) => p.slug === project.slug);
+  const prev = idx > 0 ? sameCategory[idx - 1] : null;
+  const next = idx < sameCategory.length - 1 ? sameCategory[idx + 1] : null;
 
   const canonicalUrl = `${SITE_URL}/projects/${project.slug}`;
   const jsonLd = {
@@ -123,7 +131,7 @@ export default async function ProjectPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <ProjectDetailClient project={project} />
+      <ProjectDetailClient project={project} prev={prev} next={next} />
     </>
   );
 }

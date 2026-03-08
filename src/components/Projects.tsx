@@ -11,6 +11,7 @@ import {
   Rocket,
   Zap,
   Handshake,
+  HelpCircle,
 } from "lucide-react";
 import type { Project, ProjectTag } from "@/data/projects";
 
@@ -56,11 +57,11 @@ export default function Projects({ projects, allTags }: ProjectsProps) {
         >
           <p className="font-mono text-sm text-accent mb-3">Portfolio</p>
           <h2 className="text-3xl md:text-4xl font-semibold tracking-tight">
-            Hackathons & Business Deep Dives
+            Selected Projects
           </h2>
           <p className="mt-4 text-muted max-w-xl text-lg">
-            Consulting case studies, hackathons, consulting missions, and school
-            projects. From 3-day hackathons to 3-week deep dives.
+            Business deep dives, hackathons, consulting missions, and school
+            projects — across 10+ industries.
           </p>
         </motion.div>
 
@@ -102,6 +103,12 @@ export default function Projects({ projects, allTags }: ProjectsProps) {
               <h3 className="text-sm font-mono text-muted uppercase tracking-wider">
                 Business Deep Dives
               </h3>
+              <span className="relative group cursor-help">
+                <HelpCircle size={13} className="text-muted/50 hover:text-muted transition-colors" />
+                <span className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 text-xs text-foreground bg-surface border border-border rounded-lg shadow-lg opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none w-56 text-center leading-relaxed">
+                  3-week consulting-grade case studies for real companies, part of the Albert School curriculum.
+                </span>
+              </span>
               <span className="px-2 py-0.5 text-[10px] font-mono bg-accent/10 text-accent rounded-full">
                 {filteredBDD.length}
               </span>

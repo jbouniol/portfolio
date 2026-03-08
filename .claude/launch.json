@@ -8,5 +8,6 @@
       "runtimeArgs": ["/Users/jo/.nvm/versions/node/v20.14.0/lib/node_modules/npm/bin/npm-cli.js", "run", "dev"],
       "port": 3000
     }
-  ]
+  ],
+  "autoVerify": false
 }

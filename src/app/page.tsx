@@ -7,14 +7,13 @@ import Research from "@/components/Research";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import HomeDeferredAI from "@/components/HomeDeferredAI";
-import { getPublishedProjects } from "@/lib/db";
-import { allTags as defaultTags } from "@/data/projects";
+import { getPublishedProjects, getAllTags } from "@/lib/db";
 
 export default async function Home() {
-  const projects = await getPublishedProjects();
-  const allTags = Array.from(
-    new Set([...defaultTags, ...projects.flatMap((project) => project.tags || [])])
-  ).sort((a, b) => a.localeCompare(b));
+  const [projects, allTags] = await Promise.all([
+    getPublishedProjects(),
+    getAllTags(),
+  ]);
   const projectCount = projects.length;
   const winnerCount = projects.filter((project) => project.badge === "Winner").length;
   const podiumCount = projects.filter((project) => Boolean(project.badge)).length;

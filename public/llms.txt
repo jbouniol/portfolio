@@ -22,18 +22,26 @@ Albert School is Europe's first data-centric business school, operating in partn
 
 ## Professional Experience
 
-- Data & IT Transformation Intern — Generali France
-- Right-Hand to CEO (Intern) — Sunver
-- Sous-Officier Reserviste — Commissariat du Numerique de Defense (CND) (classified)
-- Student Representative — Albert School
+- Data & IT Transformation Intern — Generali France (Jul–Dec 2025)
+- Right-Hand to CEO (Intern) — Sunver (May–Jul 2024)
+- Sous-Officier Reserviste — Commissariat du Numerique de Defense (CND) (2024–present, classified)
 
-## Projects (18+ total)
+## Leadership & Involvement
+
+- Vice President & CTO — Albert Junior Consulting (Jul 2024–Jul 2025)
+- Campus Leader — Notion (Sep 2025–present)
+- Student Representative — Albert School (Sep 2023–present)
+- Ambassador — Capgemini (2024–2025)
+
+## Projects (19 total)
 
 Categories: Business Deep Dives (BDD), Hackathons, Consulting Missions, School Projects.
 
-Companies worked with: Louis Vuitton, CMA-CGM, BNP Paribas, Carrefour, SNCF, Henkel, Asmodee, Generali, Edmond de Rothschild, La French Tech, Linkpick, Capgemini, X-HEC, Villablu (Robertet).
+Business Deep Dives are 3-week consulting-grade case studies for real companies, part of the Albert School × Mines Paris PSL curriculum.
 
-Hackathon results: multiple podiums and wins.
+Companies worked with: Generali, Henkel, La French Tech, Linkpick, Louis Vuitton, SNCF, Ministere des Armees, Capgemini, BNP Paribas, Carrefour, CMA-CGM, Edmond de Rothschild, Asmodee, X-HEC Entrepreneurs, Villablu (Robertet).
+
+Hackathon results: 4 wins, multiple podiums.
 
 ## Skills
 
@@ -41,7 +49,7 @@ Python, SQL, Scikit-learn, PyTorch, Qlik Sense, Power BI, Streamlit, Excel/VBA, 
 
 ## About this site
 
-jonathanbouniol.com is a personal portfolio site built with Next.js, React, and TypeScript. It features an AI-powered search, project and experience detail pages, and a public /about page.
+jonathanbouniol.com is a personal portfolio site built with Next.js, React, and TypeScript. It features an AI-powered search (Mistral AI), project and experience detail pages, and a public /about page.
 
 ## Pages
 

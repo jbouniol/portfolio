@@ -20,7 +20,6 @@ import {
   Users,
 } from "lucide-react";
 import type { Project } from "@/data/projects";
-import { projects } from "@/data/projects";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import CommandModal from "@/components/CommandModal";
@@ -83,18 +82,6 @@ function parseNumberedList(text: string): string[] | null {
   return items.length >= 2 ? items : null;
 }
 
-function getProjectNavigation(currentProject: Project) {
-  const sameCategory = projects.filter(
-    (p) => p.category === currentProject.category
-  );
-  const idx = sameCategory.findIndex((p) => p.slug === currentProject.slug);
-
-  const prev = idx > 0 ? sameCategory[idx - 1] : null;
-  const next = idx < sameCategory.length - 1 ? sameCategory[idx + 1] : null;
-
-  return { prev, next };
-}
-
 function getBadgeConfig(badge: string | undefined) {
   switch (badge) {
     case "Winner":
@@ -128,11 +115,14 @@ function getBadgeConfig(badge: string | undefined) {
 
 export default function ProjectDetailClient({
   project,
+  prev,
+  next,
 }: {
   project: Project;
+  prev: Project | null;
+  next: Project | null;
 }) {
   const [showCanva, setShowCanva] = useState(!!project.canvaEmbedUrl);
-  const { prev, next } = getProjectNavigation(project);
   const badgeConfig = getBadgeConfig(project.badge);
 
   useLayoutEffect(() => {
