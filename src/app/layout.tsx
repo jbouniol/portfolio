@@ -87,6 +87,13 @@ export default async function RootLayout({
     "@context": "https://schema.org",
     "@graph": [
       {
+        "@type": "ProfilePage",
+        "@id": `${SITE_URL}/#profilepage`,
+        url: SITE_URL,
+        dateModified: "2026-03-08T00:00:00+00:00",
+        mainEntity: { "@id": `${SITE_URL}/#person` },
+      },
+      {
         "@type": "WebSite",
         "@id": `${SITE_URL}/#website`,
         name: SITE_NAME,
