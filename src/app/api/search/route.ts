@@ -2,9 +2,9 @@ import { NextRequest, NextResponse } from "next/server";
 import { getPublishedProjects, getPublishedExperiences } from "@/lib/db";
 import { buildPortfolioContext } from "@/lib/portfolio-context";
 import type { Project } from "@/data/projects";
-import { fetchWithTimeout } from "@/lib/fetch";
 import { SUPPLEMENTAL_EXPERIENCE_ITEMS } from "@/data/profile";
 import { buildDisambiguationContext } from "@/lib/ai-disambiguation";
+import { generateAskAICompletion } from "@/lib/ask-ai";
 
 export async function POST(req: NextRequest) {
   try {
@@ -14,15 +14,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json(
         { error: "Query is required" },
         { status: 400 }
-      );
-    }
-
-    const apiKey = process.env.MISTRAL_API_KEY;
-
-    if (!apiKey || apiKey === "your_mistral_api_key_here") {
-      return NextResponse.json(
-        { error: "MISTRAL_API_KEY not configured" },
-        { status: 500 }
       );
     }
 
@@ -45,18 +36,7 @@ export async function POST(req: NextRequest) {
       experiences,
     });
 
-    const response = await fetchWithTimeout("https://api.mistral.ai/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        model: "mistral-small-latest",
-        messages: [
-          {
-            role: "system",
-            content: `You are an AI assistant embedded in Jonathan Bouniol's portfolio website. Your job is to answer questions about his projects, skills, experience, and background using ONLY the information provided below.
+    const systemPrompt = `You are an AI assistant embedded in Jonathan Bouniol's portfolio website. Your job is to answer questions about his projects, skills, experience, and background using ONLY the information provided below.
 ${pageContext ? `\nCurrent user context: The visitor is currently viewing ${pageContext}. Prioritize content relevant to this context when applicable.\n` : ""}
 Rules:
 - Answer in the same language as the question (French or English)
@@ -85,40 +65,13 @@ Rules:
 Portfolio data:
 ${portfolioContext}
 
-${disambiguationContext ? `Disambiguation guardrails:\n${disambiguationContext}` : ""}`,
-          },
-          {
-            role: "user",
-            content: query,
-          },
-        ],
-        temperature: 0.3,
-        max_tokens: 500,
-        response_format: { type: "json_object" },
-      }),
-      timeoutMs: 25_000,
+${disambiguationContext ? `Disambiguation guardrails:\n${disambiguationContext}` : ""}`;
+
+    const { content } = await generateAskAICompletion({
+      systemPrompt,
+      query,
     });
 
-    if (!response.ok) {
-      const errorData = await response.text();
-      console.error("Mistral API error:", errorData);
-      return NextResponse.json(
-        { error: "AI service error" },
-        { status: 502 }
-      );
-    }
-
-    const data = await response.json();
-    const content = data.choices?.[0]?.message?.content;
-
-    if (!content) {
-      return NextResponse.json(
-        { error: "No response from AI" },
-        { status: 502 }
-      );
-    }
-
-    // Parse the JSON response from Mistral
     let parsed;
     try {
       parsed = JSON.parse(content);
@@ -192,9 +145,13 @@ ${disambiguationContext ? `Disambiguation guardrails:\n${disambiguationContext}`
     });
   } catch (error) {
     console.error("Search API error:", error);
+    if (error instanceof Error && /_API_KEY/.test(error.message)) {
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
     return NextResponse.json(
-      { error: "Internal server error" },
-      { status: 500 }
+      { error: "AI service error" },
+      { status: 502 }
     );
   }
 }

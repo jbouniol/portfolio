@@ -69,6 +69,7 @@ KV_REST_API_URL=...        # Upstash Redis
 KV_REST_API_TOKEN=...      # Upstash Redis
 MISTRAL_API_KEY=...
 GEMINI_API_KEY=...
+OPENAI_API_KEY=...        # AskAI fallback when Mistral is unavailable
 ```
 
 ## Dev Server
