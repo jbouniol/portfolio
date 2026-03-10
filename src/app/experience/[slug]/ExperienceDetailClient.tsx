@@ -15,12 +15,15 @@ import type { Experience } from "@/data/experiences";
 import Navigation from "@/components/Navigation";
 import Footer from "@/components/Footer";
 import CommandModal from "@/components/CommandModal";
+import { getExperienceBadgeConfig } from "@/lib/experience-badges";
 
 export default function ExperienceDetailClient({
   experience,
 }: {
   experience: Experience;
 }) {
+  const badgeConfig = getExperienceBadgeConfig(experience.badge);
+
   useLayoutEffect(() => {
     const html = document.documentElement;
     const body = document.body;
@@ -71,6 +74,21 @@ export default function ExperienceDetailClient({
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
+            {badgeConfig && (
+              <div
+                className={`inline-flex items-center gap-3 px-4 py-2.5 rounded-xl border mb-6 ${badgeConfig.className}`}
+              >
+                <badgeConfig.icon size={18} strokeWidth={1.5} />
+                <div>
+                  <p className="font-mono text-sm font-medium">
+                    {badgeConfig.label}
+                  </p>
+                  <p className="text-xs opacity-80 mt-0.5">
+                    Recognition from {experience.company}
+                  </p>
+                </div>
+              </div>
+            )}
             <div className="flex items-center gap-3 mb-4 flex-wrap">
               <span className="font-mono text-sm text-accent">
                 {experience.company}

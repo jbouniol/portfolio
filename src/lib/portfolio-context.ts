@@ -58,7 +58,7 @@ Impact: ${p.impact}`;
 EntityType: experience
 Slug: ${e.slug}
 Type: ${e.type === "work" ? "Work Experience" : "Leadership"}
-Period: ${e.period} | Location: ${e.location}
+Period: ${e.period} | Location: ${e.location}${e.badge ? ` | Badge: ${e.badge}` : ""}
 Tagline: ${e.tagline}
 About the Role: ${e.description}
 Key Missions:

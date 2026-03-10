@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { Briefcase, GraduationCap, Users, ArrowUpRight } from "lucide-react";
 import type { Experience } from "@/data/experiences";
+import { getExperienceBadgeConfig } from "@/lib/experience-badges";
 
 const education = [
   {
@@ -33,6 +34,7 @@ interface TimelineItemProps {
   period: string;
   title: string;
   subtitle: string;
+  badge?: string;
   description: string;
   slug?: string;
   dotColor: string;
@@ -45,6 +47,7 @@ function TimelineItem({
   period,
   title,
   subtitle,
+  badge,
   description,
   slug,
   dotColor,
@@ -52,6 +55,8 @@ function TimelineItem({
   basePath,
   index,
 }: TimelineItemProps) {
+  const badgeConfig = getExperienceBadgeConfig(badge);
+
   const content = (
     <>
       <span className="font-mono text-xs text-muted block mb-1">{period}</span>
@@ -65,6 +70,14 @@ function TimelineItem({
         )}
       </div>
       <p className={`${subtitleColor} text-sm font-medium mt-0.5`}>{subtitle}</p>
+      {badgeConfig && (
+        <span
+          className={`mt-2 inline-flex items-center gap-1 px-2 py-0.5 text-[10px] font-mono rounded-full border ${badgeConfig.className}`}
+        >
+          <badgeConfig.icon size={10} />
+          {badgeConfig.label}
+        </span>
+      )}
       <p className="text-muted text-xs leading-relaxed mt-2">{description}</p>
     </>
   );
@@ -131,6 +144,7 @@ export default function ExperienceClient({
                     period={exp.period}
                     title={exp.role}
                     subtitle={exp.company}
+                    badge={exp.badge}
                     description={exp.tagline}
                     slug={exp.slug}
                     dotColor="bg-foreground"
@@ -158,6 +172,7 @@ export default function ExperienceClient({
                     period={item.period}
                     title={item.role}
                     subtitle={item.company}
+                    badge={item.badge}
                     description={item.tagline}
                     slug={item.slug}
                     dotColor="bg-purple-500"

@@ -187,6 +187,11 @@ export default function ExperiencesListClient({
                     <ShieldCheck size={8} /> Confidential
                   </span>
                 )}
+                {exp.badge && (
+                  <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-mono bg-amber-500/10 text-amber-300 rounded-full">
+                    {exp.badge}
+                  </span>
+                )}
                 {(exp.status ?? "published") === "draft" && (
                   <span className="inline-flex items-center gap-1 px-1.5 py-0.5 text-[10px] font-mono bg-zinc-700/40 text-zinc-300 rounded-full">
                     Draft

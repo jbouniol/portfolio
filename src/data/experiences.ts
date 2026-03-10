@@ -6,6 +6,7 @@ export interface Experience {
   period: string;
   location: string;
   type: "work" | "leadership";
+  badge?: string;
   tagline: string;
   description: string;
   missions: string[];
@@ -136,6 +137,7 @@ export const experiences: Experience[] = [
     period: "Sep 2023 — Present",
     location: "Paris, Marseille, Lyon, Geneva, Luxembourg",
     type: "leadership",
+    badge: "Distinguished Ambassador",
     tagline:
       "Representing Albert School at student fairs and open days, supporting applicants, and introducing high school students to Data and AI careers; awarded the Distinguished Ambassador certification.",
     description:

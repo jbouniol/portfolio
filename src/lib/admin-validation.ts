@@ -186,6 +186,7 @@ export function validateExperiencePayload(
 
   if ("period" in payload) data.period = sanitizeOptionalString(payload.period, 120);
   if ("location" in payload) data.location = sanitizeOptionalString(payload.location, 120);
+  if ("badge" in payload) data.badge = sanitizeOptionalString(payload.badge, 80);
   if ("tagline" in payload) data.tagline = sanitizeOptionalString(payload.tagline, 400);
   if ("description" in payload) data.description = sanitizeOptionalString(payload.description, 4000);
   if ("isConfidential" in payload) data.isConfidential = sanitizeBoolean(payload.isConfidential);

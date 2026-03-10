@@ -49,6 +49,7 @@ export async function POST(req: NextRequest) {
       location: body.location || "",
       type: body.type,
       status: body.status || "draft",
+      ...(body.badge && { badge: body.badge }),
       tagline: body.tagline || "",
       description: body.description || "",
       missions: body.missions || [],

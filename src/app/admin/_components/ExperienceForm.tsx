@@ -34,6 +34,7 @@ const EXPERIENCE_DIFF_LABELS: Record<string, string> = {
   period: "Period",
   location: "Location",
   type: "Type",
+  badge: "Badge",
   tagline: "Tagline",
   description: "Description",
   missions: "Missions",
@@ -58,6 +59,7 @@ export default function ExperienceForm({ experience, mode }: Props) {
   const [period, setPeriod] = useState(experience?.period || "");
   const [location, setLocation] = useState(experience?.location || "");
   const [type, setType] = useState<"work" | "leadership">(experience?.type || "work");
+  const [badge, setBadge] = useState(experience?.badge || "");
   const [tagline, setTagline] = useState(experience?.tagline || "");
   const [description, setDescription] = useState(experience?.description || "");
   const [missions, setMissions] = useState<string[]>(experience?.missions || [""]);
@@ -84,6 +86,7 @@ export default function ExperienceForm({ experience, mode }: Props) {
       period,
       location,
       type,
+      badge,
       tagline,
       description,
       missions,
@@ -98,6 +101,7 @@ export default function ExperienceForm({ experience, mode }: Props) {
       period,
       location,
       type,
+      badge,
       tagline,
       description,
       missions,
@@ -116,6 +120,7 @@ export default function ExperienceForm({ experience, mode }: Props) {
       period: experience.period ?? "",
       location: experience.location ?? "",
       type: experience.type ?? "work",
+      badge: experience.badge ?? "",
       tagline: experience.tagline ?? "",
       description: experience.description ?? "",
       missions: experience.missions ?? [],
@@ -173,6 +178,7 @@ export default function ExperienceForm({ experience, mode }: Props) {
       if (typeof draft.period === "string") setPeriod(draft.period);
       if (typeof draft.location === "string") setLocation(draft.location);
       if (draft.type === "work" || draft.type === "leadership") setType(draft.type);
+      if (typeof draft.badge === "string") setBadge(draft.badge);
       if (typeof draft.tagline === "string") setTagline(draft.tagline);
       if (typeof draft.description === "string") setDescription(draft.description);
       if (Array.isArray(draft.missions)) setMissions(draft.missions);
@@ -194,6 +200,7 @@ export default function ExperienceForm({ experience, mode }: Props) {
     if (dataFromAI.period) setPeriod(dataFromAI.period);
     if (dataFromAI.location) setLocation(dataFromAI.location);
     if (dataFromAI.type) setType(dataFromAI.type);
+    if (dataFromAI.badge) setBadge(dataFromAI.badge);
     if (dataFromAI.tagline) setTagline(dataFromAI.tagline);
     if (dataFromAI.description) setDescription(dataFromAI.description);
     if (dataFromAI.missions) setMissions(dataFromAI.missions);
@@ -252,6 +259,7 @@ export default function ExperienceForm({ experience, mode }: Props) {
       period,
       location,
       type,
+      badge: badge || undefined,
       tagline,
       description,
       missions: missions.filter((mission) => mission.trim()),
@@ -410,6 +418,13 @@ export default function ExperienceForm({ experience, mode }: Props) {
               onChange={setLocation}
             />
           </div>
+
+          <AdminTextField
+            label="Badge"
+            value={badge}
+            onChange={setBadge}
+            placeholder="e.g. Distinguished Ambassador"
+          />
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <div>
